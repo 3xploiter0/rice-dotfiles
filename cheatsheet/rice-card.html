@@ -151,13 +151,16 @@
       <div class="row"><span class="desc">Click <b class="sub" style="color:var(--red)">red IP</b> in bar</span><span class="desc">Copies target to clipboard</span></div>
       <div class="row"><span class="desc">Click <b class="sub" style="color:var(--blue)">blue IP</b> in bar</span><span class="desc">Copies your VPN IP</span></div>
       <div class="row"><code class="cmd">$TARGET  $LHOST</code><span class="desc">Auto-filled: <span class="sub">nmap -sCV $TARGET</span></span></div>
-      <div class="row"><code class="cmd">sudo openvpn <span class="arg">f.ovpn</span></code><span class="desc">Connect — blue IP then appears</span></div>
+      <div class="row"><code class="cmd">vpn <span class="arg">htb</span></code> <code class="cmd">vpn <span class="arg">thm</span></code><span class="desc">Connect .ovpn <span class="sub">(files in ~/vpn/) — blue IP appears</span></span></div>
+      <div class="row"><code class="cmd">vpn down</code> <code class="cmd">vpn status</code><span class="desc">Disconnect · show tunnel state</span></div>
     </section>
 
     <section class="card span t-green">
       <h2>Start a hack</h2>
       <div class="row"><code class="cmd">htb <span class="arg">&lt;ip&gt; &lt;box&gt;</span></code><span class="desc">Sets the target, builds <b>~/htb-machines/&lt;box&gt;/</b> with <span class="sub">nmap/ loot/ exploits/ notes.md</span>, and opens a tmux workspace: nmap on the target, an <span class="sub">rlwrap nc</span> listener on 4444, notes in nvim, plus a free shell window.</span></div>
       <div class="row"><code class="cmd">tmux attach -t <span class="arg">&lt;box&gt;</span></code><span class="desc">Re-open that workspace later <span class="sub">(or just run htb again)</span></span></div>
+      <div class="row"><code class="cmd">recon <span class="arg">&lt;ip&gt;</span></code><span class="desc">Full port scan, then auto-enum each service <span class="sub">(web dirs, SMB, FTP…) into the box folder. No ip = current target.</span></span></div>
+      <div class="row"><code class="cmd">addhost <span class="arg">&lt;ip&gt; &lt;name&gt;</span></code><span class="desc">Add /etc/hosts entry <span class="sub">· addhost &lt;name&gt; = remove</span></span></div>
     </section>
 
     <section class="card t-cyan">
@@ -189,6 +192,31 @@
       <div class="row"><code class="cmd">rice</code><span class="desc">fastfetch + btop + visualizer</span></div>
     </section>
 
+    <section class="card t-red">
+      <h2>Payloads &amp; shells</h2>
+      <div class="row"><code class="cmd">revshell</code><span class="desc">Print reverse shells <span class="sub">(bash/python/php/ps…)</span>, copies first</span></div>
+      <div class="row"><code class="cmd">revshell <span class="arg">ip port sh</span></code><span class="desc">Override host / port / type</span></div>
+      <div class="row"><code class="cmd">pwncat-cs -lp <span class="arg">4444</span></code><span class="desc">Smart catcher <span class="sub">(auto TTY upgrade)</span></span></div>
+      <div class="row"><code class="cmd">rlwrap nc -lvnp <span class="arg">4444</span></code><span class="desc">Plain listener with history</span></div>
+      <div class="row"><code class="cmd">report <span class="arg">&lt;box&gt;</span></code><span class="desc">Build a markdown report from notes + logs</span></div>
+    </section>
+
+    <section class="card t-cyan">
+      <h2>Recon &amp; arsenal</h2>
+      <div class="row"><code class="cmd">recon-web <span class="arg">&lt;domain&gt;</span></code><span class="desc">subfinder → httpx → nuclei <span class="sub">(authorized scope only)</span></span></div>
+      <div class="row"><code class="cmd">arsenal</code><span class="desc">Install missing tools + update all</span></div>
+      <div class="row"><code class="cmd">wl</code> <code class="cmd">wl <span class="arg">web</span></code><span class="desc">cd SecLists · print a wordlist path</span></div>
+      <div class="row"><code class="cmd">ligolo-proxy</code> <code class="cmd">chisel</code><span class="desc">Pivoting <span class="sub">(agent in ~/tools/ligolo/)</span></span></div>
+    </section>
+
+    <section class="card span t-green">
+      <h2>Backup &amp; Burp</h2>
+      <div class="row"><code class="cmd">rice-backup</code><span class="desc">Snapshot all configs to <b>~/.rice-dotfiles</b> <span class="sub">— then: cd ~/.rice-dotfiles &amp;&amp; git push</span></span></div>
+      <div class="row"><code class="cmd">sudo timeshift --create -c <span class="arg">"msg"</span></code><span class="desc">Full system restore point <span class="sub">· restore: sudo timeshift --restore</span></span></div>
+      <div class="row"><code class="cmd">burpchrome</code><span class="desc">Chrome routed through Burp <span class="sub">(127.0.0.1:8080)</span></span></div>
+      <div class="row"><code class="cmd">burpcert</code><span class="desc">Trust Burp CA <span class="sub">(run once, Burp open)</span></span></div>
+    </section>
+
     <section class="card span">
       <h2>Good to know</h2>
       <div class="row"><span class="desc"><b>New terminal needed</b></span><span class="desc">Open a fresh terminal after config changes — <span class="sub">htb, target, z and the prompt load on start.</span></span></div>
@@ -202,6 +230,6 @@
   <div class="foot">
     <span>Kali · XFCE · Tokyo Night</span>
     <span><b>target:</b> <span class="red">󰓾 red</span> = RHOST · <span class="blue">󰖂 blue</span> = LHOST</span>
-    <span><b>tip:</b> Ctrl+P to print this page</span>
+    <span><b>tip:</b> <code class="cmd" style="padding:1px 5px">cheat</code> in a terminal · Ctrl+P to print</span>
   </div>
 </div>
