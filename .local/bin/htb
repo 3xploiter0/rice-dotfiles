@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# htb <target-ip> <box-name> [-d]
+# Sets the target, creates ~/htb-machines/<box>/ and opens a tmux workspace:
+#   window "recon": nmap | listener (4444) / notes     window "shell": free terminal
+# -d = create without attaching
+set -e
+ip="$1"; box="$2"
+if [ -z "$ip" ] || [ -z "$box" ]; then echo "usage: htb <target-ip> <box-name>"; exit 1; fi
+dir="$HOME/htb-machines/$box"
+mkdir -p "$dir"/{nmap,loot,exploits}
+echo "$ip" > "$HOME/.config/hack/target"
+if [ ! -f "$dir/notes.md" ]; then
+cat > "$dir/notes.md" <<NOTES
+# $box — $ip
+Started: $(date '+%F %H:%M')
+
+## Recon
+- nmap: nmap/initial.nmap
+
+## Foothold
+
+## Privesc
+
+## Creds / loot
+
+## Flags
+- user:
+- root:
+NOTES
+fi
+s=$(echo "$box" | tr -c 'A-Za-z0-9_-' '_' | sed 's/_$//')
+if ! tmux has-session -t "=$s" 2>/dev/null; then
+  tmux new-session -d -s "$s" -n recon -c "$dir"
+  tmux send-keys -t "$s:recon" "nmap -sC -sV -T4 -oA nmap/initial $ip" Enter
+  tmux split-window -h -t "$s:recon" -c "$dir"
+  tmux send-keys -t "$s:recon.2" "rlwrap -cAr nc -lvnp 4444" Enter
+  tmux split-window -v -t "$s:recon.2" -c "$dir"
+  tmux send-keys -t "$s:recon.3" "nvim notes.md" Enter
+  tmux new-window -t "$s" -n shell -c "$dir"
+  tmux select-window -t "$s:recon"; tmux select-pane -t "$s:recon.1"
+fi
+[ "$3" = "-d" ] && { echo "workspace '$s' ready (tmux attach -t $s)"; exit 0; }
+if [ -n "$TMUX" ]; then tmux switch-client -t "$s"; else exec tmux attach -t "$s"; fi

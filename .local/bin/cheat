@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# Tokyo Night cheat-sheet for this rice. Run: cheat   (or: cheat htb / tmux / desktop)
+B=$'\e[38;2;122;162;247m'   # blue
+C=$'\e[38;2;125;207;255m'   # cyan
+P=$'\e[38;2;187;154;247m'   # purple
+G=$'\e[38;2;158;206;106m'   # green
+R=$'\e[38;2;247;118;142m'   # red
+Y=$'\e[38;2;224;175;104m'   # yellow
+D=$'\e[38;2;86;95;137m'     # dim
+W=$'\e[38;2;192;202;245m'   # bright
+BD=$'\e[1m'; X=$'\e[0m'
+h(){ printf "\n${BD}${P}  %s${X}\n${D}  ────────────────────────────────────────────────${X}\n" "$1"; }
+k(){ printf "  ${C}%-22s${X} ${W}%s${X}\n" "$1" "$2"; }
+
+banner(){ printf "${B}${BD}
+   ┌─────────────────────────────────────────────┐
+   │   3xploiter0 · Kali rice cheat-sheet         │
+   └─────────────────────────────────────────────┘${X}
+${D}   tip: ${C}cheat htb${D} · ${C}cheat tmux${D} · ${C}cheat desktop${D} · ${C}cheat shell${X}\n"; }
+
+desktop(){ h "DESKTOP (Super = Windows key)"
+k "Super+Return"        "new terminal"
+k "Super+Space"         "app launcher (type + Enter)"
+k "Super+Ctrl+Space"    "next wallpaper"
+k "Super+1..5"          "go to workspace 1-5"
+k "Super+Shift+1..5"    "move window to workspace"
+k "Super+Q / Alt+F4"    "close window"
+k "Super+drag"          "move window (no title bar)"
+k "drag to edge"        "snap window to half"; }
+
+htb(){ h "START A HACK"
+k "htb <ip> <box>"      "target + folders + tmux workspace"
+k "  "                  "${D}makes ~/htb-machines/<box>/{nmap,loot,exploits,notes.md}${X}"
+k "tmux attach -t <box>" "re-open that workspace later"
+h "TARGET / VPN"
+k "target <ip>"         "set target (red in bar/prompt/tmux)"
+k "target"             "show it   ·   target clear = remove"
+k "click red IP"        "copies target   ·   click blue IP = VPN IP"
+k "\$TARGET  \$LHOST"     "auto-filled, e.g. nmap -sCV \$TARGET"
+k "sudo openvpn f.ovpn"  "connect VPN (blue IP appears)"; }
+
+tmuxc(){ h "TMUX  (prefix = Ctrl+b, press then release)"
+k "Alt + arrows"        "move between panes"
+k "prefix |  /  -"      "split left-right / top-bottom"
+k "prefix c"            "new window   ·   prefix 1/2.. switch"
+k "prefix z"            "zoom pane fullscreen (toggle)"
+k "prefix d"            "detach (scans keep running)"
+k "prefix L"            "toggle logging this pane"
+k "prefix [ , q"        "scroll mode (q to quit)   ·   mouse works"
+k "prefix r"            "reload tmux config"; }
+
+shell(){ h "SHELL SPEED"
+k "z <part-of-dir>"     "jump to a folder you've visited"
+k "Ctrl+R"              "fuzzy-search command history"
+k "Ctrl+T"              "fuzzy-find a file into the command"
+k "cat <file>"          "colored syntax view (bat)"
+k "ls / ll / la"        "files with icons (eza)"
+h "NOTES & LOGS"
+k "logs"                "list today's terminal logs"
+k "logclean <file>"     "clean a log for a report"
+k "nvim notes.md"       "edit notes (i=type, Esc, :w=save, :q=quit)"
+k "rice"                "fastfetch + btop + visualizer layout"; }
+
+case "$1" in
+  htb)     banner; htb ;;
+  tmux)    banner; tmuxc ;;
+  desktop) banner; desktop ;;
+  shell)   banner; shell ;;
+  *)       banner; desktop; htb; tmuxc; shell; echo ;;
+esac

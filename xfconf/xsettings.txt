@@ -1,0 +1,33 @@
+/Gtk/ButtonImages               true
+/Gtk/CursorBlinkTimeout         10
+/Gtk/CursorThemeName            Adwaita
+/Gtk/CursorThemeSize            24
+/Gtk/DecorationLayout           :
+/Gtk/EnableAnimations           true
+/Gtk/EnablePrimaryPaste         true
+/Gtk/FontName                   Inter 10
+/Gtk/ImModule                   
+/Gtk/KeynavUseCaret             false
+/Gtk/KeyThemeName               Default
+/Gtk/MenuImages                 true
+/Gtk/MonospaceFontName          JetBrainsMono Nerd Font 10
+/Gtk/OverlayScrolling           true
+/Gtk/RecentFilesEnabled         true
+/Gtk/RecentFilesMaxAge          -1
+/Gtk/TitlebarDoubleClick        toggle-maximize
+/Gtk/TitlebarMiddleClick        none
+/Gtk/TitlebarRightClick         menu
+/Net/CursorBlink                true
+/Net/CursorBlinkTime            1200
+/Net/DndDragThreshold           8
+/Net/DoubleClickTime            400
+/Net/EnableEventSounds          true
+/Net/EnableInputFeedbackSounds  false
+/Net/IconThemeName              Papirus-Dark
+/Net/SoundThemeName             freedesktop
+/Net/ThemeName                  adw-gtk3-dark
+/Xfce/SyncThemes                true
+/Xft/Antialias                  1
+/Xft/Hinting                    true
+/Xft/HintStyle                  hintslight
+/Xft/RGBA                       rgb

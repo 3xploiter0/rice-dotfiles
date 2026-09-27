@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Cycle to the next Omarchy wallpaper (Super+Ctrl+Space)
+dir="$HOME/.local/share/backgrounds/omarchy"
+mapfile -t walls < <(find "$dir" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.png' \) | sort)
+[ ${#walls[@]} -eq 0 ] && exit 1
+state="$HOME/.cache/omarchy-bg-index"
+i=$(( ( $(cat "$state" 2>/dev/null || echo -1) + 1 ) % ${#walls[@]} ))
+echo "$i" > "$state"
+for p in $(xfconf-query -c xfce4-desktop -l | grep -E 'last-image$'); do
+  xfconf-query -c xfce4-desktop -p "$p" -s "${walls[$i]}"
+done

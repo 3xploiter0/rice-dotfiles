@@ -1,0 +1,9 @@
+/idle-activation/delay           10
+/idle-activation/enabled         true
+/lock/embedded-keyboard/command  onboard -e
+/lock/embedded-keyboard/enabled  true
+/lock/enabled                    true
+/lock/saver-activation/delay     1
+/saver/enabled                   true
+/saver/mode                      1
+/saver/themes/list               matrix
