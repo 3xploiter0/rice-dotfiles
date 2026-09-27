@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Open the "what are you using?" layout: fastfetch | btop / cava
+read -r SW SH < <(xdotool getdisplaygeometry)
+BAR=26; G=8; B=2
+W=$(( (SW - 3*G) / 2 - 2*B )); H=$(( SH - BAR - 2*G - 2*B ))
+TOPH=$(( H * 66 / 100 )); BOTH=$(( H - TOPH - G - 2*B ))
+X2=$(( G + W + 2*B + G )); Y=$(( BAR + G ))
+
+launch() { # class x y w h cmd...
+  local cls=$1 x=$2 y=$3 w=$4 h=$5; shift 5
+  alacritty --class "$cls" -o font.size=${FS:-9} -e "$@" &>/dev/null &
+  local pid=$! win=""
+  for _ in $(seq 50); do
+    win=$(xdotool search --onlyvisible --pid "$pid" 2>/dev/null | tail -1)
+    [ -n "$win" ] && break; sleep 0.1
+  done
+  [ -n "$win" ] && xdotool windowsize "$win" "$w" "$h" windowmove "$win" "$x" "$y"
+}
+FS=8 launch rice-ff   $G  $Y $W $H     zsh -c 'clear; fastfetch; KALI_NEON_NO_BANNER=1 exec zsh'
+FS=7.5 launch rice-btop $X2 $Y $W $TOPH  btop
+launch rice-cava $X2 $(( Y + TOPH + 2*B + G )) $W $BOTH cava

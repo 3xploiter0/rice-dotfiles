@@ -1,0 +1,8 @@
+/applications/known_applications  [,blueman,google-chrome,notify-send,org.freedesktop.network-manager-applet,Xfce volume control,xfce4-power-manager,xfce4-settings-helper]
+/do-fadeout                       true
+/do-slideout                      false
+/expire-timeout                   5
+/initial-opacity                  1.000000
+/log-max-size-enabled             true
+/notify-location                  top-right
+/theme                            Omarchy-TokyoNight

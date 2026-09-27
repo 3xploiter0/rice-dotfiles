@@ -1,0 +1,39 @@
+#!/bin/sh
+# Top bar widget for xfce4-genmon: `hackbar vpn` or `hackbar target`
+# Output is also reused by tmux with `hackbar vpn plain`.
+vpn_ip() {
+  for i in tun0 tun1 wg0 $(ip -o link show type tun 2>/dev/null | awk -F': ' '{print $2}'); do
+    ip=$(ip -4 -o addr show "$i" 2>/dev/null | awk '{print $4}' | cut -d/ -f1 | head -1)
+    [ -n "$ip" ] && { echo "$ip"; return; }
+  done
+}
+target_ip() { head -1 "$HOME/.config/hack/target" 2>/dev/null; }
+
+case "$1" in
+  vpn)    v=$(vpn_ip) ;;
+  target) v=$(target_ip) ;;
+esac
+if [ "$2" = plain ]; then echo "$v"; exit; fi
+if [ "$1" = tmux ]; then
+  t=$(target_ip); v=$(vpn_ip)
+  [ -n "$t" ] && printf '#[fg=#f7768e,bold]󰓾 %s  ' "$t"
+  if [ -n "$v" ]; then printf '#[fg=#7aa2f7,bold]󰖂 %s  ' "$v"; else printf '#[fg=#565f89]󰖂 no vpn  '; fi
+  exit
+fi
+
+copy="sh -c 'printf %s \"$v\" | xclip -selection clipboard && notify-send -t 1500 \"Copied\" \"$v\"'"
+if [ "$1" = vpn ]; then
+  if [ -n "$v" ]; then
+    printf '<txt><span foreground="#7aa2f7">󰖂 %s</span></txt>' "$v"
+    printf '<txtclick>%s</txtclick><tool>VPN IP (LHOST) – click to copy</tool>' "$copy"
+  else
+    printf '<txt><span foreground="#565f89">󰖂 no vpn</span></txt><tool>No VPN interface up</tool>'
+  fi
+else
+  if [ -n "$v" ]; then
+    printf '<txt><span foreground="#f7768e">󰓾 %s</span></txt>' "$v"
+    printf '<txtclick>%s</txtclick><tool>Target (RHOST) – click to copy · change with: target IP</tool>' "$copy"
+  else
+    printf '<txt></txt><tool>No target · set with: target IP</tool>'
+  fi
+fi

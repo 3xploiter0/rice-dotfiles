@@ -1,0 +1,5 @@
+#!/bin/sh
+# Fullscreen blue Matrix rain, used as the XFCE screensaver
+exec xterm -fullscreen -fa "JetBrainsMono Nerd Font" -fs 12 \
+  -bg black -fg "#7aa2f7" +sb -name matrixsaver \
+  -e cmatrix -b -u 5 -C blue

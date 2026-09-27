@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# Snapshot all desktop + hacking customization into a git repo (~/.rice-dotfiles).
+# First run: rice-backup            -> commits locally
+#            rice-backup <git-url>  -> also sets remote and pushes
+set -e
+repo="$HOME/.rice-dotfiles"
+mkdir -p "$repo"
+
+# what to save (relative to $HOME)
+paths=(
+  .zshrc .tmux.conf .config/starship.toml
+  .config/alacritty .config/picom .config/rofi .config/conky
+  .config/gtk-3.0/gtk.css .config/gtk-4.0/gtk.css
+  .config/qterminal.org/qterminal.ini
+  .config/nvim/lua .config/fastfetch .config/btop/btop.conf .config/cava/config
+  .config/hack .config/cherrytree/config.cfg
+  .local/bin
+  .local/share/themes/Omarchy-TokyoNight
+  .local/share/qtermwidget6/color-schemes/TokyoNight.colorscheme
+  .local/share/gtksourceview-5/styles/tokyonight.xml
+)
+
+cd "$repo"
+[ -d .git ] || git init -q
+
+# copy current files in
+for p in "${paths[@]}"; do
+  src="$HOME/$p"
+  [ -e "$src" ] || continue
+  dest="$repo/$p"
+  mkdir -p "$(dirname "$dest")"
+  cp -a "$src" "$(dirname "$dest")/"
+done
+
+# xfconf settings (panel, wm, theme) dumped to text so they're restorable
+mkdir -p "$repo/xfconf"
+for ch in xfce4-panel xfwm4 xsettings xfce4-desktop xfce4-keyboard-shortcuts xfce4-screensaver xfce4-notifyd; do
+  xfconf-query -c "$ch" -lv 2>/dev/null > "$repo/xfconf/$ch.txt" || true
+done
+# list of installed apt packages (to reinstall on a fresh box)
+comm -23 <(apt-mark showmanual 2>/dev/null | sort) <(gzip -dc /usr/share/doc/*/changelog.gz >/dev/null 2>&1; apt-mark showauto 2>/dev/null | sort) > "$repo/packages.txt" 2>/dev/null || apt-mark showmanual > "$repo/packages.txt"
+
+cat > "$repo/README.md" <<'MD'
+# 3xploiter0 rice dotfiles
+Kali XFCE Tokyo Night rice + hacking workflow. Backup made by `rice-backup`.
+
+Restore on a fresh box:
+1. `sudo apt install $(cat packages.txt)`
+2. Copy dirs back into `$HOME` (`.zshrc`, `.tmux.conf`, `.config/*`, `.local/*`).
+3. Reload xfconf from `xfconf/*.txt` if needed (panel/theme settings).
+MD
+
+git add -A
+if git diff --cached --quiet; then echo "rice-backup: nothing changed"; else
+  git commit -q -m "rice snapshot $(date '+%F %H:%M')"
+  echo "rice-backup: committed $(git rev-list --count HEAD) total snapshots"
+fi
+
+# optional remote push
+if [ -n "$1" ]; then
+  git remote remove origin 2>/dev/null || true
+  git remote add origin "$1"
+  git branch -M main
+  git push -u origin main && echo "rice-backup: pushed to $1"
+fi
