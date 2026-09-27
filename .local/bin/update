@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# update            full maintenance: apt upgrade + tools + nuclei templates + backup&push
+# update --auto     unattended parts only (no sudo/apt): templates + backup&push  (used by the weekly timer)
+export PATH="$HOME/.local/bin:$PATH"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+say(){ printf "\n${B}[*] %s${X}\n" "$1"; }
+auto=0; [ "${1:-}" = "--auto" ] && auto=1
+
+if [ "$auto" = 0 ]; then
+  say "system packages (apt upgrade)"
+  sudo apt-get update -qq && sudo DEBIAN_FRONTEND=noninteractive apt-get -y upgrade 2>&1 | tail -3
+  say "security tool arsenal"
+  arsenal update 2>&1 | tail -4
+fi
+
+say "nuclei templates"
+command -v nuclei >/dev/null && nuclei -update-templates 2>&1 | tail -1
+
+say "backup + push dotfiles"
+rice-backup 2>&1 | tail -1
+( cd "$HOME/.rice-dotfiles" && git push 2>&1 | tail -1 )
+
+say "done  $(date '+%F %H:%M')"
