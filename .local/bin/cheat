@@ -26,7 +26,13 @@ k "Super+1..5"          "go to workspace 1-5"
 k "Super+Shift+1..5"    "move window to workspace"
 k "Super+Q / Alt+F4"    "close window"
 k "Super+drag"          "move window (no title bar)"
-k "drag to edge"        "snap window to half"; }
+k "drag to edge"        "snap window to half"
+h "macOS FEELS"
+k "F4  /  Super+A"      "Launchpad — fullscreen app grid"
+k "F3"                  "Mission Control — all open windows"
+k "hot corner ↖"        "top-left = Mission Control"
+k "hot corner ↙"        "bottom-left = Launchpad"
+k "dock (bottom)"       "running apps + Launchpad; right-click icon > Pin to Dock"; }
 
 htb(){ h "START A HACK"
 k "htb <ip> <box>"      "target + folders + tmux workspace"
