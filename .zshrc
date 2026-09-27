@@ -338,3 +338,14 @@ export BAT_THEME="tokyonight_night"
 logs() { eza -l --sort=modified "$HOME/logs/${1:-$(date +%F)}" 2>/dev/null || echo "no logs for ${1:-today}"; }
 logclean() { ansifilter "$1" | col -b; }
 alias vim='nvim'
+
+# wordlists shortcut: `wl` = cd to seclists · `wl web` common web dir list path
+wl() {
+  case "${1:-}" in
+    web) echo /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt ;;
+    dns) echo /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt ;;
+    pass) echo /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt* ;;
+    users) echo /usr/share/seclists/Usernames/top-usernames-shortlist.txt ;;
+    *) cd /usr/share/seclists && ls ;;
+  esac
+}

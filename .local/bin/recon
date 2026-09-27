@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# recon <ip> [outdir]   full port scan, then auto service-enum. Non-destructive.
+# Defaults outdir to the current box folder (~/htb-machines/<cwd>) or ./recon.
+set -u
+ip="${1:-$(head -1 "$HOME/.config/hack/target" 2>/dev/null)}"
+[ -z "$ip" ] && { echo "usage: recon <ip> [outdir]   (or set a target first)"; exit 1; }
+out="${2:-$( [ -d ./nmap ] && echo . || echo ./recon )}"
+mkdir -p "$out/nmap" "$out/web"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+say(){ printf "\n${B}[*] %s${X}\n" "$1"; }
+
+say "full TCP port scan  ($ip)"
+nmap -p- --min-rate 3000 -T4 -Pn -oG "$out/nmap/allports.gnmap" "$ip" >/dev/null 2>&1
+ports=$(grep -oP '\d+/open' "$out/nmap/allports.gnmap" | cut -d/ -f1 | paste -sd, -)
+[ -z "$ports" ] && { echo "${Y}no open TCP ports found${X}"; exit 0; }
+printf "${G}open ports:${X} %s\n" "$ports"
+
+say "service + script scan on open ports"
+nmap -sCV -p"$ports" -Pn -oA "$out/nmap/services" "$ip" >/dev/null 2>&1
+grep -E '^[0-9]+/tcp' "$out/nmap/services.nmap" | sed "s/^/  /"
+
+# per-service follow-ups
+has(){ echo ",$ports," | grep -q ",$1,"; }
+webports=""
+for p in 80 443 8080 8000 8443 8888 3000 5000; do has "$p" && webports="$webports $p"; done
+
+if [ -n "$webports" ]; then
+  WL=/usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt
+  [ -f "$WL" ] || WL=/usr/share/wordlists/dirb/common.txt
+  for p in $webports; do
+    scheme=http; case $p in 443|8443) scheme=https;; esac
+    url="$scheme://$ip:$p"
+    say "web enum $url"
+    command -v whatweb >/dev/null && whatweb -a3 "$url" 2>/dev/null | sed 's/^/  /'
+    command -v feroxbuster >/dev/null && \
+      feroxbuster -u "$url" -w "$WL" -k -q -t 50 -o "$out/web/ferox_${p}.txt" 2>/dev/null | tail -15
+  done
+fi
+
+if has 445 || has 139; then
+  say "SMB enum"
+  command -v enum4linux-ng >/dev/null && enum4linux-ng -A "$ip" > "$out/smb.txt" 2>&1 && grep -iE 'sharename|mapping|os |domain' "$out/smb.txt" | head -20
+  command -v smbclient >/dev/null && { echo "${D}shares (null session):${X}"; smbclient -L "//$ip" -N 2>/dev/null | sed 's/^/  /'; }
+fi
+if has 21; then say "FTP anon check"; command -v ftp >/dev/null && echo -e "user anonymous anonymous\nls\nbye" | timeout 15 ftp -inv "$ip" 2>/dev/null | sed 's/^/  /'; fi
+if has 6379; then say "Redis"; command -v redis-cli >/dev/null && redis-cli -h "$ip" INFO server 2>/dev/null | head -5; fi
+
+say "done — results in $out/"
+printf "${D}next: add the box to hosts (addhost %s <name>.htb) and dig into web/ + nmap/services.nmap${X}\n" "$ip"

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# vpn <name|path>   connect a .ovpn (searches ~/vpn, ~/Downloads, .)
+# vpn down          disconnect        vpn status   show tun IP + state
+# examples: vpn htb   vpn thm   vpn ~/vpn/lab.ovpn
+DIRS=("$HOME/vpn" "$HOME/Downloads" "$HOME/htb-machines" ".")
+LOG="$HOME/.config/hack/vpn.log"; mkdir -p "$HOME/.config/hack"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; R=$'\e[38;2;247;118;142m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+
+tun_ip(){ ip -4 -o addr show 2>/dev/null | awk '/tun|tap|wg/{print $2": "$4}' | cut -d/ -f1; }
+
+case "$1" in
+  down|stop|off)
+    sudo pkill -x openvpn 2>/dev/null && echo "${R}VPN disconnected${X}" || echo "${D}no openvpn running${X}"
+    exit 0 ;;
+  status|"")
+    if pgrep -x openvpn >/dev/null; then
+      ip=$(tun_ip); echo "${G}VPN up${X}  ${ip:-（no tun addr yet）}"
+    else echo "${D}VPN down${X}"; fi
+    exit 0 ;;
+esac
+
+# find the ovpn file
+f=""
+if [ -f "$1" ]; then f="$1"; else
+  for d in "${DIRS[@]}"; do
+    hit=$(find "$d" -maxdepth 2 -iname "*$1*.ovpn" 2>/dev/null | head -1)
+    [ -n "$hit" ] && { f="$hit"; break; }
+  done
+fi
+[ -z "$f" ] && { echo "${R}no .ovpn matching '$1'${X} — put files in ~/vpn/ or pass a path"; exit 1; }
+
+echo "${B}connecting:${X} $f"
+sudo pkill -x openvpn 2>/dev/null; sleep 1
+sudo bash -c "openvpn --config '$f' --daemon --log '$LOG'"
+# wait for the tunnel to come up
+for i in $(seq 15); do sleep 1; ip=$(tun_ip); [ -n "$ip" ] && break; done
+if [ -n "$ip" ]; then echo "${G}connected${X}  $ip"; else
+  echo "${R}no tunnel after 15s${X} — check: tail $LOG"; fi

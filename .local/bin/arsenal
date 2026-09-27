@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# arsenal          install any missing tools, then update everything
+# arsenal update   just update (apt tools, nuclei/subfinder templates, pipx)
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+say(){ printf "\n${B}[*] %s${X}\n" "$1"; }
+
+APT=(feroxbuster nuclei httpx-toolkit gobuster ffuf subfinder chisel seclists enum4linux-ng whatweb redis-tools smbclient rlwrap)
+
+if [ "${1:-}" != "update" ]; then
+  say "checking apt tools"
+  miss=()
+  for p in "${APT[@]}"; do dpkg -s "$p" >/dev/null 2>&1 || miss+=("$p"); done
+  if [ ${#miss[@]} -gt 0 ]; then
+    printf "${Y}installing:${X} %s\n" "${miss[*]}"
+    sudo apt-get update -qq && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "${miss[@]}"
+  else echo "${G}all apt tools present${X}"; fi
+  command -v pwncat-cs >/dev/null || { say "pwncat-cs (pipx)"; pipx install pwncat-cs; }
+  [ -x /usr/local/bin/ligolo-proxy ] || echo "${Y}ligolo-proxy missing — re-run installer${X}"
+fi
+
+say "updating apt tools"
+sudo apt-get update -qq && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --only-upgrade "${APT[@]}" 2>/dev/null | tail -1
+
+say "updating nuclei templates"; nuclei -update-templates 2>&1 | tail -1
+command -v pipx >/dev/null && { say "updating pipx apps"; pipx upgrade-all 2>&1 | tail -2; }
+
+say "arsenal ready"
+printf "${D}recon: ${X}recon <ip>   ${D}web: ${X}recon-web <domain>   ${D}pivot: ${X}ligolo-proxy / chisel   ${D}shell: ${X}pwncat-cs\n"

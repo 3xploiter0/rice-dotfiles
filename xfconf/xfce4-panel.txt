@@ -71,7 +71,7 @@
 /plugins/plugin-19/digital-time-format        %A %H:%M
 /plugins/plugin-1/button-icon                 view-app-grid-symbolic
 /plugins/plugin-1/button-title                
-/plugins/plugin-1/recent                      [google-chrome.desktop,kali-burpsuite.desktop]
+/plugins/plugin-1/recent                      [xfce4-file-manager.desktop,google-chrome.desktop,kali-burpsuite.desktop]
 /plugins/plugin-1/show-button-title           false
 /plugins/plugin-2                             separator
 /plugins/plugin-20                            separator
