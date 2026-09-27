@@ -5,7 +5,7 @@
 /backdrop/screen0/monitor0/image-path                 /home/x3xploiter0/.local/share/backgrounds/kali-neon-wallpaper.jpg
 /backdrop/screen0/monitor0/image-show                 true
 /backdrop/screen0/monitor0/image-style                5
-/backdrop/screen0/monitor0/last-image                 /home/x3xploiter0/.local/share/backgrounds/omarchy/anime-8geml1.jpg
+/backdrop/screen0/monitor0/last-image                 /home/x3xploiter0/.local/share/backgrounds/omarchy/anime-akaza.jpg
 /backdrop/screen0/monitor0/last-single-image          /home/x3xploiter0/.local/share/backgrounds/kali-neon-wallpaper.jpg
 /backdrop/screen0/monitor1/brightness                 0
 /backdrop/screen0/monitor1/color1                     [7936,16128,28416,65535]
@@ -14,7 +14,7 @@
 /backdrop/screen0/monitor1/image-path                 /usr/share/backgrounds/kali-16x9/default
 /backdrop/screen0/monitor1/image-show                 true
 /backdrop/screen0/monitor1/image-style                5
-/backdrop/screen0/monitor1/last-image                 /home/x3xploiter0/.local/share/backgrounds/omarchy/anime-8geml1.jpg
+/backdrop/screen0/monitor1/last-image                 /home/x3xploiter0/.local/share/backgrounds/omarchy/anime-akaza.jpg
 /backdrop/screen0/monitor1/last-single-image          /usr/share/images/desktop-base/default
 /backdrop/screen0/monitor2/image-path                 /usr/share/backgrounds/kali-16x9/default
 /backdrop/screen0/monitor2/image-show                 true
@@ -25,7 +25,7 @@
 /backdrop/screen0/monitor4/image-path                 /usr/share/backgrounds/kali-16x9/default
 /backdrop/screen0/monitor4/image-show                 true
 /backdrop/screen0/monitor4/image-style                5
-/backdrop/screen0/monitoreDP-1/workspace0/last-image  /home/x3xploiter0/.local/share/backgrounds/omarchy/anime-8geml1.jpg
+/backdrop/screen0/monitoreDP-1/workspace0/last-image  /home/x3xploiter0/.local/share/backgrounds/omarchy/anime-akaza.jpg
 /desktop-icons/file-icons/show-filesystem             false
 /desktop-icons/file-icons/show-home                   true
 /desktop-icons/file-icons/show-removable              false
