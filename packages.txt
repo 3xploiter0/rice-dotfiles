@@ -13,6 +13,7 @@ bind9-dnsutils
 bind9-host
 bsdutils
 btop
+build-essential
 busybox
 bzip2
 ca-certificates
@@ -43,7 +44,9 @@ eza
 fastfetch
 fd-find
 fdisk
+feh
 feroxbuster
+ffmpeg
 file
 findutils
 firmware-intel-graphics
@@ -160,6 +163,10 @@ libtirpc3t64
 libudev1
 libunistring5
 libuuid1
+libx11-dev
+libxext-dev
+libxinerama-dev
+libxrender-dev
 libxtables12
 libxxhash0
 libzstd1
@@ -177,6 +184,7 @@ manpages
 mawk
 media-types
 mount
+mpv
 nano
 ncurses-base
 ncurses-bin

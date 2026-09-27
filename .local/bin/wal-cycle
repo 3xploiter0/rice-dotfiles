@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Auto-theme from a wallpaper: sets it, then recolors open terminals to match.
+#   wal-cycle            -> next wallpaper in the rotation, recolor
+#   wal-cycle <image>    -> that image
+#   wal-cycle reset      -> back to Tokyo Night (new terminals are already Tokyo Night)
+export PATH="$HOME/.local/bin:$PATH"
+dir="$HOME/.local/share/backgrounds/omarchy"
+
+if [ "$1" = reset ]; then
+  # restore the Tokyo Night terminal colors in open shells
+  printf '\033]10;#a9b1d6\007\033]11;#1a1b26\007'
+  rm -f "$HOME/.cache/wal/in_use"
+  echo "reset — Tokyo Night restored (open a new terminal for full reset)"; exit 0
+fi
+
+if [ -n "$1" ] && [ -f "$1" ]; then
+  img="$1"
+else
+  mapfile -t w < <(find "$dir" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.png' \) | sort)
+  s="$HOME/.cache/wal-cycle-idx"
+  i=$(( ( $(cat "$s" 2>/dev/null || echo -1) + 1 ) % ${#w[@]} ))
+  echo "$i" > "$s"; img="${w[$i]}"
+fi
+
+# set desktop wallpaper
+for p in $(xfconf-query -c xfce4-desktop -l | grep -E 'last-image$'); do
+  xfconf-query -c xfce4-desktop -p "$p" -s "$img"
+done
+# generate palette (don't let wal set the wallpaper itself)
+wal -i "$img" -n -q -t 2>/dev/null
+touch "$HOME/.cache/wal/in_use" 2>/dev/null
+# push the new colors into every open terminal
+if [ -f "$HOME/.cache/wal/sequences" ]; then
+  for t in /dev/pts/*; do [ -w "$t" ] && cat "$HOME/.cache/wal/sequences" > "$t" 2>/dev/null; done
+fi
+echo "themed from: $(basename "$img")"
+[ -f "$HOME/.cache/wal/colors" ] && { echo "palette:"; head -8 "$HOME/.cache/wal/colors" | sed 's/^/  /'; }
+echo "tip: wal-cycle reset  -> back to Tokyo Night"

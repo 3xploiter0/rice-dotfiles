@@ -32,7 +32,11 @@ k "F4  /  Super+A"      "Launchpad — fullscreen app grid"
 k "F3"                  "Mission Control — all open windows"
 k "hot corner ↖"        "top-left = Mission Control"
 k "hot corner ↙"        "bottom-left = Launchpad"
-k "dock (bottom)"       "running apps + Launchpad; right-click icon > Pin to Dock"; }
+k "dock (bottom)"       "running apps + Launchpad; right-click icon > Pin to Dock"
+h "EYE CANDY"
+k "livewp on / off"     "animated video wallpaper (~/vidwall/*.mp4)"
+k "wal-cycle"           "recolor terminals from wallpaper  ·  wal-cycle reset"
+k "conky HUD"           "desktop clock+stats (top-right, autostarts)"; }
 
 htb(){ h "START A HACK"
 k "htb <ip> <box>"      "target + folders + tmux workspace"
