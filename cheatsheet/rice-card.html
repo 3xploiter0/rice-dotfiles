@@ -226,6 +226,17 @@
       <div class="row"><code class="cmd">burpcert</code><span class="desc">Trust Burp CA <span class="sub">(run once, Burp open)</span></span></div>
     </section>
 
+    <section class="card span t-yellow">
+      <h2>Daily ops</h2>
+      <div class="row"><code class="cmd">serve</code><span class="desc">HTTP server + paste-ready <span class="sub">wget/curl/certutil</span> with your VPN IP filled in <span class="sub">(serves ~/tools/serve)</span></span></div>
+      <div class="row"><code class="cmd">gettools</code><span class="desc">Stage linpeas / winpeas / pspy / chisel / ligolo into ~/tools/serve</span></div>
+      <div class="row"><code class="cmd">status</code><span class="desc">One glance: VPN, target, current box, listeners, tmux</span></div>
+      <div class="row"><code class="cmd">note <span class="arg">"text"</span></code><span class="desc">Timestamped line into the current box's notes.md</span></div>
+      <div class="row"><code class="cmd">loot <span class="arg">&lt;file&gt;</span></code><span class="desc">Copy a file into the box's loot/ folder</span></div>
+      <div class="row"><code class="cmd">crack <span class="arg">&lt;hash|file&gt;</span></code><span class="desc">Auto-detect hash type → hashcat vs rockyou</span></div>
+      <div class="row"><span class="keys"><code class="cmd">… | copy</code></span><span class="desc">Clipboard <span class="sub">· paste &gt; file</span></span></div>
+    </section>
+
     <section class="card span">
       <h2>Good to know</h2>
       <div class="row"><span class="desc"><b>New terminal needed</b></span><span class="desc">Open a fresh terminal after config changes — <span class="sub">htb, target, z and the prompt load on start.</span></span></div>
