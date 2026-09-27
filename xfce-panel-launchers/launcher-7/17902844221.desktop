@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Kali Terminal
+Comment=Open a Kali neon terminal
+TryExec=qterminal
+Exec=qterminal
+Icon=utilities-terminal
+Terminal=false
+Categories=System;TerminalEmulator;
+Keywords=shell;terminal;console;zsh;
+StartupNotify=true
+X-XFCE-Source=file:///home/x3xploiter0/.local/share/applications/kali-neon-terminal.desktop

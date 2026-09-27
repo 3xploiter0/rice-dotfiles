@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme id="tokyonight" name="Tokyo Night" version="1.0">
+  <author>Tokyo Night (folke) for Kali</author>
+  <description>Tokyo Night night palette</description>
+  <color name="bg" value="#1a1b26"/><color name="bg2" value="#24283b"/><color name="sel" value="#292e42"/>
+  <color name="fg" value="#c0caf5"/><color name="comment" value="#565f89"/><color name="blue" value="#7aa2f7"/>
+  <color name="cyan" value="#7dcfff"/><color name="purple" value="#bb9af7"/><color name="green" value="#9ece6a"/>
+  <color name="orange" value="#ff9e64"/><color name="red" value="#f7768e"/><color name="yellow" value="#e0af68"/>
+  <color name="teal" value="#73daca"/><color name="muted" value="#3b4261"/>
+  <style name="text" foreground="fg" background="bg"/>
+  <style name="selection" foreground="fg" background="sel"/>
+  <style name="selection-unfocused" background="sel"/>
+  <style name="cursor" foreground="#c0caf5"/>
+  <style name="current-line" background="#1f2335"/>
+  <style name="line-numbers" foreground="muted" background="bg"/>
+  <style name="current-line-number" foreground="yellow" background="bg"/>
+  <style name="bracket-match" foreground="cyan" background="sel" bold="true"/>
+  <style name="bracket-mismatch" foreground="red" underline="true"/>
+  <style name="search-match" foreground="bg" background="yellow"/>
+  <style name="right-margin" foreground="muted" background="#1f2335"/>
+  <style name="draw-spaces" foreground="muted"/>
+  <style name="def:comment" foreground="comment" italic="true"/>
+  <style name="def:shebang" foreground="comment" bold="true"/>
+  <style name="def:doc-comment-element" foreground="comment"/>
+  <style name="def:constant" foreground="orange"/>
+  <style name="def:string" foreground="green"/>
+  <style name="def:special-char" foreground="cyan"/>
+  <style name="def:number" foreground="orange"/>
+  <style name="def:boolean" foreground="orange"/>
+  <style name="def:identifier" foreground="fg"/>
+  <style name="def:function" foreground="blue"/>
+  <style name="def:builtin" foreground="cyan"/>
+  <style name="def:statement" foreground="purple"/>
+  <style name="def:keyword" foreground="purple"/>
+  <style name="def:type" foreground="teal"/>
+  <style name="def:preprocessor" foreground="cyan"/>
+  <style name="def:operator" foreground="cyan"/>
+  <style name="def:variable" foreground="fg"/>
+  <style name="def:emphasis" italic="true"/>
+  <style name="def:strong-emphasis" bold="true"/>
+  <style name="def:heading" foreground="blue" bold="true"/>
+  <style name="def:link-text" foreground="cyan"/>
+  <style name="def:net-address" foreground="cyan" underline="true"/>
+  <style name="def:error" foreground="red" underline="true"/>
+  <style name="def:warning" foreground="yellow"/>
+  <style name="def:note" foreground="bg" background="blue"/>
+  <style name="diff:added-line" foreground="green"/>
+  <style name="diff:removed-line" foreground="red"/>
+  <style name="diff:changed-line" foreground="yellow"/>
+</style-scheme>
