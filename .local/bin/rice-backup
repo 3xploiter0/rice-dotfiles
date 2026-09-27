@@ -38,7 +38,7 @@ for ch in xfce4-panel xfwm4 xsettings xfce4-desktop xfce4-keyboard-shortcuts xfc
   xfconf-query -c "$ch" -lv 2>/dev/null > "$repo/xfconf/$ch.txt" || true
 done
 # list of installed apt packages (to reinstall on a fresh box)
-comm -23 <(apt-mark showmanual 2>/dev/null | sort) <(gzip -dc /usr/share/doc/*/changelog.gz >/dev/null 2>&1; apt-mark showauto 2>/dev/null | sort) > "$repo/packages.txt" 2>/dev/null || apt-mark showmanual > "$repo/packages.txt"
+apt-mark showmanual > "$repo/packages.txt" 2>/dev/null
 
 cat > "$repo/README.md" <<'MD'
 # 3xploiter0 rice dotfiles

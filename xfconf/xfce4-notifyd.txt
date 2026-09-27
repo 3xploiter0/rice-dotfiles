@@ -1,4 +1,4 @@
-/applications/known_applications  [,blueman,google-chrome,notify-send,org.freedesktop.network-manager-applet,Xfce volume control,xfce4-power-manager,xfce4-settings-helper]
+/applications/known_applications  [,blueman,google-chrome,notify-send,org.freedesktop.network-manager-applet,timeshift-gtk,Xfce volume control,xfce4-power-manager,xfce4-settings-helper]
 /do-fadeout                       true
 /do-slideout                      false
 /expire-timeout                   5

