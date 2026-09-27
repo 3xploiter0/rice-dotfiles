@@ -17,6 +17,7 @@ busybox
 bzip2
 ca-certificates
 cava
+chisel
 cmatrix
 conky-all
 console-setup
@@ -193,6 +194,7 @@ pciutils
 perl
 perl-base
 picom
+pipx
 procps
 readline-common
 ripgrep

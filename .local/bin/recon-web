@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# recon-web <domain> [outdir]   bug-bounty recon: subfinder -> httpx -> nuclei
+# Only run against scope you are authorized to test.
+set -u
+dom="${1:-}"; [ -z "$dom" ] && { echo "usage: recon-web <domain>"; exit 1; }
+out="${2:-$HOME/bug-bount/$dom/$(date +%F)}"; mkdir -p "$out"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+say(){ printf "\n${B}[*] %s${X}\n" "$1"; }
+HTTPX=$(command -v httpx-toolkit || command -v httpx)
+
+say "subdomain discovery ($dom)"
+subfinder -d "$dom" -all -silent 2>/dev/null | sort -u > "$out/subs.txt"
+printf "${G}%s subdomains${X}\n" "$(wc -l < "$out/subs.txt")"
+
+say "probing live hosts"
+"$HTTPX" -l "$out/subs.txt" -silent -sc -title -tech-detect -o "$out/live.txt" 2>/dev/null
+sed 's/^/  /' "$out/live.txt" | head -25
+printf "${G}%s live${X}\n" "$(wc -l < "$out/live.txt")"
+
+say "nuclei scan (this can take a while)"
+cut -d' ' -f1 "$out/live.txt" > "$out/live_urls.txt"
+nuclei -l "$out/live_urls.txt" -severity low,medium,high,critical -silent -o "$out/nuclei.txt" 2>/dev/null
+if [ -s "$out/nuclei.txt" ]; then sed 's/^/  /' "$out/nuclei.txt"; else echo "${D}no nuclei findings${X}"; fi
+
+say "done — $out/"
+printf "${D}files: subs.txt · live.txt · nuclei.txt   ·  next: ffuf dirs on interesting hosts${X}\n"

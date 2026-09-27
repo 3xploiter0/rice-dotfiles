@@ -41,7 +41,15 @@ k "sudo openvpn f.ovpn"  "connect VPN (blue IP appears)"
 h "PAYLOADS & REPORT"
 k "revshell [ip] [port] [sh]" "print reverse shells (bash/python/php/ps..)"
 k "  "                  "${D}auto-uses \$LHOST + port 4444, copies first to clipboard${X}"
-k "report <box>"        "build a markdown pentest report from notes+logs"; }
+k "report <box>"        "build a markdown pentest report from notes+logs"
+h "AUTOMATION"
+k "recon <ip>"          "full port scan + auto service enum (web/smb/ftp..)"
+k "recon-web <domain>"  "subfinder -> httpx -> nuclei (authorized scope only)"
+k "vpn <htb|thm|path>"  "connect .ovpn  ·  vpn down  ·  vpn status"
+k "addhost <ip> <name>" "add /etc/hosts entry  ·  addhost <name> = remove"
+k "arsenal"             "install missing tools + update all"
+k "wl / wl web / wl dns" "wordlists: cd seclists / print a path"
+k "pwncat-cs -lp 4444"  "smart reverse-shell catcher (auto TTY)"; }
 
 tmuxc(){ h "TMUX  (prefix = Ctrl+b, press then release)"
 k "Alt + arrows"        "move between panes"

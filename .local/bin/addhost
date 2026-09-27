@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# addhost <ip> <name...>   add/refresh an /etc/hosts entry (HTB/THM boxes)
+# addhost <name>          remove entries pointing at that name
+# addhost                 show your custom entries
+set -e
+MARK="# rice-addhost"
+show(){ if grep -qF "$MARK" /etc/hosts 2>/dev/null; then grep -F "$MARK" /etc/hosts | sed "s/[[:space:]]*$MARK//"; else echo "(no custom hosts)"; fi; }
+
+if [ $# -eq 0 ]; then show; exit 0; fi
+
+if [ $# -eq 1 ]; then
+  # single arg = remove that name
+  name="$1"
+  sudo sed -i "/$MARK/{/[[:space:]]$name\([[:space:]]\|\$\)/d}" /etc/hosts
+  echo "removed host: $name"; exit 0
+fi
+
+ip="$1"; shift; names="$*"
+# drop any old line for this ip, then add fresh
+sudo sed -i "\|^$ip[[:space:]].*$MARK|d" /etc/hosts
+echo "$ip	$names	$MARK" | sudo tee -a /etc/hosts >/dev/null
+echo "added: $ip -> $names"
