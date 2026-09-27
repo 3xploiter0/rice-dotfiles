@@ -229,6 +229,7 @@ tty-clock
 tzdata
 ucf
 udev
+unattended-upgrades
 usbutils
 util-linux
 util-linux-extra
