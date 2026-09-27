@@ -95,7 +95,8 @@ k "rice-backup"         "snapshot all your configs to ~/.rice-dotfiles (git)"
 k "rice-backup <url>"   "...and push to a private GitHub repo"
 k "sudo timeshift --create -c msg" "full system restore point"
 k "burpchrome"          "Chrome routed through Burp (127.0.0.1:8080)"
-k "burpcert"            "trust Burp CA (run once, Burp open)"; }
+k "burpcert"            "trust Burp CA (run once, Burp open)"
+k "update"              "apt + tools + templates + backup&push (runs weekly auto)"; }
 
 case "$1" in
   htb)     banner; htb ;;
