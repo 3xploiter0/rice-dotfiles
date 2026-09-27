@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec rofi -config "$HOME/.config/rofi/expose-full.rasi" -show window

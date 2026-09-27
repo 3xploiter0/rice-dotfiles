@@ -2,6 +2,8 @@
 /commands/custom/<Alt>F2                   xfrun4
 /commands/custom/<Alt>F3                   xfce4-appfinder
 /commands/custom/<Alt>Print                /usr/share/kali-themes/xfce4-screenshooter --window
+/commands/custom/F3                        /home/x3xploiter0/.local/bin/expose
+/commands/custom/F4                        /home/x3xploiter0/.local/bin/launchpad
 /commands/custom/override                  true
 /commands/custom/<Primary><Alt>Delete      xfce4-session-logout
 /commands/custom/<Primary><Alt>Escape      xkill
@@ -17,6 +19,7 @@
 /commands/custom/<Primary><Super>space     /home/x3xploiter0/.local/bin/omarchy-bg-next
 /commands/custom/Print                     /usr/share/kali-themes/xfce4-screenshooter
 /commands/custom/<Shift>Print              /usr/share/kali-themes/xfce4-screenshooter --region
+/commands/custom/<Super>a                  /home/x3xploiter0/.local/bin/launchpad
 /commands/custom/<Super>e                  exo-open --launch FileManager
 /commands/custom/<Super>f                  exo-open --launch FileManager
 /commands/custom/<Super>F1                 xfce4-find-cursor

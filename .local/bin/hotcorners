@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# macOS-style hot corners (X11). Polls the cursor; fires when it rests in a corner.
+#   top-left     -> Mission Control (expose)
+#   bottom-left  -> Launchpad
+# Edit the two commands below to taste. Runs from autostart.
+TL="expose"          # top-left action
+BL="launchpad"       # bottom-left action
+MARGIN=3             # px from the very corner
+COOLDOWN=2           # seconds before the same corner can fire again
+
+read SW SH < <(xdotool getdisplaygeometry)
+last=0
+while true; do
+  eval "$(xdotool getmouselocation --shell 2>/dev/null)"
+  now=$(date +%s)
+  if [ $((now - last)) -ge $COOLDOWN ]; then
+    if [ "${X:-99}" -le $MARGIN ] && [ "${Y:-99}" -le $MARGIN ]; then
+      # don't fire if a rofi overlay is already open
+      pgrep -x rofi >/dev/null || { $TL & last=$now; }
+    elif [ "${X:-99}" -le $MARGIN ] && [ "${Y:-0}" -ge $((SH - MARGIN - 1)) ]; then
+      pgrep -x rofi >/dev/null || { $BL & last=$now; }
+    fi
+  fi
+  sleep 0.25
+done

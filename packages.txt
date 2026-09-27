@@ -232,6 +232,7 @@ whiptail
 wireguard
 wireless-tools
 wpasupplicant
+xfce4-docklike-plugin
 xterm
 xz-utils
 zlib1g

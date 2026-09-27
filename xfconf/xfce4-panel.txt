@@ -1,5 +1,5 @@
 /configver                                    2
-/panels                                       [1]
+/panels                                       [1,2]
 /panels/panel-1/background-color              [0.050000,0.070000,0.120000,0.950000]
 /panels/panel-1/background-rgba               [0.060000,0.040000,0.100000,0.800000]
 /panels/panel-1/background-style              0
@@ -9,6 +9,20 @@
 /panels/panel-1/position                      p=6;x=0;y=0
 /panels/panel-1/position-locked               true
 /panels/panel-1/size                          26
+/panels/panel-2/autohide-behavior             1
+/panels/panel-2/background-rgba               [0.100000,0.110000,0.150000,0.720000]
+/panels/panel-2/background-style              1
+/panels/panel-2/enter-opacity                 100
+/panels/panel-2/icon-size                     40
+/panels/panel-2/leave-opacity                 100
+/panels/panel-2/length                        1
+/panels/panel-2/length-adjust                 true
+/panels/panel-2/mode                          0
+/panels/panel-2/plugin-ids                    [30,31]
+/panels/panel-2/position                      p=10;x=683;y=766
+/panels/panel-2/position-locked               true
+/panels/panel-2/size                          52
+/panels/panel-2/span-monitors                 false
 /plugins/plugin-1                             whiskermenu
 /plugins/plugin-10                            separator
 /plugins/plugin-11                            tasklist
@@ -49,7 +63,7 @@
 /plugins/plugin-13/update-interval            0
 /plugins/plugin-14                            systray
 /plugins/plugin-14/known-items                [blueman]
-/plugins/plugin-14/known-legacy-items         [wi-fi network connection “ray mode” active: ray mode (88%),ibus panel,wi-fi network connection “ray mode” active: ray mode (89%),wi-fi network connection “ray mode” active: ray mode (87%),wi-fi network connection “1kn0wn0th1ng” active: 1kn0wn0th1ng (73%),onboard,wi-fi network connection “1kn0wn0th1ng” active: 1kn0wn0th1ng (68%),networkmanager applet]
+/plugins/plugin-14/known-legacy-items         [wi-fi network connection “ray mode” active: ray mode (84%),wi-fi network connection “ray mode” active: ray mode (85%),wi-fi network connection “ray mode” active: ray mode (88%),ibus panel,wi-fi network connection “ray mode” active: ray mode (89%),wi-fi network connection “ray mode” active: ray mode (87%),wi-fi network connection “1kn0wn0th1ng” active: 1kn0wn0th1ng (73%),onboard,wi-fi network connection “1kn0wn0th1ng” active: 1kn0wn0th1ng (68%),networkmanager applet]
 /plugins/plugin-14/size-max                   16
 /plugins/plugin-14/square-icons               true
 /plugins/plugin-14/symbolic-icons             true
@@ -91,6 +105,9 @@
 /plugins/plugin-23/update-period              1000
 /plugins/plugin-23/use-label                  false
 /plugins/plugin-3                             showdesktop
+/plugins/plugin-30                            launcher
+/plugins/plugin-30/items                      launchpad.desktop
+/plugins/plugin-31                            docklike
 /plugins/plugin-4                             directorymenu
 /plugins/plugin-4/base-directory              /home/x3xploiter0
 /plugins/plugin-4/icon-name                   system-file-manager

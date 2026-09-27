@@ -32,6 +32,7 @@ fi
 echo "${B}connecting:${X} $f"
 sudo pkill -x openvpn 2>/dev/null; sleep 1
 sudo bash -c "openvpn --config '$f' --daemon --log '$LOG'"
+sudo chown "$USER:$USER" "$LOG" 2>/dev/null
 # wait for the tunnel to come up
 for i in $(seq 15); do sleep 1; ip=$(tun_ip); [ -n "$ip" ] && break; done
 if [ -n "$ip" ]; then echo "${G}connected${X}  $ip"; else

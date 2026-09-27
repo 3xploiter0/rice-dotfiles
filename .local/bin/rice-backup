@@ -29,7 +29,7 @@ for p in "${paths[@]}"; do
   [ -e "$src" ] || continue
   dest="$repo/$p"
   mkdir -p "$(dirname "$dest")"
-  cp -a "$src" "$(dirname "$dest")/"
+  cp -a "$src" "$(dirname "$dest")/" 2>/dev/null || true
 done
 
 # xfconf settings (panel, wm, theme) dumped to text so they're restorable
@@ -50,6 +50,7 @@ Restore on a fresh box:
 3. Reload xfconf from `xfconf/*.txt` if needed (panel/theme settings).
 MD
 
+rm -f "$repo/.config/hack/vpn.log" 2>/dev/null
 git add -A
 if git diff --cached --quiet; then echo "rice-backup: nothing changed"; else
   git commit -q -m "rice snapshot $(date '+%F %H:%M')"
