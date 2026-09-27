@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Live (video) wallpaper for X11.  livewp on [file] | livewp off
+# Default video: ~/vidwall/breathing.mp4 . Drop any .mp4 in ~/vidwall and pass it.
+DEF="$HOME/vidwall/breathing.mp4"
+case "${1:-on}" in
+  off|stop)
+    pkill -x xwinwrap 2>/dev/null
+    pkill -f 'mpv -wid' 2>/dev/null
+    echo "live wallpaper off"; exit 0 ;;
+esac
+vid="${2:-$DEF}"
+[ -f "$vid" ] || { echo "no video: $vid  (put one in ~/vidwall/)"; exit 1; }
+pkill -x xwinwrap 2>/dev/null; pkill -f 'mpv -wid' 2>/dev/null; sleep 0.5
+setsid xwinwrap -fs -ov -ni -nf -b -- \
+  mpv -wid WID --loop-file=inf --no-audio --really-quiet \
+      --no-osc --no-input-default-bindings --panscan=1.0 --hwdec=auto \
+      --vo=gpu "$vid" >/dev/null 2>&1 < /dev/null &
+echo "live wallpaper on: $vid"

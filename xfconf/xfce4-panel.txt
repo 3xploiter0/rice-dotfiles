@@ -68,11 +68,11 @@
 /plugins/plugin-14/square-icons               true
 /plugins/plugin-14/symbolic-icons             true
 /plugins/plugin-15                            genmon
-/plugins/plugin-15/command                    /home/x3xploiter0/.local/bin/hackbar vpn
+/plugins/plugin-15/command                    /usr/share/kali-themes/xfce4-panel-genmon-vpnip.sh
 /plugins/plugin-15/enable-single-row          true
-/plugins/plugin-15/font                       JetBrainsMono Nerd Font Bold 9
-/plugins/plugin-15/text                       (genmon)
-/plugins/plugin-15/update-period              2000
+/plugins/plugin-15/font                       Fira Code Medium 8
+/plugins/plugin-15/text                       
+/plugins/plugin-15/update-period              1000
 /plugins/plugin-15/use-label                  false
 /plugins/plugin-16                            pulseaudio
 /plugins/plugin-16/enable-keyboard-shortcuts  true
