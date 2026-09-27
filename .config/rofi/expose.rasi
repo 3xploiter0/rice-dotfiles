@@ -1,0 +1,41 @@
+/* Mission Control — all open windows, Tokyo Night frosted overlay (theme only) */
+* {
+  bg:    #1a1b26f2;
+  fg:    #c0caf5;
+  hl:    #7aa2f7;
+  sel:   #292e42cc;
+  muted: #565f89;
+  background-color: transparent;
+  text-color: @fg;
+}
+window {
+  fullscreen: true;
+  background-color: @bg;
+  padding: 8% 20%;
+  children: [ inputbar, listview ];
+}
+inputbar {
+  children: [ prompt, entry ];
+  margin: 0 0 22px 0;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background-color: #ffffff14;
+  spacing: 10px;
+}
+prompt { text-color: @hl; }
+entry { placeholder: "Switch window"; placeholder-color: @muted; }
+listview { lines: 8; spacing: 8px; scrollbar: false; }
+element {
+  padding: 14px 18px;
+  spacing: 14px;
+  border-radius: 12px;
+  background-color: #ffffff0a;
+}
+element-icon { size: 34px; }
+element-text { vertical-align: 0.5; font: "Inter 12"; }
+element selected {
+  background-color: @sel;
+  text-color: #ffffff;
+  border: 0 0 0 3px;
+  border-color: @hl;
+}

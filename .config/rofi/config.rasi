@@ -1,4 +1,4 @@
-configuration { modi: "drun,run,window"; show-icons: true; icon-theme: "Papirus-Dark"; font: "JetBrains Mono 11"; display-drun: ""; drun-display-format: "{name}"; }
+configuration { modi: "drun,run,window"; show-icons: true; icon-theme: "Papirus-Dark"; font: "JetBrains Mono 11"; drun-display-format: "{name}"; }
 * { bg: #1a1b26; fg: #a9b1d6; hl: #7aa2f7; sel: #292e42; muted: #565f89; background-color: transparent; text-color: @fg; }
 window { width: 640px; background-color: @bg; border: 2px; border-color: @hl; border-radius: 0; padding: 14px; }
 mainbox { children: [inputbar, listview]; }

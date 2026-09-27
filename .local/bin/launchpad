@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec rofi -config "$HOME/.config/rofi/launchpad-full.rasi" -show drun
