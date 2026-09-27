@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Launchpad
+Comment=Show all apps
+Exec=/home/x3xploiter0/.local/bin/launchpad
+Icon=view-app-grid-symbolic
+Terminal=false
+Categories=Utility;
