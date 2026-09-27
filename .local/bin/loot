@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# loot <file...>   copy files into the current box's loot/ folder
+# loot             list what's already looted
+boxdir() {
+  local p="$PWD"
+  while [ "$p" != "$HOME" ] && [ "$p" != / ]; do
+    case "$p" in "$HOME"/htb-machines/*) echo "$p"; return;; esac
+    p="$(dirname "$p")"
+  done
+  find "$HOME/htb-machines" -maxdepth 1 -mindepth 1 -type d -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-
+}
+dir="$(boxdir)"; [ -z "$dir" ] && { echo "no box found (cd into ~/htb-machines/<box>)"; exit 1; }
+mkdir -p "$dir/loot"
+if [ $# -eq 0 ]; then
+  echo "loot in $(basename "$dir"):"; ls -la "$dir/loot" 2>/dev/null | tail -n +2 | sed 's/^/  /'
+  exit 0
+fi
+for f in "$@"; do
+  [ -e "$f" ] && cp -a "$f" "$dir/loot/" && echo "looted: $(basename "$f")" || echo "missing: $f"
+done

