@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# report <box>   – build a markdown pentest report from ~/htb-machines/<box>
+# Pulls in your notes.md and lists nmap output + today's logs. Opens it in nvim.
+set -e
+box="$1"; [ -z "$box" ] && { echo "usage: report <box>"; exit 1; }
+dir="$HOME/htb-machines/$box"
+[ -d "$dir" ] || { echo "no such box: $dir"; exit 1; }
+target="$(head -1 "$HOME/.config/hack/target" 2>/dev/null)"
+out="$dir/report.md"
+
+{
+echo "# Penetration Test Report — $box"
+echo
+echo "- **Target:** ${target:-N/A}"
+echo "- **Tester:** x3xploiter0"
+echo "- **Date:** $(date '+%F')"
+echo
+echo "## 1. Summary"
+echo "_One paragraph: what the box was, how it was compromised, overall risk._"
+echo
+echo "## 2. Recon"
+echo '```'
+[ -f "$dir/nmap/initial.nmap" ] && sed -n '1,60p' "$dir/nmap/initial.nmap" || echo "(no nmap/initial.nmap yet)"
+echo '```'
+echo
+echo "## 3. Enumeration & Foothold"
+echo "_Services, findings, the vuln used for initial access._"
+echo
+echo "## 4. Privilege Escalation"
+echo "_How you went from user to root._"
+echo
+echo "## 5. Proof / Flags"
+echo '```'
+echo "user: "
+echo "root: "
+echo '```'
+echo
+echo "## 6. Remediation"
+echo "| Finding | Severity | Fix |"
+echo "| --- | --- | --- |"
+echo "|  |  |  |"
+echo
+echo "## Appendix A — Working notes"
+echo
+if [ -f "$dir/notes.md" ]; then tail -n +2 "$dir/notes.md"; fi
+echo
+echo "## Appendix B — Command log"
+echo "_Full terminal logs: ~/logs/  (clean with: logclean <file>)_"
+echo '```'
+ls -1 "$HOME/logs/$(date +%F)/" 2>/dev/null | grep -i "$box" || echo "(no logs captured today for $box)"
+echo '```'
+} > "$out"
+
+echo "report -> $out"
+"${EDITOR:-nvim}" "$out"

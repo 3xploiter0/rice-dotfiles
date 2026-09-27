@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Import Burp's CA cert into Chrome/curl trust so HTTPS interception has no warnings.
+# Run once, AFTER starting Burp (Proxy listening on 127.0.0.1:8080).
+set -e
+tmp="$(mktemp --suffix=.der)"
+echo "[*] fetching Burp CA via the proxy (http://burp/cert)..."
+if ! curl -fsS -x 127.0.0.1:8080 http://burp/cert -o "$tmp"; then
+  echo "[!] couldn't reach Burp. Start Burp, ensure Proxy is on 127.0.0.1:8080, then re-run."
+  echo "    (or in Burp: Proxy > Options > Import/Export CA cert > DER, save it, then: burpcert /path/cert.der)"
+  exit 1
+fi
+[ -n "$1" ] && cp "$1" "$tmp"
+mkdir -p "$HOME/.pki/nssdb"
+certutil -d sql:$HOME/.pki/nssdb -D -n "Burp CA" 2>/dev/null || true
+certutil -d sql:$HOME/.pki/nssdb -A -t "C,," -n "Burp CA" -i "$tmp"
+echo "[+] imported into Chrome trust store (~/.pki/nssdb). Restart Chrome to apply."
+# also make it available to curl/system tools
+S=/usr/local/share/ca-certificates/burp.crt
+openssl x509 -inform DER -in "$tmp" -out /tmp/burp.pem 2>/dev/null && echo "[*] system trust needs sudo:"
+echo "    sudo cp /tmp/burp.pem /usr/local/share/ca-certificates/burp.crt && sudo update-ca-certificates"
+rm -f "$tmp"

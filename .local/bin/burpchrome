@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Launch Chrome routed through Burp (127.0.0.1:8080) in a separate profile.
+# All this window's traffic goes through Burp. Start Burp first.
+PROXY="${1:-127.0.0.1:8080}"
+exec google-chrome-stable \
+  --user-data-dir="$HOME/.config/google-chrome-burp" \
+  --proxy-server="$PROXY" \
+  --no-first-run --no-default-browser-check \
+  "${@:2}" >/dev/null 2>&1 &
