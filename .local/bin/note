@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# note "text"   append a timestamped line to the current box's notes.md
+# note          show the current box's notes
+boxdir() {
+  local p="$PWD"
+  while [ "$p" != "$HOME" ] && [ "$p" != / ]; do
+    case "$p" in "$HOME"/htb-machines/*) echo "$p"; return;; esac
+    p="$(dirname "$p")"
+  done
+  # fallback: most recently modified box
+  find "$HOME/htb-machines" -maxdepth 1 -mindepth 1 -type d -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-
+}
+dir="$(boxdir)"; [ -z "$dir" ] && { echo "no box found (cd into ~/htb-machines/<box>)"; exit 1; }
+f="$dir/notes.md"
+if [ $# -eq 0 ]; then
+  [ -f "$f" ] && cat "$f" || echo "(no notes for $(basename "$dir"))"
+  exit 0
+fi
+printf -- '- `%s` %s\n' "$(date +%H:%M)" "$*" >> "$f"
+echo "noted -> $(basename "$dir")/notes.md"

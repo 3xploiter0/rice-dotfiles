@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# crack <hash-or-file> [wordlist]   identify a hash and run hashcat against rockyou
+#   crack hash.txt                  file of hashes
+#   crack '$1$xyz$...'              single hash
+# Prints hashid's guess + the hashcat mode it will use.
+set -u
+WL="${2:-/usr/share/wordlists/rockyou.txt}"
+[ -f "$WL" ] || { echo "wordlist not found: $WL (gunzip rockyou first)"; exit 1; }
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+
+in="$1"
+if [ -f "$in" ]; then hf="$in"; sample="$(head -1 "$in")"; else
+  hf="$(mktemp)"; printf '%s\n' "$in" > "$hf"; sample="$in"; fi
+
+echo "${B}hashid guess:${X}"; hashid -m "$sample" 2>/dev/null | grep -i hashcat | head -6 | sed 's/^/  /'
+echo
+# map common prefixes -> hashcat mode
+mode=""
+case "$sample" in
+  '$1$'*) mode=500;;    '$6$'*) mode=1800;;   '$5$'*) mode=7400;;
+  '$2a$'*|'$2b$'*|'$2y$'*) mode=3200;;
+  '$apr1$'*) mode=1600;;
+  *:*) mode=0;;                                   # user:md5-ish
+esac
+if [ -z "$mode" ]; then
+  case "${#sample}" in 32) mode=0;; 40) mode=100;; 64) mode=1400;; 128) mode=1700;; esac
+fi
+[ -z "$mode" ] && { echo "${Y}couldn't auto-pick a mode — set it: hashcat -m <mode> '$hf' $WL${X}"; exit 0; }
+echo "${G}running:${X} hashcat -m $mode -a 0 $hf $WL"
+hashcat -m "$mode" -a 0 "$hf" "$WL" --quiet 2>/dev/null
+echo "${D}show cracked:${X} hashcat -m $mode $hf --show"

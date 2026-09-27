@@ -349,3 +349,7 @@ wl() {
     *) cd /usr/share/seclists && ls ;;
   esac
 }
+
+# clipboard: `cat flag | copy`  ·  `paste > file`
+alias copy='xclip -selection clipboard'
+alias paste='xclip -selection clipboard -o'

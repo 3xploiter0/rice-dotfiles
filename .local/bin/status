@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# status   one-glance: VPN, target, current box, running listeners
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; R=$'\e[38;2;247;118;142m'; Y=$'\e[38;2;224;175;104m'; D=$'\e[38;2;86;95;137m'; W=$'\e[38;2;192;202;245m'; X=$'\e[0m'
+row(){ printf "  ${B}%-10s${X} %s\n" "$1" "$2"; }
+
+echo "${W}── status ─────────────────────────────${X}"
+vip="$(~/.local/bin/hackbar vpn plain 2>/dev/null)"
+[ -n "$vip" ] && row "VPN" "${G}up${X}  $vip" || row "VPN" "${D}down${X}"
+tgt="$(head -1 "$HOME/.config/hack/target" 2>/dev/null)"
+[ -n "$tgt" ] && row "TARGET" "${R}$tgt${X}" || row "TARGET" "${D}none${X}"
+
+box="$(find "$HOME/htb-machines" -maxdepth 1 -mindepth 1 -type d -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-)"
+[ -n "$box" ] && row "BOX" "$(basename "$box")  ${D}$box${X}"
+
+# listeners (nc / pwncat / metasploit)
+lis="$(ss -tlnp 2>/dev/null | awk 'NR>1{print $4}' | sed 's/.*://' | sort -un | tr '\n' ' ')"
+[ -n "$lis" ] && row "LISTEN" "$lis" || row "LISTEN" "${D}none${X}"
+# tmux sessions
+tm="$(tmux ls 2>/dev/null | cut -d: -f1 | tr '\n' ' ')"
+[ -n "$tm" ] && row "TMUX" "$tm"
+# live wallpaper?
+pgrep -x xwinwrap >/dev/null && row "LIVEWP" "${G}on${X}"
+echo "${W}───────────────────────────────────────${X}"
