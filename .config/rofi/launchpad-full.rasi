@@ -39,21 +39,24 @@ listview {
 }
 element {
   orientation: vertical;
-  padding: 18px 8px;
+  padding: 16px 8px;
   spacing: 10px;
   border-radius: 16px;
+  background-color: #24283be6;
+  text-color: @fg;
 }
+element normal.normal    { background-color: transparent; text-color: @fg; }
+element alternate.normal { background-color: transparent; text-color: @fg; }
+element selected.normal  { background-color: @hl;          text-color: #1a1b26; }
 element-icon {
-  size: 68px;
+  size: 66px;
   horizontal-align: 0.5;
+  background-color: transparent;
 }
 element-text {
   horizontal-align: 0.5;
   vertical-align: 0.5;
-  font: "Inter 11";
-  text-color: @fg;
-}
-element selected {
-  background-color: @sel;
-  text-color: #ffffff;
+  font: "Inter Medium 11";
+  background-color: transparent;
+  text-color: inherit;
 }

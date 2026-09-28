@@ -34,6 +34,8 @@ element {
 }
 element-icon { size: 34px; }
 element-text { vertical-align: 0.5; font: "Inter 12"; }
+element normal.normal    { background-color: #ffffff0a; text-color: @fg; }
+element alternate.normal { background-color: #ffffff0a; text-color: @fg; }
 element selected {
   background-color: @sel;
   text-color: #ffffff;
