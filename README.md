@@ -86,9 +86,21 @@ Self-update: a systemd user timer runs `update` weekly (nuclei templates + confi
 
 ---
 
-## ↩️ Uninstall / revert
+## ↩️ Uninstall
 
-The installer backs up whatever it replaces to `~/.rice-restore-<date>/`. Copy those files back and log out/in to restore your previous setup.
+```bash
+cd ~/rice        # the folder you cloned into
+./uninstall.sh
+```
+
+It stops the rice (picom, conky, dock, live wallpaper, weekly timer), removes the
+helper commands and configs it added, and **restores your previous configs** from
+the backup `install.sh` made (`~/.rice-restore-<date>/`). Log out and back in
+afterwards.
+
+Packages are left installed (they're harmless on their own); the uninstaller
+prints the `apt remove` line if you also want to drop the extras. If you no longer
+have the cloned folder, re-clone it and run `./uninstall.sh` from there.
 
 ---
 

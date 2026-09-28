@@ -14,6 +14,7 @@ paths=(
   .config/qterminal.org/qterminal.ini
   .config/nvim/lua .config/fastfetch .config/btop/btop.conf .config/cava/config
   .config/hack .config/cherrytree/config.cfg
+  .config/autostart .config/systemd
   .local/bin
   .local/share/themes/Omarchy-TokyoNight
   .local/share/qtermwidget6/color-schemes/TokyoNight.colorscheme
@@ -51,6 +52,7 @@ Restore on a fresh box:
 MD
 
 rm -f "$repo/.config/hack/vpn.log" 2>/dev/null
+find "$repo/.local/bin" -maxdepth 1 -type l -delete 2>/dev/null
 git add -A
 if git diff --cached --quiet; then echo "rice-backup: nothing changed"; else
   git commit -q -m "rice snapshot $(date '+%F %H:%M')"
