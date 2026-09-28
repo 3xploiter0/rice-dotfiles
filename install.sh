@@ -113,28 +113,45 @@ fi
 if command -v xfconf-query >/dev/null; then
   say "Applying XFCE look (panel, theme, keybinds, wallpaper)"
   XD="$HOME/.config/xfce4/xfconf/xfce-perchannel-xml"; mkdir -p "$XD"
+  # xfconfd caches every channel in memory and rewrites the XML on logout, so files
+  # copied under a running session get silently reverted. Stop it (and the panel)
+  # first; dbus re-spawns xfconfd on the next query and it re-reads from disk.
+  xfce4-panel --quit >/dev/null 2>&1
+  pkill -x xfconfd 2>/dev/null; sleep 1
   # back up + install the perchannel XML (panel/dock, wm theme, fonts, keybinds, desktop)
   for f in "$REPO"/xfce-xml/*.xml; do
     [ -e "$f" ] || continue; n="$(basename "$f")"
     [ -e "$XD/$n" ] && cp -a "$XD/$n" "$BK/xfce-$n" 2>/dev/null
     sed "s#/home/x3xploiter0#$HOME#g" "$f" > "$XD/$n"
   done
+  # picom does the compositing — xfwm4's own compositor must be off or they fight
+  xfconf-query -c xfwm4 -p /general/use_compositing -n -t bool -s false 2>/dev/null
   # panel launchers (Launchpad etc)
   mkdir -p "$HOME/.config/xfce4/panel"
   if [ -d "$REPO/xfce-panel-launchers" ]; then
     cp -a "$REPO/xfce-panel-launchers/." "$HOME/.config/xfce4/panel/"
     grep -rlZ '/home/x3xploiter0' "$HOME/.config/xfce4/panel" 2>/dev/null | xargs -0 -r sed -i "s#/home/x3xploiter0#$HOME#g"
   fi
-  # default wallpaper -> first bundled one (only if the saved one is missing)
+  # wallpaper on every monitor THIS machine has (names differ per PC: eDP-1, eDP, HDMI-1…)
   WP="$HOME/.local/share/backgrounds/omarchy"
-  if [ -d "$WP" ]; then
-    img="$(find "$WP" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.png' \) | sort | head -1)"
-    for pth in $(xfconf-query -c xfce4-desktop -l 2>/dev/null | grep -E 'last-image$'); do
-      cur="$(xfconf-query -c xfce4-desktop -p "$pth" 2>/dev/null)"
-      [ -f "$cur" ] || xfconf-query -c xfce4-desktop -p "$pth" -s "$img" 2>/dev/null
+  img="$WP/anime-yq2mll.jpg"
+  [ -f "$img" ] || img="$(find "$WP" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.png' \) 2>/dev/null | sort | head -1)"
+  if [ -n "$img" ] && command -v xrandr >/dev/null; then
+    for mon in $(xrandr --query | awk '/ connected/{print $1}'); do
+      for ws in 0 1 2 3 4; do
+        base="/backdrop/screen0/monitor$mon/workspace$ws"
+        xfconf-query -c xfce4-desktop -p "$base/last-image"  -n -t string -s "$img" 2>/dev/null
+        xfconf-query -c xfce4-desktop -p "$base/image-style" -n -t int    -s 5      2>/dev/null
+      done
     done
   fi
-  ok "XFCE settings staged (applied on next login / panel restart)"
+  # reload the desktop now so the look shows without waiting for a re-login
+  if [ -n "${DISPLAY:-}" ]; then
+    (setsid xfwm4 --replace >/dev/null 2>&1 &)
+    (setsid xfce4-panel >/dev/null 2>&1 &)
+    xfdesktop --reload >/dev/null 2>&1
+  fi
+  ok "XFCE settings applied"
 fi
 
 # ---------------------------------------------------------------- autostart + timer
