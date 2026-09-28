@@ -57,6 +57,10 @@ else
     && mkdir -p "$HOME/.local/share/fonts/JetBrainsMonoNerd" \
     && tar -xf /tmp/JBM.tar.xz -C "$HOME/.local/share/fonts/JetBrainsMonoNerd"
 fi
+# UI font — Hanken Grotesk (free, Claude-like)
+mkdir -p "$HOME/.local/share/fonts/HankenGrotesk"
+curl -fsSL -o "$HOME/.local/share/fonts/HankenGrotesk/HankenGrotesk.ttf" \
+  "https://github.com/google/fonts/raw/main/ofl/hankengrotesk/HankenGrotesk%5Bwght%5D.ttf" 2>/dev/null || warn "Hanken Grotesk download failed (Inter fallback)"
 fc-cache -f >/dev/null 2>&1; ok "fonts"
 
 # ---------------------------------------------------------------- backup + copy configs
