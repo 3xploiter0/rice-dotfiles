@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Picom compositor
+Exec=picom --config /home/x3xploiter0/.config/picom/picom.conf
+X-GNOME-Autostart-enabled=true

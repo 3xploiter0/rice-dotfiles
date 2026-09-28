@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Conky HUD
+Exec=sh -c "sleep 4 && conky -c $HOME/.config/conky/hud.conf"
+X-GNOME-Autostart-enabled=true

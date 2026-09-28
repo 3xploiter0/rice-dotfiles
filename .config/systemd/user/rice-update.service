@@ -1,0 +1,8 @@
+[Unit]
+Description=Weekly rice maintenance (nuclei templates + dotfiles backup/push)
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/update --auto
+StandardOutput=append:%h/.cache/rice-update.log
+StandardError=append:%h/.cache/rice-update.log
