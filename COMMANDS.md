@@ -475,6 +475,17 @@ Includes a domain-joined **member server** (172.30.0.20) for lateral movement:
 smbclient //172.30.0.20/data -U 'LAB\alice%Spring2024!' -c 'ls; get secret.txt'
 ```
 
+
+### `dlab up bloodhound` + `bhound`
+**BloodHound CE** (AD attack-path graph) + collector for the samba-ad lab.
+```bash
+dlab up bloodhound                       # UI http://localhost:8888
+dlab logs bloodhound | grep -i Password  # first-run admin password (login: admin)
+dlab up samba-ad
+bhound 172.30.0.10 alice 'Spring2024!'   # collect -> .zip, upload in the UI
+```
+In the UI: "Shortest Paths to Domain Admins", mark users **Owned**, run pre-built queries.
+
 ### `adlab`
 Guide for setting up an Active Directory lab (GOAD / Ludus — VM-based, not Docker).
 ```bash
