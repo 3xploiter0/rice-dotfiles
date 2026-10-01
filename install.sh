@@ -84,6 +84,7 @@ for p in .zshrc .tmux.conf \
   copy "$p" "$HOME/$p"
 done
 chmod +x "$HOME/.local/bin/"* 2>/dev/null
+mkdir -p "$HOME/cyber" && cp -f "$REPO/COMMANDS.md" "$HOME/cyber/COMMANDS.md" 2>/dev/null
 ok "dotfiles + scripts"
 
 # fix any hardcoded author paths -> this user
