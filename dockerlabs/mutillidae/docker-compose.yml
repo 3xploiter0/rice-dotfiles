@@ -1,0 +1,6 @@
+services:
+  mutillidae:
+    image: citizenstig/nowasp
+    container_name: lab-mutillidae
+    ports: ["8084:80"]
+    restart: unless-stopped

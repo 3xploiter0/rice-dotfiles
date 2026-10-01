@@ -1,0 +1,6 @@
+services:
+  webgoat:
+    image: webgoat/webgoat
+    container_name: lab-webgoat
+    ports: ["8082:8080", "9090:9090"]
+    restart: unless-stopped
