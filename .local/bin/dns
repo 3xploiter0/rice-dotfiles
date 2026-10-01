@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# dns <domain> [ns-ip]   DNS recon: records + zone-transfer attempt
+d="${1:-}"; ns="${2:-}"; [ -z "$d" ] && { echo "usage: dns <domain> [nameserver-ip]"; exit 1; }
+B=$'\e[38;2;122;162;247m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+S=""; [ -n "$ns" ] && S="@$ns"
+echo "${B}▌ records${X}"; for r in A AAAA MX NS TXT SOA CNAME; do dig +short $S "$d" $r | sed "s/^/  $r  /"; done
+echo "${B}▌ zone transfer (AXFR)${X}"; dig $S axfr "$d" 2>/dev/null | grep -vE '^;|^$' | head -40 || true
+echo "${D}subdomains: subfinder -d $d  ·  crt $d${X}"

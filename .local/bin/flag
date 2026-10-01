@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# flag <user|root> <value>   record a flag into the current box (updates boxes tracker)
+# flag                       show this box flags
+boxdir() {
+  local p roots parent
+  p="$(realpath "$PWD" 2>/dev/null)"
+  roots="$(for r in "$HOME"/cyber/labs/*; do realpath "$r" 2>/dev/null; done)"
+  while [ "$p" != "/" ] && [ "$p" != "$HOME" ]; do
+    parent="$(dirname "$p")"
+    if printf "%s
+" "$roots" | grep -qxF "$(realpath "$parent" 2>/dev/null)"; then echo "$p"; return; fi
+    p="$parent"
+  done
+  find -L "$HOME"/cyber/labs -mindepth 2 -maxdepth 2 -type d -printf "%T@ %p
+" 2>/dev/null | sort -rn | head -1 | cut -d" " -f2-
+}
+dir="$(boxdir)"; [ -z "$dir" ] && { echo "no box (cd into ~/cyber/labs/<platform>/<box>)"; exit 1; }
+f="$dir/notes.md"; [ -f "$f" ] || printf '# %s\n\n## Flags\n- user:\n- root:\n' "$(basename "$dir")" > "$f"
+G=$'\e[38;2;158;206;106m'; X=$'\e[0m'
+case "${1:-}" in
+  user|root)
+    v="$2"; [ -z "$v" ] && { echo "usage: flag $1 <value>"; exit 1; }
+    grep -qiE "^- *$1:" "$f" && sed -i -E "s|^- *$1:.*|- $1: $v|I" "$f" || printf -- '- %s: %s\n' "$1" "$v" >> "$f"
+    echo "${G}✓${X} $1 flag set on $(basename "$dir")" ;;
+  *) grep -iE '^- *(user|root):' "$f" || echo "no flags yet — flag user <value>" ;;
+esac

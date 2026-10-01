@@ -156,6 +156,17 @@ k "services" "sc query; wmic service get name,pathname"
 k "search"   "findstr /si password *.txt *.xml *.ini"
 k "shell"    "evil-winrm ; runas ; RunasCs.exe"; }
 
+ref_enum(){ h "ENUMERATION METHODOLOGY"
+k "1 scan"   "ports <ip>  ->  recon <ip>  (full)"
+k "2 web"    "fuzz <url> ; vhost ; whatweb ; view-source"
+k "3 smb"    "smb <ip> ; enum4linux-ng -A <ip>"
+k "4 other"  "ftp anon ; snmpwalk ; dns <domain>"
+k "5 search" "search <service version>  (exploit-db)"
+k "6 access" "default creds ; found creds ; crack <hash>"
+k "7 foothold" "exploit ; listen ; spawn (stabilize)"
+k "8 privesc" "cheat linux / cheat windows ; linpeas"
+k "9 loot"   "flag user/root ; loot ; creds add ; note"; }
+
 learn(){ h "LEARNING & PRODUCTIVITY"
 k "brief"               "daily cyber news + actively-exploited CVEs"
 k "pay <query>"         "offline payloads/techniques (PayloadsAllTheThings+GTFOBins)"
@@ -185,7 +196,14 @@ k "genpass [n]"         "random password  ·  rocky <re> = grep rockyou"
 k "cve <id>"            "quick CVE lookup"
 k "payload <type> [port]" "msfvenom reverse shell (exe/elf/php/war)"
 k "tunnel chisel|ligolo" "one-command pivot setup"
-k "creds add <box> <u> <p>" "credential vault - creds [query] to search"; }
+k "creds add <box> <u> <p>" "credential vault - creds [query] to search"
+k "flag user|root <val>" "record a flag in the box (boxes shows it)"
+k "todo \"task\""        "per-box task list - todo done N"
+k "shot [name]"         "screenshot into the box loot/"
+k "sweep <cidr>"        "find live hosts on a subnet"
+k "dns <domain> [ns]"   "DNS recon + zone transfer"
+k "crt <domain>"        "passive subdomains via crt.sh"
+k "webshell [php|jsp|asp]" "drop a cmd webshell into serve"; }
 
 tmuxc(){ h "TMUX  (prefix = Ctrl+b, press then release)"
 k "Alt + arrows"        "move between panes"
@@ -231,5 +249,6 @@ case "$1" in
   crack)   banner; ref_crack ;;
   linux)   banner; ref_linux ;;
   windows) banner; ref_windows ;;
+  enum)    banner; ref_enum ;;
   *)       banner; desktop; htb; quick; tmuxc; shell; learn; echo ;;
 esac

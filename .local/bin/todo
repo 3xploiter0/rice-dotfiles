@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# todo "task"   add a task to the current box  ·  todo = list  ·  todo done N
+boxdir() {
+  local p roots parent
+  p="$(realpath "$PWD" 2>/dev/null)"
+  roots="$(for r in "$HOME"/cyber/labs/*; do realpath "$r" 2>/dev/null; done)"
+  while [ "$p" != "/" ] && [ "$p" != "$HOME" ]; do
+    parent="$(dirname "$p")"
+    if printf "%s
+" "$roots" | grep -qxF "$(realpath "$parent" 2>/dev/null)"; then echo "$p"; return; fi
+    p="$parent"
+  done
+  find -L "$HOME"/cyber/labs -mindepth 2 -maxdepth 2 -type d -printf "%T@ %p
+" 2>/dev/null | sort -rn | head -1 | cut -d" " -f2-
+}
+dir="$(boxdir)"; [ -z "$dir" ] && { echo "no box (cd into a box folder)"; exit 1; }
+t="$dir/todo.md"; touch "$t"
+G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+case "${1:-}" in
+  "") [ -s "$t" ] && nl -ba "$t" | sed "s/\[x\]/${G}[x]${X}/" || echo "${D}no todos — todo \"task\"${X}" ;;
+  done) sed -i "${2}s/^- \[ \]/- [x]/" "$t" 2>/dev/null; nl -ba "$t" ;;
+  *) printf -- '- [ ] %s\n' "$*" >> "$t"; echo "${G}added${X}" ;;
+esac

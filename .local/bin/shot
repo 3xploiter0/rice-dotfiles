@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# shot [name]   screenshot (select a region) into the current box loot/ folder
+boxdir() {
+  local p roots parent
+  p="$(realpath "$PWD" 2>/dev/null)"
+  roots="$(for r in "$HOME"/cyber/labs/*; do realpath "$r" 2>/dev/null; done)"
+  while [ "$p" != "/" ] && [ "$p" != "$HOME" ]; do
+    parent="$(dirname "$p")"
+    if printf "%s
+" "$roots" | grep -qxF "$(realpath "$parent" 2>/dev/null)"; then echo "$p"; return; fi
+    p="$parent"
+  done
+  find -L "$HOME"/cyber/labs -mindepth 2 -maxdepth 2 -type d -printf "%T@ %p
+" 2>/dev/null | sort -rn | head -1 | cut -d" " -f2-
+}
+dir="$(boxdir)"; [ -z "$dir" ] && dir="$PWD"
+mkdir -p "$dir/loot"
+out="$dir/loot/${1:-shot}_$(date +%H%M%S).png"
+import "$out" 2>/dev/null && echo "saved -> $out" || echo "select cancelled"
