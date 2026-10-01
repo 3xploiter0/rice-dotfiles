@@ -57,6 +57,7 @@ firmware-iwlwifi
 firmware-realtek
 fonts-inter
 fonts-jetbrains-mono
+foremost
 fzf
 gcc-15-base
 gdb
@@ -222,6 +223,7 @@ sensible-utils
 sqv
 sshpass
 starship
+steghide
 subfinder
 systemd
 systemd-sysv

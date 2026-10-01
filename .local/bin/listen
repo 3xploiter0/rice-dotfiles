@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# listen [port]   catch a reverse shell (default 4444). Uses pwncat-cs (auto TTY) if available.
+p="${1:-4444}"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; X=$'\e[0m'
+echo "${B}listening on${X} ${G}0.0.0.0:$p${X}  (Ctrl+C to stop)"
+if command -v pwncat-cs >/dev/null; then exec pwncat-cs -lp "$p"; else exec rlwrap -cAr nc -lvnp "$p"; fi

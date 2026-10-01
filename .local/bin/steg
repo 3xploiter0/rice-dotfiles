@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# steg <file>   forensics triage: file, strings, exiftool, binwalk, steghide, foremost
+f="${1:-}"; [ -f "$f" ] || { echo "usage: steg <file>"; exit 1; }
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+h(){ printf "\n${B}▌ %s${X}\n" "$1"; }
+h "file type"; file "$f"
+h "exif metadata"; exiftool "$f" 2>/dev/null | grep -viE 'directory|file permissions|file inode|file name' | head -30
+h "interesting strings (flags/creds/urls)"; strings -n 6 "$f" | grep -aiE 'flag\{|password|passwd|user|http|ssh|BEGIN |key' | head -20
+h "embedded files (binwalk)"; binwalk "$f" 2>/dev/null | head -20
+h "steghide (no password)"; steghide extract -sf "$f" -p "" -xf "steg_out_$(basename "$f").bin" 2>/dev/null && echo "${G}extracted -> steg_out_$(basename "$f").bin${X}" || echo "${D}nothing with empty password (try: steghide extract -sf $f -p <pass>)${X}"
+echo; echo "${D}deeper: binwalk -e $f  ·  foremost $f  ·  zsteg (png/bmp)  ·  stegseek (brute)${X}"

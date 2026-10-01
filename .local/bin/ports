@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# ports <ip>   fast top-ports scan (quick triage; use `recon` for the deep scan)
+ip="${1:-$(head -1 "$HOME/.config/hack/target" 2>/dev/null)}"
+[ -z "$ip" ] && { echo "usage: ports <ip>   (or set a target)"; exit 1; }
+B=$'\e[38;2;122;162;247m'; X=$'\e[0m'
+echo "${B}fast scan${X} $ip"
+nmap -T4 --top-ports 1000 -Pn --open "$ip"
