@@ -450,4 +450,18 @@ dlab ps              # running lab containers
 dlab add bwapp raesene/bwapp 8083:80   # add your own
 dlab clean           # prune dangling images (--all = + stopped containers)
 ```
-Seeded labs: **dvwa** (8081), **juice-shop** (3001), **webgoat** (8082/WebGoat).
+Seeded labs: **dvwa** (8081), **juice-shop** (3001), **webgoat** (8082), **bwapp** (8083), **mutillidae** (8084).
+
+### `vulhub`
+Fuzzy-pick and launch one of ~333 per-CVE scenarios (cloned in `~/cyber/dockerlabs/vulhub`).
+```bash
+vulhub log4j          # filter -> pick -> starts it, shows the exploit README
+vulhub down           # stop the last one
+vulhub update         # git pull new scenarios
+```
+
+### `adlab`
+Guide for setting up an Active Directory lab (GOAD / Ludus — VM-based, not Docker).
+```bash
+adlab                 # prints the setup path + requirements + online alternatives
+```
