@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# sweep <cidr>   find live hosts on a subnet (ping sweep)   e.g. sweep 10.10.11.0/24
+net="${1:-}"; [ -z "$net" ] && { echo "usage: sweep <cidr>   e.g. sweep 192.168.1.0/24"; exit 1; }
+B=$'\e[38;2;122;162;247m'; X=$'\e[0m'
+echo "${B}sweeping${X} $net"
+if command -v fping >/dev/null; then fping -aqg "$net" 2>/dev/null
+else nmap -sn "$net" -oG - | awk '/Up$/{print $2}'; fi

