@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# lab <platform> <ip|url> <name> [-d]   generic box/lab workspace engine
+#   platform: htb thm pg vulnhub ctf bugbounty (folder under ~/labs/<platform>)
+#   creates ~/labs/<platform>/<name>/{nmap,loot,exploits,notes.md}, sets target,
+#   opens a tmux session (recon: nmap | listener / notes  +  shell window)
+#   -d = create without attaching
+# Usually called via the wrappers: htb / thm / pg / vh / ctf
+set -e
+plat="$1"; ip="$2"; name="$3"
+[ -z "$plat" ] || [ -z "$ip" ] || [ -z "$name" ] && { echo "usage: lab <platform> <ip|url> <name>"; exit 1; }
+base="$HOME/labs/$plat"; mkdir -p "$base"
+dir="$base/$name"
+mkdir -p "$dir"/{nmap,loot,exploits}
+echo "$ip" > "$HOME/.config/hack/target"
+
+if [ ! -f "$dir/notes.md" ]; then
+cat > "$dir/notes.md" <<NOTES
+# $name — $ip   [$plat]
+Started: $(date '+%F %H:%M')
+
+## Recon
+- nmap: nmap/initial.nmap
+
+## Foothold
+
+## Privesc
+
+## Creds / loot
+
+## Flags
+- user:
+- root:
+NOTES
+fi
+
+s="${plat}-$(echo "$name" | tr -c 'A-Za-z0-9_-' '_' | sed 's/_$//')"
+if ! tmux has-session -t "=$s" 2>/dev/null; then
+  tmux new-session -d -s "$s" -n recon -c "$dir"
+  # web targets (http…) skip nmap; everything else port-scans
+  case "$ip" in
+    http*|*.com|*.io|*.net) tmux send-keys -t "$s:recon" "# web target — try: recon-web $ip" Enter ;;
+    *) tmux send-keys -t "$s:recon" "nmap -sC -sV -T4 -oA nmap/initial $ip" Enter ;;
+  esac
+  tmux split-window -h -t "$s:recon" -c "$dir"
+  tmux send-keys -t "$s:recon.2" "rlwrap -cAr nc -lvnp 4444" Enter
+  tmux split-window -v -t "$s:recon.2" -c "$dir"
+  tmux send-keys -t "$s:recon.3" "nvim notes.md" Enter
+  tmux new-window -t "$s" -n shell -c "$dir"
+  tmux select-window -t "$s:recon"; tmux select-pane -t "$s:recon.1"
+fi
+[ "$4" = "-d" ] && { echo "[$plat] workspace '$s' ready (tmux attach -t $s)"; exit 0; }
+if [ -n "$TMUX" ]; then tmux switch-client -t "$s"; else exec tmux attach -t "$s"; fi

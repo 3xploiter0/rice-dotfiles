@@ -1,26 +1,27 @@
 #!/usr/bin/env bash
-# boxes — progress tracker for machines in ~/htb-machines
-# Reads each box's notes.md "## Flags" section for user:/root: values.
-DIR="$HOME/htb-machines"
-B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; D=$'\e[38;2;86;95;137m'; W=$'\e[38;2;192;202;245m'; X=$'\e[0m'
-[ -d "$DIR" ] || { echo "no ~/htb-machines yet — start one with: htb <ip> <name>"; exit 0; }
+# boxes [platform]  — progress tracker across all platforms under ~/labs
+#   boxes            every box (htb, thm, pg, vulnhub, ctf, bugbounty)
+#   boxes htb        only that platform
+# Reads each box's notes.md "## Flags" for user:/root: values.
+ROOT="$HOME/labs"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; P=$'\e[38;2;187;154;247m'; D=$'\e[38;2;86;95;137m'; W=$'\e[38;2;192;202;245m'; X=$'\e[0m'
+[ -d "$ROOT" ] || { echo "no ~/labs yet — start one with: htb <ip> <name>  (or thm/pg/vh/ctf)"; exit 0; }
+filter="${1:-}"
 
-done_u=0; done_r=0; total=0
-printf "${W}%-20s %-7s %-7s %s${X}\n" "BOX" "USER" "ROOT" "STARTED"
-echo "${D}──────────────────────────────────────────────────${X}"
-for d in "$DIR"/*/; do
-  [ -d "$d" ] || continue; total=$((total+1)); name=$(basename "$d")
-  n="$d/notes.md"
-  u="-"; r="-"
+total=0; du_=0; dr=0
+printf "${W}%-10s %-20s %-6s %-6s %s${X}\n" "PLATFORM" "BOX" "USER" "ROOT" "STARTED"
+echo "${D}──────────────────────────────────────────────────────────${X}"
+for d in $(find -L "$ROOT" -mindepth 2 -maxdepth 2 -type d -printf '%P\n' 2>/dev/null | sort); do
+  plat="${d%%/*}"; name="${d#*/}"
+  [ -n "$filter" ] && [ "$plat" != "$filter" ] && continue
+  total=$((total+1)); n="$ROOT/$d/notes.md"; u="-"; r="-"
   if [ -f "$n" ]; then
-    grep -qiE '^- *user:[[:space:]]*\S' "$n" && { u="✓"; done_u=$((done_u+1)); }
-    grep -qiE '^- *root:[[:space:]]*\S' "$n" && { r="✓"; done_r=$((done_r+1)); }
+    grep -qiE '^- *user:[[:space:]]*\S' "$n" && { u="✓"; du_=$((du_+1)); }
+    grep -qiE '^- *root:[[:space:]]*\S' "$n" && { r="✓"; dr=$((dr+1)); }
   fi
-  started=$(stat -c %y "$d" 2>/dev/null | cut -d' ' -f1)
-  uc=$([ "$u" = "✓" ] && echo "$G" || echo "$D")
-  rc=$([ "$r" = "✓" ] && echo "$G" || echo "$D")
-  printf "%-20s ${uc}%-7s${X} ${rc}%-7s${X} ${D}%s${X}\n" "$name" "$u" "$r" "$started"
+  started=$(stat -L -c %y "$ROOT/$d" 2>/dev/null | cut -d' ' -f1)
+  uc=$([ "$u" = "✓" ] && echo "$G" || echo "$D"); rc=$([ "$r" = "✓" ] && echo "$G" || echo "$D")
+  printf "${P}%-10s${X} %-20s ${uc}%-6s${X} ${rc}%-6s${X} ${D}%s${X}\n" "$plat" "$name" "$u" "$r" "$started"
 done
-echo "${D}──────────────────────────────────────────────────${X}"
-printf "${B}%s boxes${X}  ·  ${G}%s user${X}  ·  ${G}%s root${X}\n" "$total" "$done_u" "$done_r"
-echo "${D}tip: fill '## Flags' user:/root: in each box's notes.md (journal + report pull from it)${X}"
+echo "${D}──────────────────────────────────────────────────────────${X}"
+printf "${B}%s boxes${X}  ·  ${G}%s user${X}  ·  ${G}%s root${X}   ${D}(platforms: htb thm pg vulnhub ctf bugbounty)${X}\n" "$total" "$du_" "$dr"

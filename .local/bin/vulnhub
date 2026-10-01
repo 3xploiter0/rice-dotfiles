@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# vulnhub <ip|url> <name> [-d]  — workspace under ~/labs/vulnhub
+exec lab vulnhub "$@"
