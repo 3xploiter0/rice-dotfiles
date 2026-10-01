@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# crackzip <file>   crack a password-protected zip/rar/7z/pdf/ssh-key with john + rockyou
+f="${1:-}"; [ -f "$f" ] || { echo "usage: crackzip <file>  (zip/rar/7z/pdf/id_rsa)"; exit 1; }
+WL="${2:-/usr/share/wordlists/rockyou.txt}"
+h=$(mktemp); tool=""
+case "$f" in
+  *.zip) tool=zip2john;; *.rar) tool=rar2john;; *.7z) tool=7z2john;;
+  *.pdf) tool=pdf2john;; *id_rsa*|*.key|*.pem) tool=ssh2john;;
+  *) echo "unsupported; try the right *2john manually"; exit 1;;
+esac
+command -v "$tool" >/dev/null || { echo "missing $tool (apt install john / libimage-exiftool / p7zip-full)"; exit 1; }
+"$tool" "$f" > "$h" 2>/dev/null
+echo "[*] cracking $(basename "$f") with $tool + $(basename "$WL")…"
+john --wordlist="$WL" "$h" 2>/dev/null
+john --show "$h" 2>/dev/null

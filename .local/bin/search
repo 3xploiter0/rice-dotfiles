@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# search <term...>   searchsploit (Exploit-DB) lookup   e.g. search apache 2.4
+[ -z "$1" ] && { echo "usage: search <term>   ·  search -m <id> to copy an exploit"; exit 1; }
+exec searchsploit "$@"

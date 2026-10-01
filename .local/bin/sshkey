@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# sshkey [name]   generate an ssh keypair (for dropping into a box's authorized_keys)
+name="${1:-pwn}"; dir="${PWD}"; f="$dir/$name"
+ssh-keygen -t ed25519 -f "$f" -N "" -q -C "$name@attacker"
+G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+echo "${G}private:${X} $f    ${G}public:${X} $f.pub"
+echo "${D}drop this into target ~/.ssh/authorized_keys:${X}"; cat "$f.pub"
+echo "${D}then: chmod 600 $name && ssh -i $name user@\$TARGET${X}"
