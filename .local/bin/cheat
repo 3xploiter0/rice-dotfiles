@@ -203,7 +203,9 @@ k "shot [name]"         "screenshot into the box loot/"
 k "sweep <cidr>"        "find live hosts on a subnet"
 k "dns <domain> [ns]"   "DNS recon + zone transfer"
 k "crt <domain>"        "passive subdomains via crt.sh"
-k "webshell [php|jsp|asp]" "drop a cmd webshell into serve"; }
+k "webshell [php|jsp|asp]" "drop a cmd webshell into serve"
+k "peas [lin|win]"      "serve linpeas + the target one-liner"
+k "ex <command>"        "show an example for any command"; }
 
 tmuxc(){ h "TMUX  (prefix = Ctrl+b, press then release)"
 k "Alt + arrows"        "move between panes"

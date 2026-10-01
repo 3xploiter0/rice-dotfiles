@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# ex <command>   show the documented example(s) for one command
+c="${1:-}"; [ -z "$c" ] && { echo "usage: ex <command>   e.g. ex payload"; exit 1; }
+for f in "$HOME/cyber/COMMANDS.md" "$HOME/.rice-dotfiles/COMMANDS.md"; do [ -f "$f" ] && DOC="$f" && break; done
+[ -z "${DOC:-}" ] && { echo "COMMANDS.md not found"; exit 1; }
+# print the section whose ### heading contains `<command>`
+block="$(awk -v c="\`$c\`" '
+  /^### / { inblk=(index($0,c)>0) }
+  inblk && !/^### / { print }
+  /^### / && index($0,c)>0 { print }
+' "$DOC")"
+if [ -z "$block" ]; then
+  echo "no doc for '$c'. try: cheat  |  grep it: grep -i $c $DOC"; exit 1
+fi
+if command -v batcat >/dev/null; then printf '%s\n' "$block" | batcat --language=markdown --style=plain --color=always
+else printf '%s\n' "$block"; fi
