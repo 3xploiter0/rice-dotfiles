@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# ctf <ip|url> <name> [-d]  — workspace under ~/labs/ctf
+exec lab ctf "$@"

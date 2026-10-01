@@ -3,7 +3,7 @@
 # Pulls in your notes.md and lists nmap output + today's logs. Opens it in nvim.
 set -e
 box="$1"; [ -z "$box" ] && { echo "usage: report <box>"; exit 1; }
-dir="$HOME/htb-machines/$box"
+dir="$(find -L "$HOME/labs" -mindepth 2 -maxdepth 2 -type d -name "$box" 2>/dev/null | head -1)"
 [ -d "$dir" ] || { echo "no such box: $dir"; exit 1; }
 target="$(head -1 "$HOME/.config/hack/target" 2>/dev/null)"
 out="$dir/report.md"

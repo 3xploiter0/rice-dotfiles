@@ -2,14 +2,19 @@
 # loot <file...>   copy files into the current box's loot/ folder
 # loot             list what's already looted
 boxdir() {
-  local p="$PWD"
-  while [ "$p" != "$HOME" ] && [ "$p" != / ]; do
-    case "$p" in "$HOME"/htb-machines/*) echo "$p"; return;; esac
-    p="$(dirname "$p")"
+  local p roots parent
+  p="$(realpath "$PWD" 2>/dev/null)"
+  roots="$(for r in "$HOME"/labs/*; do realpath "$r" 2>/dev/null; done)"
+  while [ "$p" != "/" ] && [ "$p" != "$HOME" ]; do
+    parent="$(dirname "$p")"
+    if printf '%s
+' "$roots" | grep -qxF "$(realpath "$parent" 2>/dev/null)"; then echo "$p"; return; fi
+    p="$parent"
   done
-  find "$HOME/htb-machines" -maxdepth 1 -mindepth 1 -type d -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-
+  find -L "$HOME"/labs -mindepth 2 -maxdepth 2 -type d -printf '%T@ %p
+' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-
 }
-dir="$(boxdir)"; [ -z "$dir" ] && { echo "no box found (cd into ~/htb-machines/<box>)"; exit 1; }
+dir="$(boxdir)"; [ -z "$dir" ] && { echo "no box found (cd into ~/labs/<platform>/<box>)"; exit 1; }
 mkdir -p "$dir/loot"
 if [ $# -eq 0 ]; then
   echo "loot in $(basename "$dir"):"; ls -la "$dir/loot" 2>/dev/null | tail -n +2 | sed 's/^/  /'

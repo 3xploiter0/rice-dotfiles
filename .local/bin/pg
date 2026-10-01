@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# pg <ip|url> <name> [-d]  — workspace under ~/labs/pg
+exec lab pg "$@"
