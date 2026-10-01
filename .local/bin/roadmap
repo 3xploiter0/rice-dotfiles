@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# roadmap — your cybersecurity study path (checkboxes). `roadmap` opens it; `roadmap -s` shows progress.
+F="$HOME/.config/hack/roadmap.md"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+[ "${1:-}" = "-s" ] && {
+  done=$(grep -c '^- \[x\]' "$F" 2>/dev/null); todo=$(grep -c '^- \[ \]' "$F" 2>/dev/null); tot=$((done+todo))
+  pct=0; [ "$tot" -gt 0 ] && pct=$((done*100/tot))
+  printf "${B}roadmap:${X} ${G}%s${X}/%s done (%s%%)\n" "$done" "$tot" "$pct"
+  grep -nE '^## ' "$F" | sed 's/^/  /'
+  exit 0; }
+exec "${EDITOR:-nvim}" "$F"

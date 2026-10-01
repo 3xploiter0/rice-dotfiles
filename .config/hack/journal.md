@@ -1,0 +1,1 @@
+- `2026-10-01 13:03` set up learning tools: kb, journal, roadmap, brief, pay

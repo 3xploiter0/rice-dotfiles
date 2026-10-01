@@ -5,7 +5,7 @@
 /Gtk/DecorationLayout           :
 /Gtk/EnableAnimations           true
 /Gtk/EnablePrimaryPaste         true
-/Gtk/FontName                   Inter 10
+/Gtk/FontName                   Hanken Grotesk 10
 /Gtk/ImModule                   
 /Gtk/KeynavUseCaret             false
 /Gtk/KeyThemeName               Default

@@ -1,0 +1,3 @@
+- [privesc] find / -perm -4000 2>/dev/null  # list SUID binaries  _(2026-10-01)_
+- [privesc] linpeas.sh | tee linpeas.txt  # save output  _(2026-10-01)_
+- [privesc] nmap -sCV -p- $TARGET  # full service scan  _(2026-10-01)_

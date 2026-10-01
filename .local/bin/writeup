@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# writeup <box>  — scaffold a blog-ready markdown writeup from a box's notes + nmap
+# Output: ~/htb-machines/<box>/writeup.md  (teaching cements learning)
+set -u
+box="${1:-}"; [ -z "$box" ] && { echo "usage: writeup <box>"; exit 1; }
+dir="$HOME/htb-machines/$box"; [ -d "$dir" ] || { echo "no such box: $dir"; exit 1; }
+out="$dir/writeup.md"; n="$dir/notes.md"
+target="$(grep -oiE '([0-9]{1,3}\.){3}[0-9]{1,3}' "$n" 2>/dev/null | head -1)"
+
+{
+echo "# $box — HTB/THM Writeup"
+echo
+echo "> Difficulty: _easy/medium/hard_ · Target: \`${target:-10.10.x.x}\` · Date: $(date +%F)"
+echo
+echo "## TL;DR"
+echo "_Two sentences: the path from recon to root._"
+echo
+echo "## Enumeration"
+echo "Nmap found:"
+echo '```'
+[ -f "$dir/nmap/initial.nmap" ] && grep -E '^[0-9]+/tcp' "$dir/nmap/initial.nmap" | head -20 || echo "(add your nmap output)"
+echo '```'
+echo
+echo "## Foothold"
+echo "_The vulnerability and how you exploited it. Include the key command/payload:_"
+echo '```bash'
+echo "# exploit / request here"
+echo '```'
+echo
+echo "## Privilege Escalation"
+echo "_How you went from user to root:_"
+echo '```bash'
+echo "# privesc here"
+echo '```'
+echo
+echo "## Lessons learned"
+echo "- "
+echo "- "
+echo
+echo "---"
+echo "<details><summary>Raw notes</summary>"
+echo
+[ -f "$n" ] && tail -n +2 "$n"
+echo
+echo "</details>"
+} > "$out"
+
+echo "writeup -> $out"
+echo "tip: publish it (GitHub/blog) — teaching is the fastest way to learn."
+command -v "${EDITOR:-nvim}" >/dev/null && "${EDITOR:-nvim}" "$out"

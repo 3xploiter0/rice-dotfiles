@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# journal — daily learning log + streak
+#   journal "rooted Blocky, learned wp-config leak"   add today's entry
+#   journal                                            show this week + streak
+#   journal all                                        full log in $EDITOR
+F="$HOME/.config/hack/journal.md"; mkdir -p "$(dirname "$F")"; touch "$F"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; P=$'\e[38;2;187;154;247m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+
+if [ "${1:-}" = all ]; then exec "${EDITOR:-nvim}" "$F"; fi
+
+if [ -n "${1:-}" ]; then
+  printf -- '- `%s` %s\n' "$(date '+%F %H:%M')" "$*" >> "$F"
+  echo "${G}logged${X} for $(date +%F)"
+fi
+
+# streak: count consecutive days (back from today) that have an entry
+streak=0; d=$(date +%F)
+while grep -q "\`$d" "$F" 2>/dev/null; do streak=$((streak+1)); d=$(date -d "$d -1 day" +%F); done
+# if nothing today yet, allow streak counted from yesterday
+if [ "$streak" = 0 ]; then
+  d=$(date -d 'yesterday' +%F)
+  while grep -q "\`$d" "$F" 2>/dev/null; do streak=$((streak+1)); d=$(date -d "$d -1 day" +%F); done
+fi
+total=$(grep -c '^- `' "$F" 2>/dev/null)
+
+echo
+printf "${P}🔥 streak: %s day(s)${X}   ${D}· %s entries total${X}\n" "$streak" "$total"
+echo "${B}── this week ───────────────────────────${X}"
+for i in 6 5 4 3 2 1 0; do
+  day=$(date -d "-$i day" +%F); lbl=$(date -d "-$i day" '+%a %d')
+  n=$(grep -c "\`$day" "$F" 2>/dev/null)
+  [ "$n" -gt 0 ] && printf "  ${G}●${X} %s  %s\n" "$lbl" "$(grep "\`$day" "$F" | sed 's/^- `[^`]*` //' | paste -sd'; ' -)" || printf "  ${D}○ %s${X}\n" "$lbl"
+done
+[ -z "${1:-}" ] && echo "${D}add today: journal \"what you learned\"${X}"

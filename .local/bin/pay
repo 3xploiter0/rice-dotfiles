@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# pay — offline, fuzzy-searchable payload / technique library
+#   pay <query>   search PayloadsAllTheThings + GTFOBins (fzf, preview with bat)
+#   pay --update  clone/refresh the reference repos (~/tools/refs)
+REF="$HOME/tools/refs"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+
+if [ "${1:-}" = "--update" ] || [ ! -d "$REF/PayloadsAllTheThings" ]; then
+  mkdir -p "$REF"
+  echo "${B}updating reference repos (one-time, a few hundred MB)…${X}"
+  if [ -d "$REF/PayloadsAllTheThings/.git" ]; then git -C "$REF/PayloadsAllTheThings" pull -q
+  else git clone -q --depth 1 https://github.com/swisskyrepo/PayloadsAllTheThings.git "$REF/PayloadsAllTheThings" && echo "${G}✓ PayloadsAllTheThings${X}"; fi
+  if [ -d "$REF/GTFOBins/.git" ]; then git -C "$REF/GTFOBins" pull -q
+  else git clone -q --depth 1 https://github.com/GTFOBins/GTFOBins.github.io.git "$REF/GTFOBins" && echo "${G}✓ GTFOBins${X}"; fi
+  [ "${1:-}" = "--update" ] && exit 0
+fi
+
+PREV='bat --style=plain --color=always --language=markdown {} 2>/dev/null || cat {}'
+command -v batcat >/dev/null && PREV='batcat --style=plain --color=always --language=markdown {} 2>/dev/null || cat {}'
+
+q="${*:-}"
+if command -v fzf >/dev/null; then
+  find "$REF" -name '*.md' -type f 2>/dev/null \
+    | fzf --query="$q" --height=90% --layout=reverse --border=sharp \
+          --prompt="pay> " --preview="$PREV" --preview-window=right,65%,wrap \
+          --bind "enter:execute(${EDITOR:-nvim} {})"
+else
+  echo "install fzf for interactive search. Files:"; grep -ril "$q" "$REF" 2>/dev/null | head
+fi
