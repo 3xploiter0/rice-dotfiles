@@ -41,7 +41,7 @@ done
 # list of installed apt packages (to reinstall on a fresh box)
 apt-mark showmanual > "$repo/packages.txt" 2>/dev/null
 
-cat > "$repo/README.md" <<'MD'
+if [ ! -f "$repo/README.md" ]; then cat > "$repo/README.md" <<'MD'
 # 3xploiter0 rice dotfiles
 Kali XFCE Tokyo Night rice + hacking workflow. Backup made by `rice-backup`.
 
@@ -50,6 +50,7 @@ Restore on a fresh box:
 2. Copy dirs back into `$HOME` (`.zshrc`, `.tmux.conf`, `.config/*`, `.local/*`).
 3. Reload xfconf from `xfconf/*.txt` if needed (panel/theme settings).
 MD
+fi
 
 rm -f "$repo/.config/hack/vpn.log" 2>/dev/null
 find "$repo/.local/bin" -maxdepth 1 -type l -delete 2>/dev/null
