@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# fuzz <url> [wordlist]   quick directory brute-force (feroxbuster)
+#   fuzz http://10.10.11.5          uses raft-medium
+#   fuzz http://10.10.11.5/FUZZ     explicit FUZZ point (ffuf)
+url="${1:-}"; [ -z "$url" ] && { echo "usage: fuzz <url> [wordlist]"; exit 1; }
+wl="${2:-/usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt}"
+[ -f "$wl" ] || wl=/usr/share/wordlists/dirb/common.txt
+if printf '%s' "$url" | grep -q FUZZ; then
+  exec ffuf -u "$url" -w "$wl" -c -mc 200,204,301,302,307,401,403 -fs 0
+else
+  exec feroxbuster -u "$url" -w "$wl" -k -t 50 -C 404
+fi

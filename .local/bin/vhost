@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# vhost <domain> [ip]   fuzz virtual hosts (Host header)
+dom="${1:-}"; ip="${2:-$(head -1 "$HOME/.config/hack/target" 2>/dev/null)}"
+[ -z "$dom" ] && { echo "usage: vhost <domain> [ip]   e.g. vhost box.htb 10.10.11.5"; exit 1; }
+[ -z "$ip" ] && ip="$dom"
+wl=/usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt
+exec ffuf -u "http://$ip" -H "Host: FUZZ.$dom" -w "$wl" -c -fc 302 -ac

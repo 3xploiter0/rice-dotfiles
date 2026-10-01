@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# enc <b64|hex|url|rot13> <text...>    encode (text or stdin)
+c="${1:-}"; shift 2>/dev/null; t="$*"; [ -z "$t" ] && t="$(cat)"
+case "$c" in
+  b64)   printf '%s' "$t" | base64 -w0; echo ;;
+  hex)   printf '%s' "$t" | xxd -p | tr -d '\n'; echo ;;
+  url)   printf '%s' "$t" | python3 -c 'import sys,urllib.parse;print(urllib.parse.quote(sys.stdin.read()))' ;;
+  rot13) printf '%s' "$t" | tr 'A-Za-z' 'N-ZA-Mn-za-m'; echo ;;
+  *) echo "usage: enc <b64|hex|url|rot13> <text>"; exit 1 ;;
+esac

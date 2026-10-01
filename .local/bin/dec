@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# dec <b64|hex|url|rot13> <text...>    decode (text or stdin)
+c="${1:-}"; shift 2>/dev/null; t="$*"; [ -z "$t" ] && t="$(cat)"
+case "$c" in
+  b64)   printf '%s' "$t" | base64 -d 2>/dev/null; echo ;;
+  hex)   printf '%s' "$t" | tr -d ' \n' | xxd -r -p; echo ;;
+  url)   printf '%s' "$t" | python3 -c 'import sys,urllib.parse;print(urllib.parse.unquote(sys.stdin.read()))' ;;
+  rot13) printf '%s' "$t" | tr 'A-Za-z' 'N-ZA-Mn-za-m'; echo ;;
+  *) echo "usage: dec <b64|hex|url|rot13> <text>"; exit 1 ;;
+esac
