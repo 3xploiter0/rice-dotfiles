@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# map — show where everything lives
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+[ -f ~/cyber/README.md ] && { command -v batcat >/dev/null && batcat --style=plain --color=always ~/cyber/README.md || cat ~/cyber/README.md; } 
+echo
+printf "${B}quick nav:${X} ${G}cd ~/cyber${X} · labs: ${G}cd ~/cyber/labs/htb${X} · tools: ${G}cd ~/tools${X}\n"

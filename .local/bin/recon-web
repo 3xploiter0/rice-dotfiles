@@ -3,7 +3,7 @@
 # Only run against scope you are authorized to test.
 set -u
 dom="${1:-}"; [ -z "$dom" ] && { echo "usage: recon-web <domain>"; exit 1; }
-out="${2:-$HOME/bug-bount/$dom/$(date +%F)}"; mkdir -p "$out"
+out="${2:-$HOME/cyber/bugbounty/$dom/$(date +%F)}"; mkdir -p "$out"
 B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
 say(){ printf "\n${B}[*] %s${X}\n" "$1"; }
 HTTPX=$(command -v httpx-toolkit || command -v httpx)
