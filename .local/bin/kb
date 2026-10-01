@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# kb — personal knowledge base (your own commands, tricks, gotchas)
+#   kb add  "nmap -sCV …  # what it does"   add an entry (prompts for tag)
+#   kb <query>                               fuzzy-search entries
+#   kb                                       browse all (fzf) / list
+#   kb edit                                  open the file in $EDITOR
+F="$HOME/.config/hack/kb.md"; mkdir -p "$(dirname "$F")"; touch "$F"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+
+case "${1:-}" in
+  add)
+    shift; entry="$*"
+    [ -z "$entry" ] && { printf "entry: "; read -r entry; }
+    printf "tag (e.g. web, ad, privesc, linux): "; read -r tag
+    printf -- '- [%s] %s  _(%s)_\n' "${tag:-misc}" "$entry" "$(date +%F)" >> "$F"
+    echo "${G}saved${X} -> kb [$tag]"; exit 0 ;;
+  edit) exec "${EDITOR:-nvim}" "$F" ;;
+  "")   q="" ;;
+  *)    q="$*" ;;
+esac
+
+[ ! -s "$F" ] && { echo "${D}kb empty — add one: kb add \"your tip\"${X}"; exit 0; }
+if command -v fzf >/dev/null; then
+  grep -v '^\s*$' "$F" | fzf --query="$q" --height=60% --layout=reverse --border=sharp \
+    --prompt="kb> " --preview-window=hidden
+else
+  grep -i --color=always "${q:-.}" "$F"
+fi

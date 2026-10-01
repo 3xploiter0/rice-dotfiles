@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# boxes — progress tracker for machines in ~/htb-machines
+# Reads each box's notes.md "## Flags" section for user:/root: values.
+DIR="$HOME/htb-machines"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; D=$'\e[38;2;86;95;137m'; W=$'\e[38;2;192;202;245m'; X=$'\e[0m'
+[ -d "$DIR" ] || { echo "no ~/htb-machines yet — start one with: htb <ip> <name>"; exit 0; }
+
+done_u=0; done_r=0; total=0
+printf "${W}%-20s %-7s %-7s %s${X}\n" "BOX" "USER" "ROOT" "STARTED"
+echo "${D}──────────────────────────────────────────────────${X}"
+for d in "$DIR"/*/; do
+  [ -d "$d" ] || continue; total=$((total+1)); name=$(basename "$d")
+  n="$d/notes.md"
+  u="-"; r="-"
+  if [ -f "$n" ]; then
+    grep -qiE '^- *user:[[:space:]]*\S' "$n" && { u="✓"; done_u=$((done_u+1)); }
+    grep -qiE '^- *root:[[:space:]]*\S' "$n" && { r="✓"; done_r=$((done_r+1)); }
+  fi
+  started=$(stat -c %y "$d" 2>/dev/null | cut -d' ' -f1)
+  uc=$([ "$u" = "✓" ] && echo "$G" || echo "$D")
+  rc=$([ "$r" = "✓" ] && echo "$G" || echo "$D")
+  printf "%-20s ${uc}%-7s${X} ${rc}%-7s${X} ${D}%s${X}\n" "$name" "$u" "$r" "$started"
+done
+echo "${D}──────────────────────────────────────────────────${X}"
+printf "${B}%s boxes${X}  ·  ${G}%s user${X}  ·  ${G}%s root${X}\n" "$total" "$done_u" "$done_r"
+echo "${D}tip: fill '## Flags' user:/root: in each box's notes.md (journal + report pull from it)${X}"

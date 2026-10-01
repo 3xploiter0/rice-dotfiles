@@ -69,6 +69,15 @@ k "loot <file>"         "copy a file into the box loot/ folder"
 k "crack <hash|file>"   "auto-detect + hashcat vs rockyou"
 k "cat x | copy"        "clipboard  ·  paste > file"; }
 
+learn(){ h "LEARNING & PRODUCTIVITY"
+k "brief"               "daily cyber news + actively-exploited CVEs"
+k "pay <query>"         "offline payloads/techniques (PayloadsAllTheThings+GTFOBins)"
+k "kb add \"tip\""       "save a command/trick  ·  kb <query> = search"
+k "journal \"…\""        "log what you learned today (+ streak)"
+k "roadmap"             "study path (checkboxes)  ·  roadmap -s = progress"
+k "boxes"               "your machine progress (user/root flags)"
+k "writeup <box>"       "scaffold a blog-ready writeup from notes"; }
+
 tmuxc(){ h "TMUX  (prefix = Ctrl+b, press then release)"
 k "Alt + arrows"        "move between panes"
 k "prefix |  /  -"      "split left-right / top-bottom"
@@ -103,5 +112,6 @@ case "$1" in
   tmux)    banner; tmuxc ;;
   desktop) banner; desktop ;;
   shell)   banner; shell ;;
-  *)       banner; desktop; htb; tmuxc; shell; echo ;;
+  learn)   banner; learn ;;
+  *)       banner; desktop; htb; tmuxc; shell; learn; echo ;;
 esac

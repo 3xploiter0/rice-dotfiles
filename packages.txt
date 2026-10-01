@@ -8,6 +8,7 @@ base-passwd
 bash
 bash-completion
 bat
+bettercap
 bibata-cursor-theme
 bind9-dnsutils
 bind9-host
@@ -20,6 +21,7 @@ ca-certificates
 cava
 chisel
 cmatrix
+code
 conky-all
 console-setup
 coreutils
@@ -36,6 +38,7 @@ dhcpcd-base
 diffutils
 dirsearch
 dmidecode
+docker-compose
 docker.io
 dpkg
 e2fsprogs
@@ -56,8 +59,10 @@ fonts-inter
 fonts-jetbrains-mono
 fzf
 gcc-15-base
+gdb
 gettext-base
 gh
+ghidra
 google-chrome-stable
 grep
 groff-base
@@ -142,6 +147,7 @@ libpcre2-8-0
 libpopt0
 libproc2-0
 libreadline8t64
+libreoffice
 libseccomp2
 libselinux1
 libsemanage-common
@@ -183,6 +189,7 @@ man-db
 manpages
 mawk
 media-types
+mitmproxy
 mount
 mpv
 nano
@@ -193,6 +200,7 @@ neovim
 netbase
 netcat-traditional
 nftables
+npm
 openssh-client
 openssl-provider-legacy
 os-prober
@@ -222,6 +230,7 @@ sysvinit-utils
 tar
 tasksel
 tesseract-ocr
+tigervnc-viewer
 timeshift
 traceroute
 tree-sitter-cli

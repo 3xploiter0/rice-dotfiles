@@ -353,3 +353,8 @@ wl() {
 # clipboard: `cat flag | copy`  ·  `paste > file`
 alias copy='xclip -selection clipboard'
 alias paste='xclip -selection clipboard -o'
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/x3xploiter0/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"

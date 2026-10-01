@@ -61,7 +61,7 @@
 /general/theme                           Omarchy-TokyoNight
 /general/tile_on_move                    true
 /general/title_alignment                 center
-/general/title_font                      Inter Bold 9
+/general/title_font                      Hanken Grotesk Bold 9
 /general/title_horizontal_offset         0
 /general/titleless_maximize              false
 /general/title_shadow_active             false
