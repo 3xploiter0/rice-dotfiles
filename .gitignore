@@ -1,3 +1,5 @@
 .local/share/fonts/
 .config/hack/vpn.log
 .local/bin/agy
+cyber/dockerlabs/vulhub/
+dockerlabs/vulhub/

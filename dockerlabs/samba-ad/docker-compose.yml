@@ -1,0 +1,15 @@
+services:
+  samba-ad:
+    build: .
+    container_name: lab-samba-ad
+    hostname: dc01
+    privileged: true
+    ports:
+      - "389:389"   # LDAP
+      - "636:636"   # LDAPS
+      - "88:88"     # Kerberos
+      - "445:445"   # SMB
+      - "139:139"
+      - "464:464"   # kpasswd
+      - "3268:3268" # Global Catalog
+    restart: unless-stopped
