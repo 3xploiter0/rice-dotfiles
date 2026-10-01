@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # recon <ip> [outdir]   full port scan, then auto service-enum. Non-destructive.
-# Defaults outdir to the current box folder (~/htb-machines/<cwd>) or ./recon.
+# Defaults outdir to the current box folder (~/cyber/labs/htb/<cwd>) or ./recon.
 set -u
 ip="${1:-$(head -1 "$HOME/.config/hack/target" 2>/dev/null)}"
 [ -z "$ip" ] && { echo "usage: recon <ip> [outdir]   (or set a target first)"; exit 1; }

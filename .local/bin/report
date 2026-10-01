@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# report <box>   – build a markdown pentest report from ~/htb-machines/<box>
+# report <box>   – build a markdown pentest report from ~/cyber/labs/htb/<box>
 # Pulls in your notes.md and lists nmap output + today's logs. Opens it in nvim.
 set -e
 box="$1"; [ -z "$box" ] && { echo "usage: report <box>"; exit 1; }
-dir="$(find -L "$HOME/labs" -mindepth 2 -maxdepth 2 -type d -name "$box" 2>/dev/null | head -1)"
+dir="$(find -L "$HOME/cyber/labs" -mindepth 2 -maxdepth 2 -type d -name "$box" 2>/dev/null | head -1)"
 [ -d "$dir" ] || { echo "no such box: $dir"; exit 1; }
 target="$(head -1 "$HOME/.config/hack/target" 2>/dev/null)"
 out="$dir/report.md"
@@ -45,9 +45,9 @@ echo
 if [ -f "$dir/notes.md" ]; then tail -n +2 "$dir/notes.md"; fi
 echo
 echo "## Appendix B — Command log"
-echo "_Full terminal logs: ~/logs/  (clean with: logclean <file>)_"
+echo "_Full terminal logs: ~/cyber/logs/  (clean with: logclean <file>)_"
 echo '```'
-ls -1 "$HOME/logs/$(date +%F)/" 2>/dev/null | grep -i "$box" || echo "(no logs captured today for $box)"
+ls -1 "$HOME/cyber/logs/$(date +%F)/" 2>/dev/null | grep -i "$box" || echo "(no logs captured today for $box)"
 echo '```'
 } > "$out"
 

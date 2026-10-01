@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # writeup <box>  — scaffold a blog-ready markdown writeup from a box's notes + nmap
-# Output: ~/htb-machines/<box>/writeup.md  (teaching cements learning)
+# Output: ~/cyber/labs/htb/<box>/writeup.md  (teaching cements learning)
 set -u
 box="${1:-}"; [ -z "$box" ] && { echo "usage: writeup <box>"; exit 1; }
-dir="$(find -L "$HOME/labs" -mindepth 2 -maxdepth 2 -type d -name "$box" 2>/dev/null | head -1)"; [ -d "$dir" ] || { echo "no such box: $dir"; exit 1; }
+dir="$(find -L "$HOME/cyber/labs" -mindepth 2 -maxdepth 2 -type d -name "$box" 2>/dev/null | head -1)"; [ -d "$dir" ] || { echo "no such box: $dir"; exit 1; }
 out="$dir/writeup.md"; n="$dir/notes.md"
 target="$(grep -oiE '([0-9]{1,3}\.){3}[0-9]{1,3}' "$n" 2>/dev/null | head -1)"
 

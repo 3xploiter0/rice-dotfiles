@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # serve [dir] [port]   HTTP server + ready-to-paste download lines with your VPN IP.
-# Default: serve ~/tools/serve on 8000. Ctrl+C to stop.
-dir="${1:-$HOME/tools/serve}"; port="${2:-8000}"
+# Default: serve ~/cyber/tools/serve on 8000. Ctrl+C to stop.
+dir="${1:-$HOME/cyber/tools/serve}"; port="${2:-8000}"
 [ -d "$dir" ] || dir="$PWD"
 LHOST="$(~/.local/bin/hackbar vpn plain 2>/dev/null)"; [ -z "$LHOST" ] && LHOST="$(hostname -I | awk '{print $1}')"
 B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'

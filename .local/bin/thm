@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-# thm <ip|url> <name> [-d]  — workspace under ~/labs/thm
+# thm <ip|url> <name> [-d]  — workspace under ~/cyber/labs/thm
 exec lab thm "$@"

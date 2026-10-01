@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# boxes [platform]  — progress tracker across all platforms under ~/labs
+# boxes [platform]  — progress tracker across all platforms under ~/cyber/labs
 #   boxes            every box (htb, thm, pg, vulnhub, ctf, bugbounty)
 #   boxes htb        only that platform
 # Reads each box's notes.md "## Flags" for user:/root: values.
-ROOT="$HOME/labs"
+ROOT="$HOME/cyber/labs"
 B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; P=$'\e[38;2;187;154;247m'; D=$'\e[38;2;86;95;137m'; W=$'\e[38;2;192;202;245m'; X=$'\e[0m'
-[ -d "$ROOT" ] || { echo "no ~/labs yet — start one with: htb <ip> <name>  (or thm/pg/vh/ctf)"; exit 0; }
+[ -d "$ROOT" ] || { echo "no ~/cyber/labs yet — start one with: htb <ip> <name>  (or thm/pg/vh/ctf)"; exit 0; }
 filter="${1:-}"
 
 total=0; du_=0; dr=0

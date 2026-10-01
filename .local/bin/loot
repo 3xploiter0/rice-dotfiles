@@ -14,7 +14,7 @@ boxdir() {
   find -L "$HOME"/labs -mindepth 2 -maxdepth 2 -type d -printf '%T@ %p
 ' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-
 }
-dir="$(boxdir)"; [ -z "$dir" ] && { echo "no box found (cd into ~/labs/<platform>/<box>)"; exit 1; }
+dir="$(boxdir)"; [ -z "$dir" ] && { echo "no box found (cd into ~/cyber/labs/<platform>/<box>)"; exit 1; }
 mkdir -p "$dir/loot"
 if [ $# -eq 0 ]; then
   echo "loot in $(basename "$dir"):"; ls -la "$dir/loot" 2>/dev/null | tail -n +2 | sed 's/^/  /'
