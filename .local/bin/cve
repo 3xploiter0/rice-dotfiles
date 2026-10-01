@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# cve <CVE-ID>   quick lookup (summary + CVSS)   e.g. cve CVE-2021-4034
+id="${1:-}"; [ -z "$id" ] && { echo "usage: cve CVE-2021-4034"; exit 1; }
+curl -fsS --max-time 10 "https://cve.circl.lu/api/cve/$id" 2>/dev/null | python3 -c '
+import sys,json
+try: d=json.load(sys.stdin)
+except: print("not found / offline"); sys.exit()
+if not d: print("not found"); sys.exit()
+s=d.get("summary") or (d.get("containers",{}).get("cna",{}).get("descriptions",[{}])[0].get("value",""))
+cvss=d.get("cvss") or d.get("cvss3","?")
+print(f"\n  {d.get(\"id\",\"\")}   CVSS: {cvss}\n")
+import textwrap
+print(textwrap.fill(s or "(no summary)", 90, initial_indent="  ", subsequent_indent="  "))
+print()
+' 2>/dev/null || echo "lookup failed"

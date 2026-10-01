@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# qr <image>   decode a QR / barcode from an image
+f="${1:-}"; [ -f "$f" ] || { echo "usage: qr <image>"; exit 1; }
+zbarimg -q --raw "$f" || echo "no QR/barcode found"

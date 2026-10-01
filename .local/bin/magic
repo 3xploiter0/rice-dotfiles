@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# magic <text>   auto-try common decodings and show readable results (CTF)
+t="$*"; [ -z "$t" ] && t="$(cat)"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+printable(){ printf '%s' "$1" | LC_ALL=C grep -qP '^[\x09\x0a\x20-\x7e]+$'; }
+try(){ local out; out="$(printf '%s' "$t" | eval "$2" 2>/dev/null)"; [ -n "$out" ] && printable "$out" && printf "${G}%-8s${X} %s\n" "$1" "${out:0:120}"; }
+echo "${B}▌ decodings that produced readable text:${X}"
+try base64 "base64 -d"
+try hex    "tr -d ' \n' | xxd -r -p"
+try rot13  "tr 'A-Za-z' 'N-ZA-Mn-za-m'"
+try url    "python3 -c 'import sys,urllib.parse;print(urllib.parse.unquote(sys.stdin.read()),end=\"\")'"
+try b32    "base32 -d"
+try rev    "rev"
+echo "${D}nothing? try: pay encoding · CyberChef · ciphey${X}"

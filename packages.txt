@@ -255,6 +255,7 @@ wpasupplicant
 xfce4-docklike-plugin
 xterm
 xz-utils
+zbar-tools
 zlib1g
 zoxide
 zstd

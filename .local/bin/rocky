@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# rocky <pattern>   grep rockyou for lines matching a pattern (password research)
+[ -z "$1" ] && { echo "usage: rocky <pattern>   e.g. rocky '^admin'"; exit 1; }
+grep -aiE "$1" /usr/share/wordlists/rockyou.txt 2>/dev/null | head -40

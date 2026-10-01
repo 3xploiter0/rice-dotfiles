@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# smb <ip>   quick SMB enum: shares (null + guest), then nxc/enum4linux hint
+ip="${1:-$(head -1 "$HOME/.config/hack/target" 2>/dev/null)}"
+[ -z "$ip" ] && { echo "usage: smb <ip>"; exit 1; }
+B=$'\e[38;2;122;162;247m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+echo "${B}▌ null session shares${X}"; smbclient -L "//$ip" -N 2>/dev/null | sed 's/^/  /'
+echo "${B}▌ guest session${X}"; smbclient -L "//$ip" -U 'guest%' 2>/dev/null | grep -i disk | sed 's/^/  /'
+command -v nxc >/dev/null && { echo "${B}▌ nxc smb${X}"; nxc smb "$ip" --shares -u '' -p '' 2>/dev/null | sed 's/^/  /' | head -20; }
+echo "${D}deeper: enum4linux-ng -A $ip  ·  smbclient //$ip/SHARE -N${X}"
