@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# creds add <box> <user> <pass> [note]   save a credential
+# creds [query]                           list / search
+# creds edit                              open the vault
+F="$HOME/.config/hack/creds.md"; mkdir -p "$(dirname "$F")"; touch "$F"; chmod 600 "$F"
+G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+case "${1:-}" in
+  add) shift; box="$1"; user="$2"; pass="$3"; shift 3 2>/dev/null; note="$*"
+       [ -z "$pass" ] && { echo "usage: creds add <box> <user> <pass> [note]"; exit 1; }
+       printf -- '- [%s] %s : %s  %s_(%s)_\n' "$box" "$user" "$pass" "${note:+$note }" "$(date +%F)" >> "$F"
+       echo "${G}saved${X} $box  $user:$pass" ;;
+  edit) exec "${EDITOR:-nvim}" "$F" ;;
+  "")  [ -s "$F" ] && column -t -s: <(cat "$F") 2>/dev/null || cat "$F" ;;
+  *)   grep -i --color=always "$*" "$F" || echo "${D}no match${X}" ;;
+esac

