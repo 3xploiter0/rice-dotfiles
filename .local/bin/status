@@ -9,7 +9,7 @@ vip="$(~/.local/bin/hackbar vpn plain 2>/dev/null)"
 tgt="$(head -1 "$HOME/.config/hack/target" 2>/dev/null)"
 [ -n "$tgt" ] && row "TARGET" "${R}$tgt${X}" || row "TARGET" "${D}none${X}"
 
-box="$(find "$HOME/htb-machines" -maxdepth 1 -mindepth 1 -type d -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-)"
+box="$(find "$HOME/cyber/labs/htb" -maxdepth 1 -mindepth 1 -type d -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-)"
 [ -n "$box" ] && row "BOX" "$(basename "$box")  ${D}$box${X}"
 
 # listeners (nc / pwncat / metasploit)

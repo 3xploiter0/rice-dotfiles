@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # tmux-log start <pane_id>   – start logging a pane (called by tmux hooks)
 # tmux-log toggle <pane_id>  – prefix + L
-dir="$HOME/logs/$(date +%F)"; mkdir -p "$dir"
+dir="$HOME/cyber/logs/$(date +%F)"; mkdir -p "$dir"
 pane="${2:-$TMUX_PANE}"
 name=$(tmux display -p -t "$pane" '#{session_name}_w#{window_index}p#{pane_index}' | tr -c 'A-Za-z0-9_.\n-' '_')
 file="$dir/${name}_$(date +%H%M%S).log"

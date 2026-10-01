@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# vpn <name|path>   connect a .ovpn (searches ~/vpn, ~/Downloads, .)
+# vpn <name|path>   connect a .ovpn (searches ~/cyber/vpn, ~/Downloads, .)
 # vpn down          disconnect        vpn status   show tun IP + state
-# examples: vpn htb   vpn thm   vpn ~/vpn/lab.ovpn
-DIRS=("$HOME/vpn" "$HOME/Downloads" "$HOME/htb-machines" ".")
+# examples: vpn htb   vpn thm   vpn ~/cyber/vpn/lab.ovpn
+DIRS=("$HOME/cyber/vpn" "$HOME/Downloads" "$HOME/cyber/labs/htb" ".")
 LOG="$HOME/.config/hack/vpn.log"; mkdir -p "$HOME/.config/hack"
 B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; R=$'\e[38;2;247;118;142m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
 
@@ -27,7 +27,7 @@ if [ -f "$1" ]; then f="$1"; else
     [ -n "$hit" ] && { f="$hit"; break; }
   done
 fi
-[ -z "$f" ] && { echo "${R}no .ovpn matching '$1'${X} — put files in ~/vpn/ or pass a path"; exit 1; }
+[ -z "$f" ] && { echo "${R}no .ovpn matching '$1'${X} — put files in ~/cyber/vpn/ or pass a path"; exit 1; }
 
 echo "${B}connecting:${X} $f"
 sudo pkill -x openvpn 2>/dev/null; sleep 1

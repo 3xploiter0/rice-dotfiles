@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # lab <platform> <ip|url> <name> [-d]   generic box/lab workspace engine
-#   platform: htb thm pg vulnhub ctf bugbounty (folder under ~/labs/<platform>)
-#   creates ~/labs/<platform>/<name>/{nmap,loot,exploits,notes.md}, sets target,
+#   platform: htb thm pg vulnhub ctf bugbounty (folder under ~/cyber/labs/<platform>)
+#   creates ~/cyber/labs/<platform>/<name>/{nmap,loot,exploits,notes.md}, sets target,
 #   opens a tmux session (recon: nmap | listener / notes  +  shell window)
 #   -d = create without attaching
 # Usually called via the wrappers: htb / thm / pg / vh / ctf
 set -e
 plat="$1"; ip="$2"; name="$3"
 [ -z "$plat" ] || [ -z "$ip" ] || [ -z "$name" ] && { echo "usage: lab <platform> <ip|url> <name>"; exit 1; }
-base="$HOME/labs/$plat"; mkdir -p "$base"
+base="$HOME/cyber/labs/$plat"; mkdir -p "$base"
 dir="$base/$name"
 mkdir -p "$dir"/{nmap,loot,exploits}
 echo "$ip" > "$HOME/.config/hack/target"

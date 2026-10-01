@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # pay — offline, fuzzy-searchable payload / technique library
 #   pay <query>   search PayloadsAllTheThings + GTFOBins (fzf, preview with bat)
-#   pay --update  clone/refresh the reference repos (~/tools/refs)
-REF="$HOME/tools/refs"
+#   pay --update  clone/refresh the reference repos (~/cyber/tools/refs)
+REF="$HOME/cyber/tools/refs"
 B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
 
 if [ "${1:-}" = "--update" ] || [ ! -d "$REF/PayloadsAllTheThings" ]; then

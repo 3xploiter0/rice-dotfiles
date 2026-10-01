@@ -335,7 +335,7 @@ export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border=sharp \
 export BAT_THEME="tokyonight_night"
 
 # logs: list today's terminal logs · logclean FILE: print a log as clean text (for reports)
-logs() { eza -l --sort=modified "$HOME/logs/${1:-$(date +%F)}" 2>/dev/null || echo "no logs for ${1:-today}"; }
+logs() { eza -l --sort=modified "$HOME/cyber/logs/${1:-$(date +%F)}" 2>/dev/null || echo "no logs for ${1:-today}"; }
 logclean() { ansifilter "$1" | col -b; }
 alias vim='nvim'
 

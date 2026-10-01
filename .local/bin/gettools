@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# gettools   stage the common post-exploitation tools into ~/tools/serve
+# gettools   stage the common post-exploitation tools into ~/cyber/tools/serve
 # Re-run anytime to refresh linpeas/winpeas/pspy to the latest release.
 set -u
-d="$HOME/tools/serve"; mkdir -p "$d"; cd "$d"
+d="$HOME/cyber/tools/serve"; mkdir -p "$d"; cd "$d"
 G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
 get(){ echo "${D}[*]${X} $2"; curl -fsSL -o "$2" "$1" && echo "${G}  ok${X} $(du -h "$2"|cut -f1)" || echo "${Y}  failed${X} $2"; }
 
@@ -19,9 +19,9 @@ chmod +x linpeas.sh pspy64 pspy32 2>/dev/null
 
 # link tools already on the box so serve can hand them out
 [ -f /usr/bin/chisel ] && cp -f /usr/bin/chisel chisel
-[ -f "$HOME/tools/ligolo/ligolo-agent-linux" ] && cp -f "$HOME/tools/ligolo/ligolo-agent-linux" ligolo-agent
+[ -f "$HOME/cyber/tools/ligolo/ligolo-agent-linux" ] && cp -f "$HOME/cyber/tools/ligolo/ligolo-agent-linux" ligolo-agent
 [ -f /usr/share/windows-resources/binaries/nc.exe ] && cp -f /usr/share/windows-resources/binaries/nc.exe nc.exe
 [ -f /usr/bin/nc ] && cp -f /usr/bin/nc nc 2>/dev/null
 
 echo; echo "${G}staged in $d:${X}"; ls -1 "$d"
-echo "${D}now: cd to a box folder and run 'serve' (or 'serve ~/tools/serve')${X}"
+echo "${D}now: cd to a box folder and run 'serve' (or 'serve ~/cyber/tools/serve')${X}"
