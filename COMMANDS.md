@@ -108,6 +108,12 @@ Quick SMB share enum (null + guest + nxc).
 smb 10.10.11.5
 ```
 
+### `ftpanon`
+Try anonymous FTP login and list files.
+```bash
+ftpanon 10.10.11.5
+```
+
 ### `dns`
 DNS records + zone-transfer attempt.
 ```bash
@@ -150,6 +156,13 @@ Generate a reverse-shell payload with msfvenom (uses your VPN IP).
 payload windows 4444         # shell.exe
 payload php                  # shell.php
 payload elf 9001             # linux ELF on port 9001
+```
+
+### `spray`
+Password spraying via nxc (default smb).
+```bash
+spray users.txt 'Autumn2024!' 10.10.11.5
+spray users.txt 'pass' 10.10.11.5 winrm
 ```
 
 ### `webshell`
@@ -233,6 +246,12 @@ magic ZmxhZ3t0ZXN0fQ==
 echo "<blob>" | magic
 ```
 
+### `caesar`
+Brute-force all 25 Caesar/ROT shifts (spot the flag).
+```bash
+caesar "Uryyb Jbeyq"      # shift 13 -> Hello World
+```
+
 ### `rocky`
 Grep rockyou for a pattern.
 ```bash
@@ -267,6 +286,12 @@ Timestamped line into the current box's notes.md.
 ```bash
 note "foothold via CVE-2021-41773"
 note                         # show the notes
+```
+
+### `findflag`
+Print flag-hunting one-liners to paste on a target shell (copies the first).
+```bash
+findflag
 ```
 
 ### `flag`

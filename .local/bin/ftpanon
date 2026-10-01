@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# ftpanon <ip>   try anonymous FTP login and list files
+ip="${1:-$(head -1 "$HOME/.config/hack/target" 2>/dev/null)}"
+[ -z "$ip" ] && { echo "usage: ftpanon <ip>"; exit 1; }
+echo -e "user anonymous anonymous\nls -la\nbye" | timeout 20 ftp -inv "$ip"

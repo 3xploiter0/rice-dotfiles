@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# caesar <text>   print all 25 Caesar-shift rotations (spot the flag)
+t="$*"; [ -z "$t" ] && t="$(cat)"
+for i in $(seq 1 25); do
+  printf "%2d: " "$i"
+  printf '%s' "$t" | tr "$(printf '%s' {A..Z} | sed "s/\(.\{$i\}\)\(.*\)/\2\1/")$(printf '%s' {a..z} | sed "s/\(.\{$i\}\)\(.*\)/\2\1/")" "A-Za-z" 2>/dev/null || \
+  printf '%s' "$t" | python3 -c "import sys;s=sys.stdin.read();print(''.join(chr((ord(c)-b-$i)%26+b) if c.isalpha() else c for c in s for b in [65 if c.isupper() else 97]),end='')"
+  echo
+done
