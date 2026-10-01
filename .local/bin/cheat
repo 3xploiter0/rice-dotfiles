@@ -205,6 +205,10 @@ k "dns <domain> [ns]"   "DNS recon + zone transfer"
 k "crt <domain>"        "passive subdomains via crt.sh"
 k "webshell [php|jsp|asp]" "drop a cmd webshell into serve"
 k "peas [lin|win]"      "serve linpeas + the target one-liner"
+k "caesar <text>"       "brute all 25 ROT shifts (crypto)"
+k "spray <users> <pass>" "password spray (nxc)"
+k "ftpanon <ip>"        "anonymous FTP check"
+k "findflag"            "flag-hunt one-liners for a shell"
 k "ex <command>"        "show an example for any command"; }
 
 tmuxc(){ h "TMUX  (prefix = Ctrl+b, press then release)"

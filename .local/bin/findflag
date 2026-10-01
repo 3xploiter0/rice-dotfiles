@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# findflag   print commands to hunt flags on a compromised target (copies the first)
+G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+a='find / \( -name user.txt -o -name root.txt -o -name proof.txt -o -name flag.txt \) 2>/dev/null'
+b='grep -rlE "flag\{|HTB\{|THM\{|FLAG\{" / 2>/dev/null | head'
+echo "${D}# paste on the target:${X}"
+echo "${G}$a${X}"
+echo "${G}$b${X}"
+command -v xclip >/dev/null && { printf '%s' "$a" | setsid xclip -selection clipboard >/dev/null 2>&1 & echo "${D}(first copied)${X}"; }
