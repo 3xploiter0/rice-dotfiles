@@ -435,3 +435,19 @@ Chrome through Burp / trust Burp's CA.
 burpchrome                   # Chrome routed through 127.0.0.1:8080
 burpcert                     # run once with Burp open
 ```
+
+## 🐳 Docker practice labs
+
+### `dlab`
+Manage self-hosted vulnerable labs in `~/cyber/dockerlabs/` (each a `docker-compose.yml`).
+```bash
+dlab                 # list labs + status
+dlab up dvwa         # start DVWA -> http://localhost:8081
+dlab up juice-shop   # -> http://localhost:3001
+dlab open dvwa       # open in browser
+dlab down dvwa       # stop
+dlab ps              # running lab containers
+dlab add bwapp raesene/bwapp 8083:80   # add your own
+dlab clean           # prune dangling images (--all = + stopped containers)
+```
+Seeded labs: **dvwa** (8081), **juice-shop** (3001), **webgoat** (8082/WebGoat).

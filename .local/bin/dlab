@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# dlab — manage self-hosted Docker practice labs in ~/cyber/dockerlabs/<name>/
+#   dlab                list labs + running status
+#   dlab up <name>      start a lab (docker compose up -d) + show URL
+#   dlab down <name>    stop a lab
+#   dlab restart <name> | dlab logs <name> | dlab open <name>
+#   dlab ps             containers for your labs only
+#   dlab add <name> <image> [host:cont port]   scaffold a new lab
+#   dlab clean          prune dangling images (safe)   ·  dlab clean --all = + stopped containers
+LABS="$HOME/cyber/dockerlabs"; mkdir -p "$LABS"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; R=$'\e[38;2;247;118;142m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+dc(){ docker compose "$@" 2>/dev/null || docker-compose "$@"; }
+url(){ cat "$LABS/$1/.url" 2>/dev/null; }
+
+cmd="${1:-list}"; name="${2:-}"
+case "$cmd" in
+  list|ls|"")
+    printf "${B}%-16s %-9s %s${X}\n" "LAB" "STATUS" "URL"
+    echo "${D}────────────────────────────────────────────${X}"
+    for d in "$LABS"/*/; do
+      [ -f "$d/docker-compose.yml" ] || continue; n="$(basename "$d")"
+      if [ -n "$(cd "$d" && dc ps -q 2>/dev/null)" ]; then st="${G}up${X}"; else st="${D}down${X}"; fi
+      printf "%-16s %-18s ${D}%s${X}\n" "$n" "$st" "$(url "$n")"
+    done
+    echo "${D}up: dlab up <name>  ·  add: dlab add <name> <image> [8080:80]${X}" ;;
+  up|start)
+    [ -z "$name" ] && { echo "usage: dlab up <name>"; exit 1; }
+    [ -d "$LABS/$name" ] || { echo "${R}no lab '$name'${X} (dlab list)"; exit 1; }
+    echo "${B}starting $name…${X}"; ( cd "$LABS/$name" && dc up -d ) && \
+      echo "${G}up${X}  ->  $(url "$name")" ;;
+  down|stop)  ( cd "$LABS/$name" && dc down ) && echo "${Y}$name stopped${X}" ;;
+  restart)    ( cd "$LABS/$name" && dc restart ) ;;
+  logs)       ( cd "$LABS/$name" && dc logs -f --tail=50 ) ;;
+  open)       u="$(url "$name")"; [ -n "$u" ] && { setsid xdg-open "$u" >/dev/null 2>&1 & echo "opening $u"; } || echo "no .url for $name" ;;
+  ps)         docker ps --filter "name=lab-" --format 'table {{.Names}}\t{{.Ports}}\t{{.Status}}' ;;
+  add)
+    img="$3"; port="${4:-8080:80}"
+    [ -z "$name" ] || [ -z "$img" ] && { echo "usage: dlab add <name> <image> [host:cont]"; exit 1; }
+    mkdir -p "$LABS/$name"
+    cat > "$LABS/$name/docker-compose.yml" <<EOF
+services:
+  $name:
+    image: $img
+    container_name: lab-$name
+    ports: ["$port"]
+    restart: unless-stopped
+EOF
+    echo "http://localhost:${port%%:*}" > "$LABS/$name/.url"
+    echo "${G}created${X} $LABS/$name  ->  dlab up $name" ;;
+  clean)
+    echo "${B}pruning dangling images…${X}"; docker image prune -f
+    if [ "$name" = "--all" ]; then echo "${Y}pruning stopped containers…${X}"; docker container prune -f; fi
+    echo "${D}(volumes & running containers untouched; --all also removes stopped containers)${X}" ;;
+  *) echo "usage: dlab [list|up|down|restart|logs|open|ps|add|clean]"; exit 1 ;;
+esac
