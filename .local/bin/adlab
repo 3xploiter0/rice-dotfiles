@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# adlab   how to set up an Active Directory practice lab (not docker — VM/Vagrant based)
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; D=$'\e[38;2;86;95;137m'; W=$'\e[38;2;192;202;245m'; X=$'\e[0m'
+cat <<TXT
+${W}  Active Directory practice labs${X}
+${D}  AD labs run Windows Server VMs — not Docker. Pick by your resources:${X}
+
+${B}▌ GOAD${X} (Game of Active Directory) — the standard, most complete
+  ${D}needs ~120GB disk, 24GB+ RAM, VirtualBox/VMware/Proxmox + Vagrant${X}
+  ${G}git clone https://github.com/Orange-Cyberdefense/GOAD ~/cyber/adlabs/GOAD${X}
+  ${G}cd ~/cyber/adlabs/GOAD && ./goad.sh${X}   ${D}(pick provider; it builds the forest)${X}
+
+${B}▌ GOAD-Light${X} — 2 VMs, lighter (same repo: ./goad.sh -t install -l GOAD-Light)
+
+${B}▌ Ludus${X} — easiest if you have a dedicated host (auto-deploys GOAD & more)
+  ${D}https://docs.ludus.cloud${X}
+
+${B}▌ No hardware?${X} practice AD attacks online instead:
+  ${D}HackTheBox Pro Labs (Dante/Zephyr), TryHackMe AD rooms, HTB AD boxes${X}
+
+${B}▌ When it's up, attack from Kali with:${X}
+  ${G}cheat ad${X}   ${D}(nxc, GetNPUsers, GetUserSPNs, bloodhound-python, secretsdump, evil-winrm)${X}
+TXT

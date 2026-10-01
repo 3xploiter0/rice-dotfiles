@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# vulhub [query]   fuzzy-pick a vulhub scenario and start it (333 CVE labs)
+#   vulhub log4j          filter, pick, start
+#   vulhub down           stop the last scenario you started
+#   vulhub update         git pull the collection
+ROOT="$HOME/cyber/dockerlabs/vulhub"; STATE="$HOME/.cache/vulhub-last"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+[ -d "$ROOT" ] || { echo "vulhub not cloned — git clone https://github.com/vulhub/vulhub ~/cyber/dockerlabs/vulhub"; exit 1; }
+
+case "${1:-}" in
+  down|stop)
+    d="$(cat "$STATE" 2>/dev/null)"; [ -d "$d" ] || { echo "no active scenario"; exit 0; }
+    ( cd "$d" && docker compose down ) && echo "${D}stopped $(basename "$(dirname "$d")")/$(basename "$d")${X}"; exit 0 ;;
+  update) exec git -C "$ROOT" pull ;;
+esac
+
+PREV='f={}; d=$(dirname {}); (command -v batcat>/dev/null && batcat --style=plain --color=always "$d/README.md" 2>/dev/null) || cat "$d/README.md" 2>/dev/null || echo no README'
+sel="$(find "$ROOT" -name docker-compose.yml -printf '%P\n' 2>/dev/null \
+      | sed 's#/docker-compose.yml##' \
+      | fzf --query="${1:-}" --height=90% --layout=reverse --border=sharp --prompt="vulhub> " \
+            --preview="d=$ROOT/{}; (command -v batcat>/dev/null && batcat --style=plain --color=always \$d/README.md 2>/dev/null) || cat \$d/README.md 2>/dev/null || echo 'no README'" \
+            --preview-window=right,60%,wrap)"
+[ -z "$sel" ] && exit 0
+dir="$ROOT/$sel"
+echo "$dir" > "$STATE"
+echo "${B}starting${X} $sel"
+( cd "$dir" && docker compose up -d ) && echo "${G}up${X} — see the README for the exploit:"
+echo "${D}README:${X} $dir/README.md    ${D}stop with:${X} vulhub down"
