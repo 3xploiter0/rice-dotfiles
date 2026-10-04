@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# menu   fzf-based master command launcher (called via Super+M keybind)
+# Provides quick access to: payloads, recon, listeners, notes, help
+IFS=$'\n' read -d '' -r -a options < <(cat << 'EOF'
+🎯 box — htb/thm/pg workspace
+📡 vpn htb — connect VPN (htb/thm/custom)
+🔍 ports <ip> — fast port scan
+🔎 recon <ip> — full enumeration
+💻 listener [port] — catch reverse shells
+🎨 payload [os] — msfvenom reverse shell
+📝 note "text" — add timestamped note
+🎯 target <ip> — set active target
+🗂️ loot <file> — copy to box loot/
+🚀 boxes — progress tracker (all boxes)
+📚 cheat [section] — command reference
+🐳 dlab — docker labs (list/up/down)
+🔑 creds [action] — password vault
+📊 status — VPN/target/listener status
+💡 brief — daily cyber news
+🤖 ai-suggest — exploit suggestions (for a service)
+🤖 ai-chain — full attack plan generator
+🚪 tmux-guide — pane navigation
+❓ help — this menu
+EOF
+)
+
+# rofi selection
+sel=$(printf '%s\n' "${options[@]}" | sed 's/^[^ ]* //' | fzf --height=60% --layout=reverse --border=sharp --prompt="command> " --preview='ex {1}' 2>/dev/null)
+[ -z "$sel" ] && exit 0
+
+# parse and execute
+cmd=$(echo "$sel" | awk '{print $1}')
+args=$(echo "$sel" | cut -d' ' -f2-)
+
+case "$cmd" in
+  box|vpn|ports|recon|listener|payload|note|target|loot|boxes|cheat|dlab|creds|status|brief|tmux-guide|help)
+    if [ "$args" = "$sel" ]; then
+      # no args → run as-is
+      exec "$cmd"
+    else
+      # has args → prompt for them
+      read -p "$cmd " -e -i "$args" input
+      exec $cmd $input
+    fi
+    ;;
+  *) echo "unknown: $sel" ;;
+esac

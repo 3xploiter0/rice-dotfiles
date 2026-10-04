@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# tmux-guide   print the tmux pane navigation reference
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+
+cat << 'EOF'
+
+EOF
+printf "${B}%s${X}\n" "━━━ tmux PANE NAVIGATION (inside a workspace) ━━━"
+cat << 'EOF'
+
+KEYS (press inside tmux; Ctrl+B is the leader):
+  Ctrl+B Right  ← next pane  (same as Ctrl+B +Right arrow)
+  Ctrl+B Left   ← prev pane
+  Ctrl+B Up     ← pane above
+  Ctrl+B Down   ← pane below
+  Ctrl+B q      ← show pane numbers, type the number to jump
+
+  Ctrl+B Space  ← cycle layout (resize panes)
+  Ctrl+B {      ← swap panes
+  Ctrl+B }      ← swap panes
+  Ctrl+B z      ← fullscreen this pane (toggle)
+
+EXIT & RE-ATTACH:
+  Ctrl+D        ← close pane  (closes session if last pane)
+  tmux attach -t <session>   ← come back to it later
+  tmux kill-session -t <session>   ← force-delete
+
+YOUR LAYOUT (thm/htb workspace):
+  Pane 0: nmap scan
+  Pane 1: reverse-shell listener  (nc -lvnp 4444)
+  Pane 2: nvim notes.md editor
+
+SHORTCUTS:
+  cheat quick   ← shows tmux examples
+  status        ← shows your current sessions
+  Ctrl+B d      ← detach from tmux (don't kill it)
+  tmux attach   ← jump back in
+
+EOF

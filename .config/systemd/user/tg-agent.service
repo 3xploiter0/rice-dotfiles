@@ -1,0 +1,17 @@
+[Unit]
+Description=Telegram Agent — PC Command Execution
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/tg-agent
+Environment="TG_BOT_TOKEN=YOUR_BOT_TOKEN_HERE"
+Environment="TG_USER_ID=YOUR_USER_ID_HERE"
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

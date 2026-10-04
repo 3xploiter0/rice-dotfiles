@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# notify [level] [title] [message]   send a desktop notification (uses dunst)
+# levels: low (blue), normal (cyan), critical (red)
+# examples:
+#   notify low "VPN" "Connected to HTB"
+#   notify normal "Listener" "Got shell on 10.10.11.5:4444"
+#   notify critical "Error" "Recon failed"
+
+level="${1:-normal}"
+title="${2:-Notification}"
+message="${3:-}"
+
+# urgency map
+case "$level" in
+  low)     urgency="low" ;;
+  critical|error|warn) urgency="critical" ;;
+  *)       urgency="normal" ;;
+esac
+
+# send via notify-send (dunst listens)
+notify-send -u "$urgency" -t 4000 "$title" "$message" 2>/dev/null &

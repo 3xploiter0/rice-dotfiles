@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+# attack-chain <target-ip> [notes]   AI generates prioritized attack plan from nmap + context
+# Requires recon to have run first (nmap data in box folder)
+# Examples:
+#   attack-chain 10.10.11.5
+#   attack-chain 10.10.11.5 "Linux, web server, SMB open"
+
+API_KEY="${ANTHROPIC_API_KEY:-}"
+TARGET="${1:-}"
+CONTEXT="${2:-}"
+
+[ -z "$API_KEY" ] && { echo "error: set ANTHROPIC_API_KEY"; exit 1; }
+[ -z "$TARGET" ] && { echo "usage: attack-chain <ip> [notes]"; exit 1; }
+
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; X=$'\e[0m'
+
+say() { printf "\n${B}[*] %s${X}\n" "$1"; }
+
+say "Building attack chain for $TARGET…"
+
+# Try to find nmap results in current box
+NMAP_FILE=""
+if [ -d "./nmap" ]; then
+  NMAP_FILE="$(find ./nmap -name 'services.nmap' -o -name 'services.xml' | head -1)"
+fi
+
+NMAP_DATA=""
+if [ -f "$NMAP_FILE" ]; then
+  say "Found nmap data: $NMAP_FILE"
+  NMAP_DATA=$(cat "$NMAP_FILE" | head -50)
+fi
+
+# Build attack plan prompt
+PROMPT="You are a master penetration tester. Given a target system, create a step-by-step attack plan.
+
+TARGET: $TARGET
+$( [ -n "$CONTEXT" ] && echo "CONTEXT: $CONTEXT" || echo "" )
+
+$( [ -n "$NMAP_DATA" ] && echo "NMAP DATA:" && echo "$NMAP_DATA" || echo "No nmap data provided." )
+
+Generate an ATTACK CHAIN with:
+1. **Phase 1: Reconnaissance** — what to scan/enumerate first
+2. **Phase 2: Exploitation** — initial access vectors (prioritized by success likelihood)
+3. **Phase 3: Privilege Escalation** — methods to gain root/admin
+4. **Phase 4: Persistence** — how to maintain access
+5. **Phase 5: Post-Exploitation** — lateral movement, data exfil
+
+For each phase, provide:
+- Specific command/tool to run
+- Expected output/what to look for
+- Next steps if successful/unsuccessful
+
+Be tactical and specific. Assume Kali Linux with standard tools."
+
+say "Generating attack plan…"
+
+# Call Claude API
+RESPONSE=$(curl -s "https://api.anthropic.com/v1/messages" \
+  -H "x-api-key: $API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "content-type: application/json" \
+  -d @- << PAYLOAD
+{
+  "model": "claude-opus-5-5",
+  "max_tokens": 2500,
+  "messages": [
+    {
+      "role": "user",
+      "content": $(printf '%s' "$PROMPT" | jq -R -s '.')
+    }
+  ]
+}
+PAYLOAD
+)
+
+# Extract and display
+CHAIN=$(echo "$RESPONSE" | jq -r '.content[0].text // .error.message // "API error"')
+
+printf "\n${G}━━━ ATTACK CHAIN: $TARGET ━━━${X}\n"
+echo "$CHAIN"
+
+# Save to box notes
+if [ -f "./notes.md" ]; then
+  echo "" >> ./notes.md
+  echo "## AI Attack Chain ($(date +%F))" >> ./notes.md
+  echo "$CHAIN" | sed 's/^/  /' >> ./notes.md
+  printf "\n${B}[+] Appended to ./notes.md${X}\n"
+fi
+
+# Cache
+CACHE_DIR="$HOME/.cache/attack-chain"
+mkdir -p "$CACHE_DIR"
+CACHE_FILE="$CACHE_DIR/${TARGET}_$(date +%s).txt"
+echo "$CHAIN" > "$CACHE_FILE"
+printf "${B}[*] Full plan cached → $CACHE_FILE${X}\n"

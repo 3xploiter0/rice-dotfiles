@@ -24,6 +24,7 @@
 /commands/custom/<Super>f                  exo-open --launch FileManager
 /commands/custom/<Super>F1                 xfce4-find-cursor
 /commands/custom/<Super>l                  xflock4
+/commands/custom/<Super>m                  $HOME/.local/bin/menu
 /commands/custom/<Super>p                  xfce4-display-settings --minimal
 /commands/custom/<Super>r                  xfrun4
 /commands/custom/<Super>Return             alacritty

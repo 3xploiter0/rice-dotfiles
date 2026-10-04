@@ -1,6 +1,6 @@
 /applications/known_applications  [,blueman,google-chrome,notify-send,org.freedesktop.network-manager-applet,timeshift-gtk,Xfce volume control,xfce4-power-manager,xfce4-settings-helper]
 /do-fadeout                       true
-/do-not-disturb                   true
+/do-not-disturb                   false
 /do-slideout                      false
 /expire-timeout                   5
 /initial-opacity                  1.000000

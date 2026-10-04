@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# recon-ai <nmap-xml> [--json]   AI analysis of nmap scan + attack recommendations
+# Parses nmap results, sends to Claude API, gets intelligent exploit/payload suggestions
+# Examples:
+#   recon-ai nmap/services.xml
+#   recon-ai ~/cyber/labs/htb/blocky/nmap/services.xml --json
+# Requires: ANTHROPIC_API_KEY env var set
+
+set -u
+API_KEY="${ANTHROPIC_API_KEY:-}"
+NMAP_FILE="${1:-}"
+JSON_MODE="${2:-}"
+
+[ -z "$API_KEY" ] && { echo "error: set ANTHROPIC_API_KEY env var"; exit 1; }
+[ -z "$NMAP_FILE" ] && { echo "usage: recon-ai <nmap-xml> [--json]"; exit 1; }
+[ ! -f "$NMAP_FILE" ] && { echo "error: file not found: $NMAP_FILE"; exit 1; }
+
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; X=$'\e[0m'
+
+say() { printf "\n${B}[*] %s${X}\n" "$1"; }
+
+say "Analyzing nmap results with Claude…"
+
+# Extract key info from nmap XML
+NMAP_TEXT=$(cat "$NMAP_FILE" | sed -n '/<nmaprun/,/<\/nmaprun>/p' | head -100)
+
+# Build the prompt for Claude
+read -r -d '' PROMPT << 'EOF' || true
+You are a penetration testing assistant. Analyze the following nmap scan output and provide:
+
+1. **Services Found** — list each open port, service, version
+2. **Vulnerabilities** — known CVEs or misconfigurations for each service
+3. **Attack Paths** — prioritized exploitation steps (easiest to hardest)
+4. **Payloads** — specific reverse shell payloads for the target OS (if detected)
+5. **Tools** — recommended tools for each service (searchsploit, sqlmap, ffuf, etc)
+6. **Quick Wins** — low-hanging fruit to try first (default creds, unauth access, etc)
+
+Be concise, actionable, and prioritize by likelihood of success.
+
+NMAP OUTPUT:
+EOF
+
+PROMPT="${PROMPT}
+${NMAP_TEXT}"
+
+# Call Claude API
+RESPONSE=$(curl -s "https://api.anthropic.com/v1/messages" \
+  -H "x-api-key: $API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "content-type: application/json" \
+  -d @- << PAYLOAD
+{
+  "model": "claude-opus-5-5",
+  "max_tokens": 2048,
+  "messages": [
+    {
+      "role": "user",
+      "content": $(printf '%s' "$PROMPT" | jq -R -s '.')
+    }
+  ]
+}
+PAYLOAD
+)
+
+# Extract and format response
+if [ "$JSON_MODE" = "--json" ]; then
+  echo "$RESPONSE" | jq '.content[0].text' -r
+else
+  ANALYSIS=$(echo "$RESPONSE" | jq -r '.content[0].text // .error.message // "API error"')
+
+  # Pretty-print the analysis
+  printf "\n${G}━━━ AI RECON ANALYSIS ━━━${X}\n"
+  echo "$ANALYSIS"
+  printf "\n${Y}[*] Save this: recon-ai ${NMAP_FILE} > analysis.txt${X}\n"
+
+  # Cache the result
+  CACHE_DIR="$HOME/.cache/recon-ai"
+  mkdir -p "$CACHE_DIR"
+  CACHE_FILE="$CACHE_DIR/$(basename "$NMAP_FILE" .xml)_$(date +%s).txt"
+  echo "$ANALYSIS" > "$CACHE_FILE"
+  printf "${B}[*] Cached → $CACHE_FILE${X}\n"
+fi

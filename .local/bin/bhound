@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# bhound <dc-ip> <user> <pass> [domain]   collect AD data for BloodHound CE (zip to upload)
+# default domain: lab.local (the samba-ad lab).  Then upload the .zip in the BH UI.
+dc="${1:-172.30.0.10}"; user="${2:-alice}"; pass="${3:-Spring2024!}"; dom="${4:-lab.local}"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+out="bloodhound_$(date +%H%M%S)"; mkdir -p "$out"; cd "$out"
+echo "${B}collecting${X} $dom via $dc as $user ..."
+if command -v bloodhound-python >/dev/null; then
+  bloodhound-python -d "$dom" -u "$user" -p "$pass" -ns "$dc" -c all --zip 2>&1 | tail -6
+else
+  nxc ldap "$dc" -u "$user" -p "$pass" --bloodhound -c all --dns-server "$dc" 2>&1 | tail -6
+fi
+z="$(ls -1t *.zip 2>/dev/null | head -1)"
+echo "${G}done${X} -> $(pwd)/$z"
+echo "${D}upload it:${X} BloodHound UI (http://localhost:8888) > gear/Administration > File Ingest > Upload  ->  then explore 'Shortest paths to Domain Admins'"

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # shot [name]   screenshot (select a region) into the current box loot/ folder
+# Uses scrot (clearer selection overlay) or falls back to import
 boxdir() {
   local p roots parent
   p="$(realpath "$PWD" 2>/dev/null)"
@@ -16,4 +17,11 @@ boxdir() {
 dir="$(boxdir)"; [ -z "$dir" ] && dir="$PWD"
 mkdir -p "$dir/loot"
 out="$dir/loot/${1:-shot}_$(date +%H%M%S).png"
-import "$out" 2>/dev/null && echo "saved -> $out" || echo "select cancelled"
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; X=$'\e[0m'
+echo "${B}selecting region…${X} (drag to select, ESC to cancel)"
+# Try scrot first (clearer selection), fall back to import
+if command -v scrot &>/dev/null; then
+  scrot -s "$out" 2>/dev/null && echo "${G}saved${X} -> $out" || echo "select cancelled"
+else
+  import "$out" 2>/dev/null && echo "${G}saved${X} -> $out" || echo "select cancelled"
+fi

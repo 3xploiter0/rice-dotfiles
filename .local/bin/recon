@@ -47,3 +47,4 @@ if has 6379; then say "Redis"; command -v redis-cli >/dev/null && redis-cli -h "
 
 say "done — results in $out/"
 printf "${D}next: add the box to hosts (addhost %s <name>.htb) and dig into web/ + nmap/services.nmap${X}\n" "$ip"
+~/.local/bin/notify normal "Recon" "Scan complete for $ip  →  $out/" &

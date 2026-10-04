@@ -213,13 +213,17 @@ perl-base
 picom
 pipx
 procps
+python3-requests
 readline-common
 ripgrep
+riseup-vpn
 rlwrap
 rofi
+rustscan
 seclists
 sed
 sensible-utils
+simplescreenrecorder
 sqv
 sshpass
 starship

@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# suggest [service] [version]   AI-powered exploit + payload recommendations
+# Uses Claude to generate targeted attack suggestions
+# Examples:
+#   suggest apache 2.4.41
+#   suggest "wordpress 5.8"
+#   suggest php 7.2
+#   suggest                       (enter interactive mode)
+
+API_KEY="${ANTHROPIC_API_KEY:-}"
+SERVICE="${1:-}"
+VERSION="${2:-}"
+
+[ -z "$API_KEY" ] && { echo "error: set ANTHROPIC_API_KEY"; exit 1; }
+
+B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; R=$'\e[38;2;247;118;142m'; X=$'\e[0m'
+
+if [ -z "$SERVICE" ]; then
+  echo "${B}Suggest mode — enter service details${X}"
+  read -p "service> " SERVICE
+  read -p "version (optional)> " VERSION
+fi
+
+[ -z "$SERVICE" ] && { echo "error: no service"; exit 1; }
+
+TARGET_INFO="Service: $SERVICE"
+[ -n "$VERSION" ] && TARGET_INFO="$TARGET_INFO | Version: $VERSION"
+
+say() { printf "\n${B}[*] %s${X}\n" "$1"; }
+
+say "Generating exploit suggestions for: $TARGET_INFO"
+
+PROMPT="You are a penetration testing expert. A target has the following service running:
+
+$TARGET_INFO
+
+Provide:
+1. **Known CVEs** — specific CVE numbers with brief descriptions
+2. **Exploitation Methods** — step-by-step techniques to exploit
+3. **Reverse Shell Payloads** — msfvenom commands for bash/python/powershell
+4. **Tools** — specific tools to use (e.g., searchsploit, metasploit, custom exploits)
+5. **Quick Checks** — first things to try (unauth access, default creds, etc)
+6. **Difficulty** — ease of exploitation (easy/medium/hard)
+
+Be concise and actionable. Assume the attacker has network access and basic tools."
+
+# Call Claude API
+RESPONSE=$(curl -s "https://api.anthropic.com/v1/messages" \
+  -H "x-api-key: $API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "content-type: application/json" \
+  -d @- << PAYLOAD
+{
+  "model": "claude-opus-5-5",
+  "max_tokens": 1500,
+  "messages": [
+    {
+      "role": "user",
+      "content": $(printf '%s' "$PROMPT" | jq -R -s '.')
+    }
+  ]
+}
+PAYLOAD
+)
+
+# Extract and display
+SUGGESTIONS=$(echo "$RESPONSE" | jq -r '.content[0].text // .error.message // "API error"')
+
+printf "\n${G}━━━ EXPLOIT SUGGESTIONS: $SERVICE ━━━${X}\n"
+echo "$SUGGESTIONS"
+
+# Highlight payloads for copy
+if echo "$SUGGESTIONS" | grep -qi "msfvenom\|bash\|python"; then
+  printf "\n${Y}[*] Copy payloads above with: Ctrl+C, then Ctrl+Shift+C${X}\n"
+fi
+
+# Cache
+CACHE_DIR="$HOME/.cache/suggest"
+mkdir -p "$CACHE_DIR"
+CACHE_FILE="$CACHE_DIR/$(echo "$SERVICE" | tr ' ' '_')_$(date +%s).txt"
+echo "$SUGGESTIONS" > "$CACHE_FILE"
+printf "${B}[*] Cached → $CACHE_FILE${X}\n"

