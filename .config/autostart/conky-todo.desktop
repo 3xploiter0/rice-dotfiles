@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Conky Todo Widget
+Exec=sh -c "sleep 4 && conky -c $HOME/.config/conky/todo.conf"
+X-GNOME-Autostart-enabled=true

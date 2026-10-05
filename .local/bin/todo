@@ -1,5 +1,30 @@
 #!/usr/bin/env bash
-# todo "task"   add a task to the current box  ·  todo = list  ·  todo done N
+# todo "task"      add a task to the current box  ·  todo = list  ·  todo done N
+# todo rm N        delete line N   ·  todo clear   remove all checked-off tasks
+# todo -g "task"   same, but for the GENERAL list (the desktop widget)
+G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; R=$'\e[38;2;247;118;142m'; X=$'\e[0m'
+
+# run a todo action against file $1 ("" = general vs box label is set by caller via $2 "empty msg")
+manage() {
+  local t="$1" emptymsg="$2"; shift 2
+  touch "$t"
+  case "${1:-}" in
+    "")    [ -s "$t" ] && nl -ba "$t" | sed "s/\[x\]/${G}[x]${X}/" || echo "${D}$emptymsg${X}" ;;
+    done)  [ -n "${2:-}" ] && sed -i "${2}s/^- \[ \]/- [x]/" "$t" 2>/dev/null; nl -ba "$t" | sed "s/\[x\]/${G}[x]${X}/" ;;
+    rm)    [ -n "${2:-}" ] && sed -i "${2}d" "$t" 2>/dev/null && echo "${R}removed line $2${X}"; nl -ba "$t" | sed "s/\[x\]/${G}[x]${X}/" ;;
+    clear) local n; n=$(grep -c '^- \[x\]' "$t"); sed -i '/^- \[x\]/d' "$t"; echo "${R}cleared ${n:-0} done${X}"; [ -s "$t" ] && nl -ba "$t" ;;
+    *)     printf -- '- [ ] %s\n' "$*" >> "$t"; echo "${G}added${X}" ;;
+  esac
+}
+
+# -g = GENERAL list (shown in the left-side conky widget), lives outside any box
+if [ "${1:-}" = "-g" ]; then
+  shift
+  mkdir -p "$HOME/.config/hack"
+  manage "$HOME/.config/hack/todo.md" 'no general todos — todo -g "task"' "$@"
+  exit 0
+fi
+
 boxdir() {
   local p roots parent
   p="$(realpath "$PWD" 2>/dev/null)"
@@ -13,11 +38,5 @@ boxdir() {
   find -L "$HOME"/cyber/labs -mindepth 2 -maxdepth 2 -type d -printf "%T@ %p
 " 2>/dev/null | sort -rn | head -1 | cut -d" " -f2-
 }
-dir="$(boxdir)"; [ -z "$dir" ] && { echo "no box (cd into a box folder)"; exit 1; }
-t="$dir/todo.md"; touch "$t"
-G=$'\e[38;2;158;206;106m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
-case "${1:-}" in
-  "") [ -s "$t" ] && nl -ba "$t" | sed "s/\[x\]/${G}[x]${X}/" || echo "${D}no todos — todo \"task\"${X}" ;;
-  done) sed -i "${2}s/^- \[ \]/- [x]/" "$t" 2>/dev/null; nl -ba "$t" ;;
-  *) printf -- '- [ ] %s\n' "$*" >> "$t"; echo "${G}added${X}" ;;
-esac
+dir="$(boxdir)"; [ -z "$dir" ] && { echo "no box (cd into a box folder, or use ${G}todo -g${X} for the general list)"; exit 1; }
+manage "$dir/todo.md" 'no todos — todo "task"' "$@"

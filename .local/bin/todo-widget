@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# todo-widget — emit todos formatted for the conky left-side desktop widget.
+# Shows the GENERAL list (~/.config/hack/todo.md) plus the active box's pending tasks.
+# Output uses conky ${...} markup (the widget calls it with execpi, which re-parses).
+GLOBAL="$HOME/.config/hack/todo.md"
+MAXLINES=16          # keep it on a 768px screen
+count=0
+
+emit() {           # emit a file's tasks; $1=file $2=section label $3=pending_only(1/0)
+  local f="$1" label="$2" pend="$3" shown=0 line task
+  [ -f "$f" ] || return
+  while IFS= read -r line; do
+    case "$line" in *'- ['*) : ;; *) continue ;; esac
+    task="${line#*] }"
+    [ -z "$task" ] && continue
+    [ "$count" -ge "$MAXLINES" ] && { printf '${color8}  …more${color}\n'; return; }
+    if [ "$shown" -eq 0 ]; then printf '${color3}%s${color}\n' "$label"; shown=1; count=$((count+1)); fi
+    case "$line" in
+      *'- [x]'*) [ "$pend" = 1 ] && continue
+                 printf '${color8}  %s${color}\n' "$task" ;;
+      *)         printf '${color2} ${color} %s\n' "$task" ;;
+    esac
+    count=$((count+1))
+  done < "$f"
+}
+
+emit "$GLOBAL" "GENERAL" 0
+
+# active box = most recently touched box folder that has a todo.md
+box="$(find -L "$HOME/cyber/labs" -mindepth 2 -maxdepth 2 -type d -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-)"
+[ -n "$box" ] && [ -s "$box/todo.md" ] && emit "$box/todo.md" "$(basename "$box" | tr '[:lower:]' '[:upper:]')" 1
+
+if [ "$count" -eq 0 ]; then
+  printf '${color8}no todos yet${color}\n'
+  printf '${color8}add one:${color}\n'
+  printf '${color8}todo -g "task"${color}\n'
+fi
