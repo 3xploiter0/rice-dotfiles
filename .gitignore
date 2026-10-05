@@ -3,3 +3,12 @@
 .local/bin/agy
 cyber/dockerlabs/vulhub/
 dockerlabs/vulhub/
+
+# SECRETS — Never commit these files
+.zshrc
+.bashrc
+.env
+.secrets.local
+*.token
+TG_BOT_TOKEN
+TG_USER_ID
