@@ -76,7 +76,7 @@
 /plugins/plugin-15/use-label                  false
 /plugins/plugin-16                            pulseaudio
 /plugins/plugin-16/enable-keyboard-shortcuts  true
-/plugins/plugin-16/known-players              Chrome
+/plugins/plugin-16/known-players              Chrome;firefox-esr
 /plugins/plugin-17                            notification-plugin
 /plugins/plugin-18                            power-manager-plugin
 /plugins/plugin-19                            clock
@@ -85,7 +85,7 @@
 /plugins/plugin-19/digital-time-format        %A %H:%M
 /plugins/plugin-1/button-icon                 view-app-grid-symbolic
 /plugins/plugin-1/button-title                
-/plugins/plugin-1/recent                      [com.microsoft.VSCode.desktop,xfce-wmtweaks-settings.desktop,riseup-vpn.desktop,google-chrome.desktop,firefox-esr.desktop,org.wireshark.Wireshark.desktop,xfce-backdrop-settings.desktop,xfce-display-settings.desktop,be.maartenbaert.simplescreenrecorder.desktop,kali-burpsuite.desktop]
+/plugins/plugin-1/recent                      [com.microsoft.VSCode.desktop,org.gnome.TextEditor.desktop,firefox-esr.desktop,riseup-vpn.desktop,google-chrome.desktop,xfce-wmtweaks-settings.desktop,org.wireshark.Wireshark.desktop,xfce-backdrop-settings.desktop,xfce-display-settings.desktop,be.maartenbaert.simplescreenrecorder.desktop]
 /plugins/plugin-1/show-button-title           false
 /plugins/plugin-2                             separator
 /plugins/plugin-20                            separator
