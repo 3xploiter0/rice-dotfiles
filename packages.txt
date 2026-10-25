@@ -15,6 +15,7 @@ bettercap
 bibata-cursor-theme
 bind9-dnsutils
 bind9-host
+binutils-aarch64-linux-gnu
 bsdutils
 btop
 build-essential
@@ -64,6 +65,7 @@ fonts-jetbrains-mono
 foremost
 fzf
 gcc-15-base
+gcc-16-cross-base
 gdb
 gettext-base
 gh
@@ -100,6 +102,8 @@ laptop-detect
 less
 libacl1
 libapt-pkg7.0
+libasan8-arm64-cross
+libatomic1-arm64-cross
 libattr1
 libaudit-common
 libaudit1
@@ -110,6 +114,7 @@ libbz2-1.0
 libc-bin
 libc-gconv-modules-extra
 libc6
+libc6-arm64-cross
 libcap-ng0
 libcap2
 libcap2-bin
@@ -121,11 +126,17 @@ libedit2
 libelf1t64
 libext2fs2t64
 libfdisk1
+libfdt1
+libgcc-16-dev-arm64-cross
 libgcc-s1
+libgcc-s1-arm64-cross
 libgmp10
+libgomp1-arm64-cross
 libgssapi-krb5-2
 libhogweed6t64
+libhwasan0-arm64-cross
 libidn2-0
+libitm1-arm64-cross
 libjansson4
 libk5crypto3
 libkeyutils1
@@ -133,6 +144,7 @@ libkmod2
 libkrb5-3
 libkrb5support0
 liblocale-gettext-perl
+liblsan0-arm64-cross
 liblz4-1
 liblzma5
 libmd0
@@ -166,6 +178,7 @@ libsmartcols1
 libss2
 libssl3t64
 libstdc++6
+libstdc++6-arm64-cross
 libsystemd-shared
 libsystemd0
 libtext-charwidth-perl
@@ -174,6 +187,8 @@ libtext-wrapi18n-perl
 libtinfo6
 libtirpc-common
 libtirpc3t64
+libtsan2-arm64-cross
+libubsan1-arm64-cross
 libudev1
 libunistring5
 libuuid1
@@ -186,6 +201,7 @@ libxxhash0
 libzstd1
 ligolo-ng-common-binaries
 linux-image-amd64
+linux-libc-dev-arm64-cross
 linux-sysctl-defaults
 locales
 login
