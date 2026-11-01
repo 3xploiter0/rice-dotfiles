@@ -63,7 +63,7 @@
 /plugins/plugin-13/update-interval            0
 /plugins/plugin-14                            systray
 /plugins/plugin-14/known-items                [chrome_status_icon_4,chrome_status_icon_3,SimpleScreenRecorder,RiseupVPN,chrome_status_icon_2,chrome_status_icon_1,blueman]
-/plugins/plugin-14/known-legacy-items         [wi-fi network connection “ray mode” active: ray mode (84%),wi-fi network connection “ray mode” active: ray mode (85%),wi-fi network connection “ray mode” active: ray mode (88%),ibus panel,wi-fi network connection “ray mode” active: ray mode (89%),wi-fi network connection “ray mode” active: ray mode (87%),wi-fi network connection “1kn0wn0th1ng” active: 1kn0wn0th1ng (73%),onboard,wi-fi network connection “1kn0wn0th1ng” active: 1kn0wn0th1ng (68%),networkmanager applet]
+/plugins/plugin-14/known-legacy-items         [anydesk,wi-fi network connection “ray mode” active: ray mode (84%),wi-fi network connection “ray mode” active: ray mode (85%),wi-fi network connection “ray mode” active: ray mode (88%),ibus panel,wi-fi network connection “ray mode” active: ray mode (89%),wi-fi network connection “ray mode” active: ray mode (87%),wi-fi network connection “1kn0wn0th1ng” active: 1kn0wn0th1ng (73%),onboard,wi-fi network connection “1kn0wn0th1ng” active: 1kn0wn0th1ng (68%),networkmanager applet]
 /plugins/plugin-14/size-max                   16
 /plugins/plugin-14/square-icons               true
 /plugins/plugin-14/symbolic-icons             true
@@ -85,7 +85,7 @@
 /plugins/plugin-19/digital-time-format        %A %H:%M
 /plugins/plugin-1/button-icon                 view-app-grid-symbolic
 /plugins/plugin-1/button-title                
-/plugins/plugin-1/recent                      [com.microsoft.VSCode.desktop,xfce-display-settings.desktop,google-chrome.desktop,riseup-vpn.desktop,org.gnome.TextEditor.desktop,firefox-esr.desktop,xfce-wmtweaks-settings.desktop,org.wireshark.Wireshark.desktop,xfce-backdrop-settings.desktop,be.maartenbaert.simplescreenrecorder.desktop]
+/plugins/plugin-1/recent                      [riseup-vpn.desktop,anydesk.desktop,google-chrome.desktop,com.microsoft.VSCode.desktop,xfce-display-settings.desktop,offsec-training.desktop,org.gnome.TextEditor.desktop,firefox-esr.desktop,xfce-wmtweaks-settings.desktop,org.wireshark.Wireshark.desktop]
 /plugins/plugin-1/show-button-title           false
 /plugins/plugin-2                             separator
 /plugins/plugin-20                            separator

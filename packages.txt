@@ -1,7 +1,9 @@
+7zip
 aapt
 adduser
 alacritty
 ansifilter
+anydesk
 apksigner
 apktool
 apt
@@ -24,6 +26,7 @@ bzip2
 ca-certificates
 cava
 chisel
+chrome-remote-desktop
 cmatrix
 code
 conky-all
