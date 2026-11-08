@@ -1,5 +1,6 @@
 7zip
 aapt
+adb
 adduser
 alacritty
 ansifilter
@@ -8,6 +9,7 @@ apksigner
 apktool
 apt
 apt-utils
+aria2
 base-files
 base-passwd
 bash
@@ -44,6 +46,7 @@ debianutils
 dhcpcd-base
 diffutils
 dirsearch
+dkms
 dmidecode
 docker-compose
 docker.io
@@ -89,6 +92,7 @@ initramfs-tools
 intel-microcode
 iproute2
 iputils-ping
+iputils-tracepath
 iw
 jadx
 kali-archive-keyring
@@ -203,6 +207,7 @@ libxtables12
 libxxhash0
 libzstd1
 ligolo-ng-common-binaries
+linux-headers-7.1.5+kali-amd64
 linux-image-amd64
 linux-libc-dev-arm64-cross
 linux-sysctl-defaults
@@ -219,6 +224,7 @@ media-types
 mitmproxy
 mount
 mpv
+mtr
 nano
 ncurses-base
 ncurses-bin
@@ -258,6 +264,7 @@ starship
 steghide
 subfinder
 systemd
+systemd-resolved
 systemd-sysv
 systemd-timesyncd
 sysvinit-utils
@@ -278,6 +285,9 @@ util-linux
 util-linux-extra
 vim-common
 vim-tiny
+virtualbox
+virtualbox-ext-pack
+virtualbox-qt
 wamerican
 wget
 whiptail

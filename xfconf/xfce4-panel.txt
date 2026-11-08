@@ -85,7 +85,7 @@
 /plugins/plugin-19/digital-time-format        %A %H:%M
 /plugins/plugin-1/button-icon                 view-app-grid-symbolic
 /plugins/plugin-1/button-title                
-/plugins/plugin-1/recent                      [riseup-vpn.desktop,anydesk.desktop,google-chrome.desktop,com.microsoft.VSCode.desktop,xfce-display-settings.desktop,offsec-training.desktop,org.gnome.TextEditor.desktop,firefox-esr.desktop,xfce-wmtweaks-settings.desktop,org.wireshark.Wireshark.desktop]
+/plugins/plugin-1/recent                      [google-chrome.desktop,be.maartenbaert.simplescreenrecorder.desktop,xfce-display-settings.desktop,com.microsoft.VSCode.desktop,virtualbox.desktop,riseup-vpn.desktop,anydesk.desktop,offsec-training.desktop,org.gnome.TextEditor.desktop,firefox-esr.desktop]
 /plugins/plugin-1/show-button-title           false
 /plugins/plugin-2                             separator
 /plugins/plugin-20                            separator
