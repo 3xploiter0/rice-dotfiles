@@ -5,6 +5,7 @@ adduser
 alacritty
 ansifilter
 anydesk
+apache2
 apksigner
 apktool
 apt
@@ -69,6 +70,7 @@ flatpak
 fonts-inter
 fonts-jetbrains-mono
 foremost
+freerdp3-x11
 fzf
 gcc-15-base
 gcc-16-cross-base
@@ -221,6 +223,7 @@ man-db
 manpages
 mawk
 media-types
+micro
 mitmproxy
 mount
 mpv
