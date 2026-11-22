@@ -136,7 +136,7 @@ have the cloned folder, re-clone it and run `./uninstall.sh` from there.
 - Built and tested on **Kali Linux rolling, XFCE (X11)**. Other XFCE distros may need small tweaks.
 - The Nerd Font isn't bundled (too large for git) — the installer downloads it automatically.
 - Wallpapers are included for convenience; swap in your own from `~/.local/share/backgrounds/omarchy/`.
-- Three-finger swipes need a physical libinput touchpad. The installer adds your user to the `input` group and enables the autostart entry; **log out and back in once** before swiping. Without a touchpad, use `Super+1..5` or `Ctrl+Alt+Left/Right`.
+- Three-finger swipes need a physical libinput touchpad. Kali has no `libinput-gestures` apt package, so the installer fetches the upstream script into `~/.local/bin` and uses `libinput-tools`. It also adds your user to the `input` group and enables autostart; **log out and back in once** before swiping. Without a touchpad, use `Super+1..5` or `Ctrl+Alt+Left/Right`. You can re-run just this part with `bash scripts/install-gestures.sh`.
 - Use the recon/scanning tools **only against systems you're authorized to test.**
 
 Made for fun. PRs and issues welcome.

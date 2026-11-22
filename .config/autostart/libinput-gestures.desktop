@@ -2,6 +2,6 @@
 Type=Application
 Name=libinput-gestures
 Comment=Three-finger workspace gestures
-Exec=libinput-gestures
+Exec=/home/x3xploiter0/.local/bin/libinput-gestures
 X-GNOME-Autostart-enabled=true
 NoDisplay=true

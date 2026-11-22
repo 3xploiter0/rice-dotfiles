@@ -416,9 +416,10 @@ wal-cycle reset              # back to Catppuccin Mocha
 ```
 
 ### Three-finger workspace swipes
-`libinput-gestures` maps a 3-finger left/right swipe to the existing XFWM workspace shortcuts (`Ctrl+Alt+Right/Left`). It needs a physical libinput touchpad, the `input` group, and one re-login. Fallback: `Super+1..5` or `Ctrl+Alt+Left/Right`.
+`libinput-gestures` maps a 3-finger left/right swipe to the existing XFWM workspace shortcuts (`Ctrl+Alt+Right/Left`). It needs a physical libinput touchpad, the `input` group, and one re-login. Kali has no apt package for it, so `scripts/install-gestures.sh` installs the upstream script into `~/.local/bin`. Fallback: `Super+1..5` or `Ctrl+Alt+Left/Right`.
 ```bash
-libinput-gestures -c ~/.config/libinput-gestures.conf   # run manually
+bash ~/.rice-dotfiles/scripts/install-gestures.sh        # install/repair
+libinput-gestures -c ~/.config/libinput-gestures.conf     # run manually
 ```
 
 ### `arsenal` / `update`

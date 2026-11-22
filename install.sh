@@ -31,7 +31,7 @@ say "Installing packages (sudo)"
 APT=(
   # look
   papirus-icon-theme bibata-cursor-theme fonts-inter picom rofi
-  libinput-gestures python3-pil
+  libinput-tools python3-pil
   xfce4-docklike-plugin xfce4-panel-profiles conky-all cmatrix
   # terminals + shell
   alacritty tmux zoxide bat eza fd-find fzf ripgrep zsh-syntax-highlighting zsh-autosuggestions
@@ -170,13 +170,10 @@ if [ -d "$REPO/.config/systemd" ]; then
 fi
 
 # ---------------------------------------------------------------- 3-finger gestures
-if command -v libinput-gestures >/dev/null 2>&1; then
-  say "Enabling three-finger workspace swipes"
-  # Reading /dev/input needs the input group; needs sudo + re-login once.
-  getent group input >/dev/null && sudo usermod -aG input "$USER" 2>/dev/null || true
-  # The autostart entry copied above launches libinput-gestures on login.
-  pgrep -x libinput-gestures >/dev/null 2>&1 || (setsid libinput-gestures >/dev/null 2>&1 &)
-  ok "gestures configured (re-login required for input group)"
+# Kali has no `libinput-gestures` apt package; the helper installs upstream's
+# Python script into ~/.local/bin and uses the distro `libinput-tools` binaries.
+if [ -f "$REPO/scripts/install-gestures.sh" ]; then
+  bash "$REPO/scripts/install-gestures.sh" && ok "gestures configured (re-login if newly added to 'input')"
 fi
 
 # default shell -> zsh
