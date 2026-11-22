@@ -78,7 +78,8 @@ for p in .zshrc .tmux.conf \
          .config/conky .config/nvim .config/fastfetch .config/btop .config/cava \
          .config/hack .config/gtk-3.0 .config/gtk-4.0 .config/qterminal.org \
          .local/bin \
-         .local/share/themes .local/share/qtermwidget6 .local/share/gtksourceview-3.0 \
+         .local/share/themes .local/share/qtermwidget6 .local/share/qterminal \
+         .local/share/gtksourceview-3.0 \
          .local/share/gtksourceview-4 .local/share/gtksourceview-5 \
          .local/share/backgrounds .local/share/applications; do
   copy "$p" "$HOME/$p"
@@ -135,7 +136,7 @@ if command -v xfconf-query >/dev/null; then
   fi
   # wallpaper on every monitor THIS machine has (names differ per PC: eDP-1, eDP, HDMI-1…)
   WP="$HOME/.local/share/backgrounds/omarchy"
-  img="$WP/catppuccin-mocha-aurora.jpg"
+  img="$WP/anime-yq2mll.jpg"
   [ -f "$img" ] || img="$(find "$WP" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.png' \) 2>/dev/null | sort | head -1)"
   if [ -n "$img" ] && command -v xrandr >/dev/null; then
     for mon in $(xrandr --query | awk '/ connected/{print $1}'); do

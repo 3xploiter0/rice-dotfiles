@@ -9,10 +9,10 @@ Color=30,30,46
 Color=49,50,68
 
 [Foreground]
-Color=186,194,222
+Color=166,173,200
 
 [ForegroundIntense]
-Color=205,214,244
+Color=186,194,222
 
 [Color0]
 Color=49,50,68
@@ -60,5 +60,5 @@ Color=148,226,213
 Color=127,132,156
 
 [Color7Intense]
-Color=205,214,244
+Color=186,194,222
 

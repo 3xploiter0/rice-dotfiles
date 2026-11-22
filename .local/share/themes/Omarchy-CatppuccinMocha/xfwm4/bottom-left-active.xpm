@@ -1,5 +1,20 @@
 /* XPM */
-static char * x[] = {"2 2 1 1", "a c #89b4fa",
-"aa",
-"aa",
+static char * x[] = {
+"14 14 2 1",
+". c None",
+"a c #11111b",
+"aaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaa",
+"...aaaaaaaaaaa",
+".....aaaaaaaaa",
+"......aaaaaaaa",
+".......aaaaaaa",
+".......aaaaaaa",
+"........aaaaaa",
+"........aaaaaa",
+"........aaaaaa"
 };

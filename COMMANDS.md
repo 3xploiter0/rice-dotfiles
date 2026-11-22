@@ -411,7 +411,7 @@ Animated video wallpaper / recolor terminals from the wallpaper.
 ```bash
 livewp on
 livewp off
-wal-cycle                    # next wallpaper + recolor
+wal-cycle                    # next anime wallpaper + recolor
 wal-cycle reset              # back to Catppuccin Mocha
 ```
 

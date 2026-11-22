@@ -8,7 +8,7 @@ dir="$HOME/.local/share/backgrounds/omarchy"
 
 if [ "$1" = reset ]; then
   # restore the Catppuccin Mocha terminal colors in open shells
-  printf '\033]10;#bac2de\007\033]11;#1e1e2e\007'
+  printf '\033]10;#a6adc8\007\033]11;#1e1e2e\007'
   rm -f "$HOME/.cache/wal/in_use"
   echo "reset — Catppuccin Mocha restored (open a new terminal for full reset)"; exit 0
 fi
@@ -16,7 +16,7 @@ fi
 if [ -n "$1" ] && [ -f "$1" ]; then
   img="$1"
 else
-  mapfile -t w < <(find "$dir" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.png' \) | sort)
+  mapfile -t w < <(find "$dir" -maxdepth 1 -type f -iname 'anime-*.jpg' | sort)
   s="$HOME/.cache/wal-cycle-idx"
   i=$(( ( $(cat "$s" 2>/dev/null || echo -1) + 1 ) % ${#w[@]} ))
   echo "$i" > "$s"; img="${w[$i]}"

@@ -1,5 +1,7 @@
 /* XPM */
-static char * x[] = {"2 2 1 1", "a c #89b4fa",
+static char * x[] = {
+"2 2 1 1",
+"a c #11111b",
 "aa",
-"aa",
+"aa"
 };

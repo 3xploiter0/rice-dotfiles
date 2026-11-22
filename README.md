@@ -15,7 +15,7 @@ Themed desktop, macOS-style feels, animated eye candy, and a pentest toolkit tha
 | Base / background | 🟣 dark | `#1e1e2e` |
 | Crust / panel | ⬛ | `#11111b` |
 | Surface | 🟪 | `#313244` |
-| Text | ⚪ | `#cdd6f4` |
+| Text | ⚪ | `#a6adc8` (low-glare) |
 | Mauve (accent) | 🟣 | `#cba6f7` |
 | Blue | 🔵 | `#89b4fa` |
 | Pink | 🌸 | `#f5c2e7` |
@@ -33,8 +33,8 @@ In a terminal: `cheat` (quick list), `cheat <section>` (enum/ports/web/ad/crack/
 ## ✨ Highlights
 
 - **Catppuccin Mocha everywhere** — window theme, GTK, Flat-Remix Purple icons, Bibata Ice cursor, JetBrainsMono Nerd Font, themed Alacritty / QTerminal / btop / Neovim, starship prompt
-- **Three new wallpapers** — `catppuccin-mocha-{aurora,orbit,dunes}.jpg`, generated in the Mocha palette and ready for `wal-cycle`
-- **macOS feels** — bottom dock, Launchpad (`F4`), Mission Control (`F3`), hot corners
+- **Anime wallpapers** — a curated `anime-*.jpg` rotation (`anime-yq2mll.jpg` by default), no gradient placeholders; cycle with `wal-cycle`
+- **macOS look** — traffic-light window buttons, rounded/frosted dock + menu bar, centered clock, Launchpad (`F4`), Mission Control (`F3`), hot corners
 - **Eye candy** — animated video wallpaper (`livewp`), wallpaper-driven auto-theming (`wal-cycle`), a desktop HUD (conky), window animations + blur (picom)
 - **Hacking workflow** — one-command box setup, auto-recon, VPN toggle, reverse-shell generator, report builder, terminal auto-logging
 - **Self-maintaining** — weekly auto-update + unattended security patches

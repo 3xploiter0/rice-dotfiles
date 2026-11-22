@@ -22,9 +22,6 @@ paths=(
   .config/btop/themes
   .config/polybar/config.ini
   .config/dunst/dunstrc
-  .local/share/backgrounds/omarchy/catppuccin-mocha-aurora.jpg
-  .local/share/backgrounds/omarchy/catppuccin-mocha-orbit.jpg
-  .local/share/backgrounds/omarchy/catppuccin-mocha-dunes.jpg
 )
 
 cd "$repo"

@@ -9,7 +9,7 @@
       <property name="position" type="string" value="p=6;x=0;y=0"/>
       <property name="length" type="uint" value="100"/>
       <property name="position-locked" type="bool" value="true"/>
-      <property name="size" type="uint" value="26"/>
+      <property name="size" type="uint" value="28"/>
       <property name="background-style" type="uint" value="0"/>
       <property name="background-color" type="array">
         <value type="double" value="0.050000000000000003"/>
@@ -42,8 +42,8 @@
     <property name="panel-2" type="empty">
       <property name="position" type="string" value="p=10;x=683;y=766"/>
       <property name="position-locked" type="bool" value="true"/>
-      <property name="size" type="uint" value="52"/>
-      <property name="icon-size" type="uint" value="40"/>
+      <property name="size" type="uint" value="56"/>
+      <property name="icon-size" type="uint" value="44"/>
       <property name="length" type="uint" value="1"/>
       <property name="length-adjust" type="bool" value="true"/>
       <property name="mode" type="uint" value="0"/>
@@ -73,7 +73,7 @@
       </property>
       <property name="button-title" type="string" value=""/>
       <property name="show-button-title" type="bool" value="false"/>
-      <property name="button-icon" type="string" value="view-app-grid-symbolic"/>
+      <property name="button-icon" type="string" value="mac-apple"/>
     </property>
     <property name="plugin-2" type="string" value="separator"/>
     <property name="plugin-3" type="string" value="showdesktop"/>
