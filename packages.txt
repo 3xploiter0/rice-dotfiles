@@ -85,6 +85,7 @@ groff-base
 grub-common
 grub-efi-amd64
 gzip
+hexedit
 hostname
 ifupdown
 inetutils-telnet
@@ -273,6 +274,7 @@ systemd-timesyncd
 sysvinit-utils
 tar
 tasksel
+termius-app
 tesseract-ocr
 tigervnc-viewer
 timeshift

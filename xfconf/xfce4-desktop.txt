@@ -2,10 +2,10 @@
 /backdrop/screen0/monitor0/color1                       [7936,16128,28416,65535]
 /backdrop/screen0/monitor0/color2                       [26880,34048,46848,65535]
 /backdrop/screen0/monitor0/color-style                  1
-/backdrop/screen0/monitor0/image-path                   /home/x3xploiter0/Downloads/jujutsu-kaisen-3840x2160-27211.png
+/backdrop/screen0/monitor0/image-path                   /home/x3xploiter0/Downloads/goku-black-and-3840x2160-20871.png
 /backdrop/screen0/monitor0/image-show                   true
 /backdrop/screen0/monitor0/image-style                  5
-/backdrop/screen0/monitor0/last-image                   /home/x3xploiter0/.local/share/backgrounds/omarchy/anime-akaza.jpg
+/backdrop/screen0/monitor0/last-image                   /home/x3xploiter0/.local/share/backgrounds/omarchy/anime-1q2le9.jpg
 /backdrop/screen0/monitor0/last-single-image            /home/x3xploiter0/.local/share/backgrounds/kali-neon-wallpaper.jpg
 /backdrop/screen0/monitor1/brightness                   0
 /backdrop/screen0/monitor1/color1                       [7936,16128,28416,65535]
@@ -14,7 +14,7 @@
 /backdrop/screen0/monitor1/image-path                   /usr/share/backgrounds/kali-16x9/default
 /backdrop/screen0/monitor1/image-show                   true
 /backdrop/screen0/monitor1/image-style                  5
-/backdrop/screen0/monitor1/last-image                   /home/x3xploiter0/.local/share/backgrounds/omarchy/anime-akaza.jpg
+/backdrop/screen0/monitor1/last-image                   /home/x3xploiter0/.local/share/backgrounds/omarchy/anime-1q2le9.jpg
 /backdrop/screen0/monitor1/last-single-image            /usr/share/images/desktop-base/default
 /backdrop/screen0/monitor2/image-path                   /usr/share/backgrounds/kali-16x9/default
 /backdrop/screen0/monitor2/image-show                   true
@@ -26,9 +26,9 @@
 /backdrop/screen0/monitor4/image-show                   true
 /backdrop/screen0/monitor4/image-style                  5
 /backdrop/screen0/monitoreDP-1/workspace0/image-style   5
-/backdrop/screen0/monitoreDP-1/workspace0/last-image    /home/x3xploiter0/Downloads/jujutsu-kaisen-3840x2160-27211.png
+/backdrop/screen0/monitoreDP-1/workspace0/last-image    /home/x3xploiter0/Downloads/goku-black-and-3840x2160-20871.png
 /backdrop/screen0/monitorHDMI-1/workspace0/image-style  5
-/backdrop/screen0/monitorHDMI-1/workspace0/last-image   /home/x3xploiter0/Downloads/jujutsu-kaisen-3840x2160-27211.png
+/backdrop/screen0/monitorHDMI-1/workspace0/last-image   /home/x3xploiter0/.local/share/backgrounds/omarchy/anime-1q2le9.jpg
 /desktop-icons/file-icons/show-filesystem               false
 /desktop-icons/file-icons/show-home                     true
 /desktop-icons/file-icons/show-removable                false
