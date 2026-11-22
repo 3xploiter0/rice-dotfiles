@@ -9,8 +9,8 @@
       <property name="position" type="string" value="p=6;x=0;y=0"/>
       <property name="length" type="uint" value="100"/>
       <property name="position-locked" type="bool" value="true"/>
-      <property name="size" type="uint" value="28"/>
-      <property name="background-style" type="uint" value="1"/>
+      <property name="size" type="uint" value="24"/>
+      <property name="background-style" type="int" value="1"/>
       <property name="background-color" type="array">
         <value type="double" value="0.050000000000000003"/>
         <value type="double" value="0.070000000000000007"/>
@@ -26,17 +26,12 @@
       <property name="icon-size" type="uint" value="16"/>
       <property name="plugin-ids" type="array">
         <value type="int" value="1"/>
-        <value type="int" value="9"/>
         <value type="int" value="12"/>
-        <value type="int" value="19"/>
-        <value type="int" value="8"/>
-        <value type="int" value="23"/>
-        <value type="int" value="15"/>
         <value type="int" value="14"/>
         <value type="int" value="16"/>
         <value type="int" value="17"/>
         <value type="int" value="18"/>
-        <value type="int" value="22"/>
+        <value type="int" value="19"/>
       </property>
     </property>
     <property name="panel-2" type="empty">
@@ -67,9 +62,16 @@
   <property name="plugins" type="empty">
     <property name="plugin-1" type="string" value="whiskermenu">
       <property name="recent" type="array">
-        <value type="string" value="xfce4-file-manager.desktop"/>
+        <value type="string" value="riseup-vpn.desktop"/>
+        <value type="string" value="virtualbox.desktop"/>
         <value type="string" value="google-chrome.desktop"/>
+        <value type="string" value="com.microsoft.VSCode.desktop"/>
         <value type="string" value="kali-burpsuite.desktop"/>
+        <value type="string" value="be.maartenbaert.simplescreenrecorder.desktop"/>
+        <value type="string" value="firefox-esr.desktop"/>
+        <value type="string" value="kali-ghidra.desktop"/>
+        <value type="string" value="org.wireshark.Wireshark.desktop"/>
+        <value type="string" value="xfce-display-settings.desktop"/>
       </property>
       <property name="button-title" type="string" value=""/>
       <property name="show-button-title" type="bool" value="false"/>
@@ -204,6 +206,11 @@
       <property name="square-icons" type="bool" value="true"/>
       <property name="symbolic-icons" type="bool" value="true"/>
       <property name="known-legacy-items" type="array">
+        <value type="string" value="wi-fi network connection “rockyou.txt” active: rockyou.txt (96%)"/>
+        <value type="string" value="wi-fi network connection “rockyou.txt” active: rockyou.txt (95%)"/>
+        <value type="string" value="wi-fi network connection “rockyou.txt” active: rockyou.txt (100%)"/>
+        <value type="string" value="wi-fi network connection “rockyou.txt” active: rockyou.txt (99%)"/>
+        <value type="string" value="anydesk"/>
         <value type="string" value="wi-fi network connection “ray mode” active: ray mode (84%)"/>
         <value type="string" value="wi-fi network connection “ray mode” active: ray mode (85%)"/>
         <value type="string" value="wi-fi network connection “ray mode” active: ray mode (88%)"/>
@@ -216,6 +223,12 @@
         <value type="string" value="networkmanager applet"/>
       </property>
       <property name="known-items" type="array">
+        <value type="string" value="chrome_status_icon_4"/>
+        <value type="string" value="chrome_status_icon_3"/>
+        <value type="string" value="SimpleScreenRecorder"/>
+        <value type="string" value="RiseupVPN"/>
+        <value type="string" value="chrome_status_icon_2"/>
+        <value type="string" value="chrome_status_icon_1"/>
         <value type="string" value="blueman"/>
       </property>
     </property>
@@ -229,13 +242,13 @@
     </property>
     <property name="plugin-16" type="string" value="pulseaudio">
       <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
-      <property name="known-players" type="string" value="Chrome"/>
+      <property name="known-players" type="string" value="Chrome;firefox-esr"/>
     </property>
     <property name="plugin-17" type="string" value="notification-plugin"/>
     <property name="plugin-18" type="string" value="power-manager-plugin"/>
     <property name="plugin-19" type="string" value="clock">
       <property name="digital-layout" type="uint" value="3"/>
-      <property name="digital-time-format" type="string" value="%A %H:%M"/>
+      <property name="digital-time-format" type="string" value="%a %H:%M"/>
       <property name="digital-time-font" type="string" value="JetBrains Mono Bold 10"/>
     </property>
     <property name="plugin-20" type="string" value="separator">
