@@ -53,15 +53,23 @@ def solid(width: int, height: int, color: tuple[int, int, int, int]) -> Image.Im
 
 
 def corner(which: str, color: tuple[int, int, int, int]) -> Image.Image:
+    """Rounded frame corner: transparent outside the radius, filled inside."""
     img = Image.new("RGBA", (CORNER, TITLE_HEIGHT), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(img)
-    r = CORNER
-    if which in ("top-left", "bottom-left"):
-        draw.pieslice((-r, -r, r, r), 0, 90, fill=color) if which == "top-left" else draw.pieslice((-r, TITLE_HEIGHT - r, r, TITLE_HEIGHT + r), 270, 360, fill=color)
-        draw.rectangle((CORNER // 2, 0, CORNER - 1, TITLE_HEIGHT - 1), fill=color)
+    px = img.load()
+    r = 12
+    if which == "top-left":
+        cx, cy = r, r
+    elif which == "top-right":
+        cx, cy = CORNER - 1 - r, r
+    elif which == "bottom-left":
+        cx, cy = r, TITLE_HEIGHT - 1 - r
     else:
-        draw.pieslice((CORNER - r, -r, CORNER + r, r), 90, 180, fill=color) if which == "top-right" else draw.pieslice((CORNER - r, TITLE_HEIGHT - r, CORNER + r, TITLE_HEIGHT + r), 180, 270, fill=color)
-        draw.rectangle((0, 0, CORNER // 2, TITLE_HEIGHT - 1), fill=color)
+        cx, cy = CORNER - 1 - r, TITLE_HEIGHT - 1 - r
+
+    for y in range(TITLE_HEIGHT):
+        for x in range(CORNER):
+            if math.hypot(x - cx, y - cy) <= r:
+                px[x, y] = color
     return img
 
 
