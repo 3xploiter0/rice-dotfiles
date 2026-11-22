@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==========================================================================
-#  3xploiter0 rice — Tokyo Night Kali (XFCE) + hacking workflow
+#  3xploiter0 rice — Catppuccin Mocha Kali (XFCE) + hacking workflow
 #  Safe install: desktop look, terminals, and the pentest toolkit.
 #  Does NOT touch GRUB, the boot splash, or the login screen.
 #
@@ -10,7 +10,7 @@
 set -u
 REPO="$(cd "$(dirname "$0")" && pwd)"
 BK="$HOME/.rice-restore-$(date +%Y%m%d-%H%M%S)"
-B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; R=$'\e[38;2;247;118;142m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+B=$'\e[38;2;137;180;250m'; G=$'\e[38;2;166;227;161m'; Y=$'\e[38;2;249;226;175m'; R=$'\e[38;2;243;139;168m'; D=$'\e[38;2;108;112;134m'; X=$'\e[0m'
 say(){ printf "\n${B}==>${X} %s\n" "$1"; }
 ok(){ printf "  ${G}✓${X} %s\n" "$1"; }
 warn(){ printf "  ${Y}!${X} %s\n" "$1"; }
@@ -20,7 +20,7 @@ command -v xfconf-query >/dev/null || warn "XFCE not detected — the look won't
 
 cat <<BANNER
 ${B}
-   3xploiter0 rice installer — Tokyo Night Kali
+   3xploiter0 rice installer — Catppuccin Mocha Kali
 ${D}   look + terminals + hacking toolkit · safe (no boot/login changes)
    backups -> $BK${X}
 BANNER
@@ -135,7 +135,7 @@ if command -v xfconf-query >/dev/null; then
   fi
   # wallpaper on every monitor THIS machine has (names differ per PC: eDP-1, eDP, HDMI-1…)
   WP="$HOME/.local/share/backgrounds/omarchy"
-  img="$WP/anime-yq2mll.jpg"
+  img="$WP/catppuccin-mocha-aurora.jpg"
   [ -f "$img" ] || img="$(find "$WP" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.png' \) 2>/dev/null | sort | head -1)"
   if [ -n "$img" ] && command -v xrandr >/dev/null; then
     for mon in $(xrandr --query | awk '/ connected/{print $1}'); do

@@ -7,7 +7,7 @@
 # ==========================================================================
 set -u
 REPO="$(cd "$(dirname "$0")" && pwd)"
-B=$'\e[38;2;122;162;247m'; G=$'\e[38;2;158;206;106m'; Y=$'\e[38;2;224;175;104m'; R=$'\e[38;2;247;118;142m'; D=$'\e[38;2;86;95;137m'; X=$'\e[0m'
+B=$'\e[38;2;137;180;250m'; G=$'\e[38;2;166;227;161m'; Y=$'\e[38;2;249;226;175m'; R=$'\e[38;2;243;139;168m'; D=$'\e[38;2;108;112;134m'; X=$'\e[0m'
 say(){ printf "\n${B}==>${X} %s\n" "$1"; }
 ok(){ printf "  ${G}✓${X} %s\n" "$1"; }
 
@@ -44,11 +44,11 @@ rm -rf "$HOME/.config/alacritty" "$HOME/.config/picom" "$HOME/.config/conky" \
        "$HOME/.config/rofi/launchpad.rasi" "$HOME/.config/rofi/launchpad-full.rasi" \
        "$HOME/.config/rofi/expose.rasi" "$HOME/.config/rofi/expose-full.rasi" \
        "$HOME/.config/fastfetch/logo.txt" \
-       "$HOME/.local/share/themes/Omarchy-TokyoNight" \
-       "$HOME/.local/share/qtermwidget6/color-schemes/TokyoNight.colorscheme" \
-       "$HOME/.local/share/gtksourceview-3.0/styles/tokyonight.xml" \
-       "$HOME/.local/share/gtksourceview-4/styles/tokyonight.xml" \
-       "$HOME/.local/share/gtksourceview-5/styles/tokyonight.xml" \
+       "$HOME/.local/share/themes/Omarchy-CatppuccinMocha" \
+       "$HOME/.local/share/qtermwidget6/color-schemes/CatppuccinMocha.colorscheme" \
+       "$HOME/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml" \
+       "$HOME/.local/share/gtksourceview-4/styles/catppuccin-mocha.xml" \
+       "$HOME/.local/share/gtksourceview-5/styles/catppuccin-mocha.xml" \
        "$HOME/.local/share/applications/screensavers/matrix.desktop"
 ok "configs"
 

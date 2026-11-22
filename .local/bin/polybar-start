@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# polybar-start   launch polybar status bar (Tokyo Night hacker bar)
+# polybar-start   launch polybar status bar (Catppuccin Mocha hacker bar)
 # Called by autostart or manually; restarts if already running
 
 killall polybar 2>/dev/null; sleep 0.5

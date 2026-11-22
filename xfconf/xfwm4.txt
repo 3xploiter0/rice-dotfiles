@@ -58,7 +58,7 @@
 /general/snap_to_border                  true
 /general/snap_to_windows                 true
 /general/snap_width                      10
-/general/theme                           Omarchy-TokyoNight
+/general/theme                           Omarchy-CatppuccinMocha
 /general/tile_on_move                    true
 /general/title_alignment                 center
 /general/title_font                      Hanken Grotesk Bold 9

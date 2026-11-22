@@ -16,22 +16,22 @@ esac
 if [ "$2" = plain ]; then echo "$v"; exit; fi
 if [ "$1" = tmux ]; then
   t=$(target_ip); v=$(vpn_ip)
-  [ -n "$t" ] && printf '#[fg=#f7768e,bold]󰓾 %s  ' "$t"
-  if [ -n "$v" ]; then printf '#[fg=#7aa2f7,bold]󰖂 %s  ' "$v"; else printf '#[fg=#565f89]󰖂 no vpn  '; fi
+  [ -n "$t" ] && printf '#[fg=#f38ba8,bold]󰓾 %s  ' "$t"
+  if [ -n "$v" ]; then printf '#[fg=#89b4fa,bold]󰖂 %s  ' "$v"; else printf '#[fg=#6c7086]󰖂 no vpn  '; fi
   exit
 fi
 
 copy="sh -c 'printf %s \"$v\" | xclip -selection clipboard && notify-send -t 1500 \"Copied\" \"$v\"'"
 if [ "$1" = vpn ]; then
   if [ -n "$v" ]; then
-    printf '<txt><span foreground="#7aa2f7">󰖂 %s</span></txt>' "$v"
+    printf '<txt><span foreground="#89b4fa">󰖂 %s</span></txt>' "$v"
     printf '<txtclick>%s</txtclick><tool>VPN IP (LHOST) – click to copy</tool>' "$copy"
   else
-    printf '<txt><span foreground="#565f89">󰖂 no vpn</span></txt><tool>No VPN interface up</tool>'
+    printf '<txt><span foreground="#6c7086">󰖂 no vpn</span></txt><tool>No VPN interface up</tool>'
   fi
 else
   if [ -n "$v" ]; then
-    printf '<txt><span foreground="#f7768e">󰓾 %s</span></txt>' "$v"
+    printf '<txt><span foreground="#f38ba8">󰓾 %s</span></txt>' "$v"
     printf '<txtclick>%s</txtclick><tool>Target (RHOST) – click to copy · change with: target IP</tool>' "$copy"
   else
     printf '<txt></txt><tool>No target · set with: target IP</tool>'

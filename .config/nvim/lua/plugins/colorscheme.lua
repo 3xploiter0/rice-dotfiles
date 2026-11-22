@@ -1,4 +1,5 @@
 return {
-  { "folke/tokyonight.nvim", opts = { style = "night" } },
-  { "LazyVim/LazyVim", opts = { colorscheme = "tokyonight-night" } },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000,
+    opts = { flavour = "mocha", transparent_background = false } },
+  { "LazyVim/LazyVim", opts = { colorscheme = "catppuccin" } },
 }

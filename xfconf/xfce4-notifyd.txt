@@ -6,4 +6,4 @@
 /initial-opacity                  1.000000
 /log-max-size-enabled             true
 /notify-location                  top-right
-/theme                            Omarchy-TokyoNight
+/theme                            Omarchy-CatppuccinMocha

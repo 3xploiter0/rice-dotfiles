@@ -1,11 +1,11 @@
 configuration { show-icons: true; icon-theme: "Papirus-Dark"; drun-display-format: "{name}"; }
-/* macOS Launchpad — fullscreen frosted app grid, Tokyo Night (theme only) */
+/* macOS Launchpad — fullscreen frosted app grid, Catppuccin Mocha (theme only) */
 * {
-  bg:    #1a1b26f2;
-  fg:    #c0caf5;
-  hl:    #7aa2f7;
-  sel:   #292e42cc;
-  muted: #565f89;
+  bg:    #1e1e2ef2;
+  fg:    #cdd6f4;
+  hl:    #89b4fa;
+  sel:   #45475acc;
+  muted: #6c7086;
   background-color: transparent;
   text-color: @fg;
 }
@@ -42,12 +42,12 @@ element {
   padding: 16px 8px;
   spacing: 10px;
   border-radius: 16px;
-  background-color: #24283be6;
+  background-color: #313244e6;
   text-color: @fg;
 }
 element normal.normal    { background-color: transparent; text-color: @fg; }
 element alternate.normal { background-color: transparent; text-color: @fg; }
-element selected.normal  { background-color: @hl;          text-color: #1a1b26; }
+element selected.normal  { background-color: @hl;          text-color: #1e1e2e; }
 element-icon {
   size: 66px;
   horizontal-align: 0.5;

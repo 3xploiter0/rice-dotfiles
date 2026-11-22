@@ -412,7 +412,7 @@ Animated video wallpaper / recolor terminals from the wallpaper.
 livewp on
 livewp off
 wal-cycle                    # next wallpaper + recolor
-wal-cycle reset              # back to Tokyo Night
+wal-cycle reset              # back to Catppuccin Mocha
 ```
 
 ### `arsenal` / `update`

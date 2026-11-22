@@ -3,7 +3,7 @@
 <channel name="xfwm4" version="1.0">
   <property name="general" type="empty">
     <property name="button_layout" type="string" value="|"/>
-    <property name="theme" type="string" value="Omarchy-TokyoNight"/>
+    <property name="theme" type="string" value="Omarchy-CatppuccinMocha"/>
     <property name="title_font" type="string" value="Hanken Grotesk Bold 9"/>
     <property name="easy_click" type="empty"/>
     <property name="workspace_count" type="int" value="5"/>

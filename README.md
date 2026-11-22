@@ -1,10 +1,27 @@
-# 🐉 3xploiter0 rice — Tokyo Night Kali
+# 🐉 3xploiter0 rice — Catppuccin Mocha Kali
 
-A complete **Tokyo Night** rice for **Kali Linux (XFCE)** with a full **hacking workflow** baked in — installed with one command.
+A complete **Catppuccin Mocha** rice for **Kali Linux (XFCE)** with a full **hacking workflow** baked in — installed with one command.
 
 Themed desktop, macOS-style feels, animated eye candy, and a pentest toolkit that turns a fresh box into a working HTB/THM rig in seconds.
 
 ![HTB workspace](docs/workspace.png)
+
+---
+
+## 🎨 Palette
+
+| Role | Color | Hex |
+|---|---|---|
+| Base / background | 🟣 dark | `#1e1e2e` |
+| Crust / panel | ⬛ | `#11111b` |
+| Surface | 🟪 | `#313244` |
+| Text | ⚪ | `#cdd6f4` |
+| Mauve (accent) | 🟣 | `#cba6f7` |
+| Blue | 🔵 | `#89b4fa` |
+| Pink | 🌸 | `#f5c2e7` |
+| Teal | 🩵 | `#94e2d5` |
+| Peach | 🟠 | `#fab387` |
+| Green / Yellow / Red | ✅ | `#a6e3a1` · `#f9e2af` · `#f38ba8` |
 
 ---
 
@@ -15,7 +32,8 @@ In a terminal: `cheat` (quick list), `cheat <section>` (enum/ports/web/ad/crack/
 
 ## ✨ Highlights
 
-- **Tokyo Night everywhere** — window theme, GTK, Papirus icons, JetBrainsMono Nerd Font, themed Alacritty / QTerminal, starship prompt
+- **Catppuccin Mocha everywhere** — window theme, GTK, Flat-Remix Purple icons, Bibata Ice cursor, JetBrainsMono Nerd Font, themed Alacritty / QTerminal / btop / Neovim, starship prompt
+- **Three new wallpapers** — `catppuccin-mocha-{aurora,orbit,dunes}.jpg`, generated in the Mocha palette and ready for `wal-cycle`
 - **macOS feels** — bottom dock, Launchpad (`F4`), Mission Control (`F3`), hot corners
 - **Eye candy** — animated video wallpaper (`livewp`), wallpaper-driven auto-theming (`wal-cycle`), a desktop HUD (conky), window animations + blur (picom)
 - **Hacking workflow** — one-command box setup, auto-recon, VPN toggle, reverse-shell generator, report builder, terminal auto-logging
@@ -79,7 +97,7 @@ Run **`cheat`** any time for the full, colored list (`cheat htb`, `cheat tmux`, 
 
 ```
 install.sh              one-command installer (portable, backs up first)
-.zshrc .tmux.conf       shell + tmux (Tokyo Night, auto-logging)
+.zshrc .tmux.conf       shell + tmux (Catppuccin Mocha, auto-logging)
 .config/               alacritty, picom, rofi, nvim (LazyVim), conky, fastfetch, btop, cava…
 .local/bin/            all the helper commands above
 .local/share/          xfwm theme, icons config, qterminal/gtksourceview themes, wallpapers

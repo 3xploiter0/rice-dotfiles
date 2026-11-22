@@ -16,9 +16,15 @@ paths=(
   .config/hack .config/cherrytree/config.cfg
   .config/autostart .config/systemd
   .local/bin
-  .local/share/themes/Omarchy-TokyoNight
-  .local/share/qtermwidget6/color-schemes/TokyoNight.colorscheme
-  .local/share/gtksourceview-5/styles/tokyonight.xml
+  .local/share/themes/Omarchy-CatppuccinMocha
+  .local/share/qtermwidget6/color-schemes/CatppuccinMocha.colorscheme
+  .local/share/gtksourceview-5/styles/catppuccin-mocha.xml
+  .config/btop/themes
+  .config/polybar/config.ini
+  .config/dunst/dunstrc
+  .local/share/backgrounds/omarchy/catppuccin-mocha-aurora.jpg
+  .local/share/backgrounds/omarchy/catppuccin-mocha-orbit.jpg
+  .local/share/backgrounds/omarchy/catppuccin-mocha-dunes.jpg
 )
 
 cd "$repo"
@@ -43,7 +49,7 @@ apt-mark showmanual > "$repo/packages.txt" 2>/dev/null
 
 if [ ! -f "$repo/README.md" ]; then cat > "$repo/README.md" <<'MD'
 # 3xploiter0 rice dotfiles
-Kali XFCE Tokyo Night rice + hacking workflow. Backup made by `rice-backup`.
+Kali XFCE Catppuccin Mocha rice + hacking workflow. Backup made by `rice-backup`.
 
 Restore on a fresh box:
 1. `sudo apt install $(cat packages.txt)`

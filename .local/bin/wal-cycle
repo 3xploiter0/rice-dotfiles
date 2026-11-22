@@ -2,15 +2,15 @@
 # Auto-theme from a wallpaper: sets it, then recolors open terminals to match.
 #   wal-cycle            -> next wallpaper in the rotation, recolor
 #   wal-cycle <image>    -> that image
-#   wal-cycle reset      -> back to Tokyo Night (new terminals are already Tokyo Night)
+#   wal-cycle reset      -> back to Catppuccin Mocha (new terminals are already Catppuccin Mocha)
 export PATH="$HOME/.local/bin:$PATH"
 dir="$HOME/.local/share/backgrounds/omarchy"
 
 if [ "$1" = reset ]; then
-  # restore the Tokyo Night terminal colors in open shells
-  printf '\033]10;#a9b1d6\007\033]11;#1a1b26\007'
+  # restore the Catppuccin Mocha terminal colors in open shells
+  printf '\033]10;#bac2de\007\033]11;#1e1e2e\007'
   rm -f "$HOME/.cache/wal/in_use"
-  echo "reset — Tokyo Night restored (open a new terminal for full reset)"; exit 0
+  echo "reset — Catppuccin Mocha restored (open a new terminal for full reset)"; exit 0
 fi
 
 if [ -n "$1" ] && [ -f "$1" ]; then
@@ -35,4 +35,4 @@ if [ -f "$HOME/.cache/wal/sequences" ]; then
 fi
 echo "themed from: $(basename "$img")"
 [ -f "$HOME/.cache/wal/colors" ] && { echo "palette:"; head -8 "$HOME/.cache/wal/colors" | sed 's/^/  /'; }
-echo "tip: wal-cycle reset  -> back to Tokyo Night"
+echo "tip: wal-cycle reset  -> back to Catppuccin Mocha"

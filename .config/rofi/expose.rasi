@@ -1,10 +1,10 @@
-/* Mission Control — all open windows, Tokyo Night frosted overlay (theme only) */
+/* Mission Control — all open windows, Catppuccin Mocha frosted overlay (theme only) */
 * {
-  bg:    #1a1b26f2;
-  fg:    #c0caf5;
-  hl:    #7aa2f7;
-  sel:   #292e42cc;
-  muted: #565f89;
+  bg:    #1e1e2ef2;
+  fg:    #cdd6f4;
+  hl:    #89b4fa;
+  sel:   #45475acc;
+  muted: #6c7086;
   background-color: transparent;
   text-color: @fg;
 }

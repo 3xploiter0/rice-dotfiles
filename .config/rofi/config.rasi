@@ -1,5 +1,5 @@
 configuration { show-icons: true; icon-theme: "Papirus-Dark"; drun-display-format: "{name}"; }
-* { bg: #1a1b26; fg: #a9b1d6; hl: #7aa2f7; sel: #292e42; muted: #565f89; background-color: transparent; text-color: @fg; font: "JetBrainsMono Nerd Font 11"; }
+* { bg: #1e1e2e; fg: #bac2de; hl: #89b4fa; sel: #45475a; muted: #6c7086; background-color: transparent; text-color: @fg; font: "JetBrainsMono Nerd Font 11"; }
 window { width: 640px; background-color: @bg; border: 2px; border-color: @hl; border-radius: 0; padding: 14px; }
 mainbox { children: [inputbar, listview]; }
 inputbar { children: [entry]; padding: 8px; border: 0 0 1px 0; border-color: @sel; }

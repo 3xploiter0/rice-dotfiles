@@ -1,6 +1,6 @@
 /Gtk/ButtonImages               true
 /Gtk/CursorBlinkTimeout         10
-/Gtk/CursorThemeName            Adwaita
+/Gtk/CursorThemeName            Bibata-Modern-Ice
 /Gtk/CursorThemeSize            24
 /Gtk/DecorationLayout           :
 /Gtk/EnableAnimations           true
@@ -23,7 +23,7 @@
 /Net/DoubleClickTime            400
 /Net/EnableEventSounds          true
 /Net/EnableInputFeedbackSounds  false
-/Net/IconThemeName              Papirus-Dark
+/Net/IconThemeName              Flat-Remix-Purple-Dark
 /Net/SoundThemeName             freedesktop
 /Net/ThemeName                  adw-gtk3-dark
 /Xfce/SyncThemes                true
