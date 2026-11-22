@@ -24,8 +24,8 @@
 
 /* ---------- macOS-style menu bar (top panel) ---------- */
 .xfce4-panel.background {
-  background-color: rgba(17, 17, 27, 0.72);
-  color: #bac2de;
+  background-color: rgba(250, 250, 252, 0.98);
+  color: #1e1e2e;
   border: none;
   font-family: "Inter", "Noto Sans", sans-serif;
   font-size: 10.5pt;
@@ -33,30 +33,33 @@
 .xfce4-panel button {
   border: none;
   border-radius: 6px;
-  padding: 2px 7px;
+  padding: 1px 7px;
   margin: 1px 2px;
-  color: #bac2de;
+  color: #1e1e2e;
+  min-height: 0;
   transition: background-color 120ms ease, color 120ms ease;
 }
+.xfce4-panel button:first-child { padding-left: 5px; padding-right: 8px; }
 .xfce4-panel button:hover {
-  background-color: rgba(137, 180, 250, 0.18);
-  color: #cdd6f4;
+  background-color: rgba(30, 30, 46, 0.12);
+  color: #11111b;
 }
 .xfce4-panel button:checked {
-  background-color: rgba(137, 180, 250, 0.28);
-  color: #cdd6f4;
+  background-color: rgba(30, 30, 46, 0.18);
+  color: #11111b;
   box-shadow: none;
 }
 .xfce4-panel label,
 .xfce4-panel .clock {
-  color: #bac2de;
+  color: #1e1e2e;
   font-family: "Inter", "Noto Sans", sans-serif;
 }
 .xfce4-panel .clock {
-  color: #cdd6f4;
+  color: #11111b;
   font-weight: 600;
   letter-spacing: 0.2px;
 }
+.xfce4-panel image { color: #1e1e2e; }
 wnck-pager { background-color: transparent; }
 wnck-pager:selected {
   background-color: rgba(137, 180, 250, 0.38);

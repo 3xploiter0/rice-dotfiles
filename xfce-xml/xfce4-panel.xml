@@ -18,12 +18,12 @@
         <value type="double" value="0.94999999999999996"/>
       </property>
       <property name="background-rgba" type="array">
-        <value type="double" value="0.059999999999999998"/>
-        <value type="double" value="0.040000000000000001"/>
-        <value type="double" value="0.10000000000000001"/>
-        <value type="double" value="0.55000000000000004"/>
+        <value type="double" value="0.97000000000000000"/>
+        <value type="double" value="0.97000000000000000"/>
+        <value type="double" value="0.98000000000000000"/>
+        <value type="double" value="0.92000000000000000"/>
       </property>
-      <property name="icon-size" type="uint" value="16"/>
+      <property name="icon-size" type="uint" value="20"/>
       <property name="plugin-ids" type="array">
         <value type="int" value="1"/>
         <value type="int" value="12"/>
