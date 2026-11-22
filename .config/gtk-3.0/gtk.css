@@ -59,16 +59,6 @@
   letter-spacing: 0.2px;
 }
 .xfce4-panel image { color: #1e1e2e; }
-.xfce4-panel button.toggle image,
-.xfce4-panel togglebutton image {
-  -gtk-icon-style: symbolic;
-  color: #000000;
-}
-.docklike image, #docklike image, .docklike-plugin image,
-.xfce4-panel .docklike image, .xfce4-panel .docklike button image {
-  -gtk-icon-style: regular;
-  color: initial;
-}
 wnck-pager { background-color: transparent; }
 wnck-pager:selected {
   background-color: rgba(137, 180, 250, 0.38);
