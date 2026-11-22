@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=WhiteSur-MacOS
+Comment=macOS-style window controls
+[X-GNOME-Metatheme]
+GtkTheme=WhiteSur-MacOS
+MetacityTheme=WhiteSur-MacOS
+ButtonLayout=close,minimize,maximize:menu

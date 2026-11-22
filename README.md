@@ -34,7 +34,7 @@ In a terminal: `cheat` (quick list), `cheat <section>` (enum/ports/web/ad/crack/
 
 - **Catppuccin Mocha everywhere** — window theme, GTK, Flat-Remix Purple icons, Bibata Ice cursor, JetBrainsMono Nerd Font, themed Alacritty / QTerminal / btop / Neovim, starship prompt
 - **Anime wallpapers** — a curated `anime-*.jpg` rotation (`anime-yq2mll.jpg` by default), no gradient placeholders; cycle with `wal-cycle`
-- **macOS look** — traffic-light window buttons, rounded/frosted dock + menu bar, centered clock, Launchpad (`F4`), Mission Control (`F3`), hot corners
+- **macOS replica look** — real WhiteSur traffic-light close/minimize/maximize buttons on every app window, frosted glass menu bar + dock, rounded windows, soft shadows, centered clock, Launchpad (`F4`), Mission Control (`F3`), hot corners
 - **Eye candy** — animated video wallpaper (`livewp`), wallpaper-driven auto-theming (`wal-cycle`), a desktop HUD (conky), window animations + blur (picom)
 - **Hacking workflow** — one-command box setup, auto-recon, VPN toggle, reverse-shell generator, report builder, terminal auto-logging
 - **Self-maintaining** — weekly auto-update + unattended security patches
@@ -89,7 +89,10 @@ Run **`cheat`** any time for the full, colored list (`cheat htb`, `cheat tmux`, 
 | `F4` / `F3` | Launchpad / Mission Control |
 | `Super+Ctrl+Space` | Next wallpaper |
 | `Super+1..5` / `+Shift` | Switch / move to workspace |
+| Three-finger swipe left/right | Switch desktop/workspace (needs `libinput-gestures` + touchpad) |
 | `livewp on` · `wal-cycle` | Live video wallpaper · recolor from wallpaper |
+
+QTerminal's menu bar is hidden (`MenuVisible=false`), so `session · action · edit · view · help` no longer overlaps the window controls.
 
 ---
 
@@ -98,9 +101,10 @@ Run **`cheat`** any time for the full, colored list (`cheat htb`, `cheat tmux`, 
 ```
 install.sh              one-command installer (portable, backs up first)
 .zshrc .tmux.conf       shell + tmux (Catppuccin Mocha, auto-logging)
-.config/               alacritty, picom, rofi, nvim (LazyVim), conky, fastfetch, btop, cava…
+.config/               alacritty, picom (glass), rofi, nvim (LazyVim), conky, fastfetch, btop, cava, libinput-gestures
 .local/bin/            all the helper commands above
-.local/share/          xfwm theme, icons config, qterminal/gtksourceview themes, wallpapers
+.local/share/          WhiteSur-MacOS xfwm theme, icons config, qterminal/gtksourceview themes, wallpapers
+scripts/               generate-xfwm-theme.py (regenerates the traffic-light theme)
 xfce-xml/              panel + dock + window-manager + keybind settings
 cheatsheet/            printable HTML reference card
 ```
@@ -132,6 +136,7 @@ have the cloned folder, re-clone it and run `./uninstall.sh` from there.
 - Built and tested on **Kali Linux rolling, XFCE (X11)**. Other XFCE distros may need small tweaks.
 - The Nerd Font isn't bundled (too large for git) — the installer downloads it automatically.
 - Wallpapers are included for convenience; swap in your own from `~/.local/share/backgrounds/omarchy/`.
+- Three-finger swipes need a physical libinput touchpad. The installer adds your user to the `input` group and enables the autostart entry; **log out and back in once** before swiping. Without a touchpad, use `Super+1..5` or `Ctrl+Alt+Left/Right`.
 - Use the recon/scanning tools **only against systems you're authorized to test.**
 
 Made for fun. PRs and issues welcome.

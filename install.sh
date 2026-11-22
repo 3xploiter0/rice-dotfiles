@@ -31,6 +31,7 @@ say "Installing packages (sudo)"
 APT=(
   # look
   papirus-icon-theme bibata-cursor-theme fonts-inter picom rofi
+  libinput-gestures python3-pil
   xfce4-docklike-plugin xfce4-panel-profiles conky-all cmatrix
   # terminals + shell
   alacritty tmux zoxide bat eza fd-find fzf ripgrep zsh-syntax-highlighting zsh-autosuggestions
@@ -75,6 +76,7 @@ copy() { # src-in-repo  dest
 say "Installing dotfiles + scripts"
 for p in .zshrc .tmux.conf \
          .config/starship.toml .config/alacritty .config/picom .config/rofi \
+         .config/libinput-gestures \
          .config/conky .config/nvim .config/fastfetch .config/btop .config/cava \
          .config/hack .config/gtk-3.0 .config/gtk-4.0 .config/qterminal.org \
          .local/bin \
@@ -165,6 +167,16 @@ if [ -d "$REPO/.config/systemd" ]; then
   cp -a "$REPO/.config/systemd/." "$HOME/.config/systemd/"
   systemctl --user daemon-reload 2>/dev/null
   systemctl --user enable --now rice-update.timer 2>/dev/null && ok "weekly timer"
+fi
+
+# ---------------------------------------------------------------- 3-finger gestures
+if command -v libinput-gestures >/dev/null 2>&1; then
+  say "Enabling three-finger workspace swipes"
+  # Reading /dev/input needs the input group; needs sudo + re-login once.
+  getent group input >/dev/null && sudo usermod -aG input "$USER" 2>/dev/null || true
+  # The autostart entry copied above launches libinput-gestures on login.
+  pgrep -x libinput-gestures >/dev/null 2>&1 || (setsid libinput-gestures >/dev/null 2>&1 &)
+  ok "gestures configured (re-login required for input group)"
 fi
 
 # default shell -> zsh

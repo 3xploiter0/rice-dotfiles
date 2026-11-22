@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=libinput-gestures
+Comment=Three-finger workspace gestures
+Exec=libinput-gestures
+X-GNOME-Autostart-enabled=true
+NoDisplay=true

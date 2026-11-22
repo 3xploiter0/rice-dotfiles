@@ -415,6 +415,12 @@ wal-cycle                    # next anime wallpaper + recolor
 wal-cycle reset              # back to Catppuccin Mocha
 ```
 
+### Three-finger workspace swipes
+`libinput-gestures` maps a 3-finger left/right swipe to the existing XFWM workspace shortcuts (`Ctrl+Alt+Right/Left`). It needs a physical libinput touchpad, the `input` group, and one re-login. Fallback: `Super+1..5` or `Ctrl+Alt+Left/Right`.
+```bash
+libinput-gestures -c ~/.config/libinput-gestures.conf   # run manually
+```
+
 ### `arsenal` / `update`
 Install/update tools / full maintenance (runs weekly automatically).
 ```bash

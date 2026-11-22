@@ -10,7 +10,7 @@
       <property name="length" type="uint" value="100"/>
       <property name="position-locked" type="bool" value="true"/>
       <property name="size" type="uint" value="28"/>
-      <property name="background-style" type="uint" value="0"/>
+      <property name="background-style" type="uint" value="1"/>
       <property name="background-color" type="array">
         <value type="double" value="0.050000000000000003"/>
         <value type="double" value="0.070000000000000007"/>
@@ -21,7 +21,7 @@
         <value type="double" value="0.059999999999999998"/>
         <value type="double" value="0.040000000000000001"/>
         <value type="double" value="0.10000000000000001"/>
-        <value type="double" value="0.80000000000000004"/>
+        <value type="double" value="0.55000000000000004"/>
       </property>
       <property name="icon-size" type="uint" value="16"/>
       <property name="plugin-ids" type="array">
@@ -56,7 +56,7 @@
         <value type="double" value="0.10000000000000001"/>
         <value type="double" value="0.11"/>
         <value type="double" value="0.14999999999999999"/>
-        <value type="double" value="0.71999999999999997"/>
+        <value type="double" value="0.55000000000000004"/>
       </property>
       <property name="plugin-ids" type="array">
         <value type="int" value="30"/>
