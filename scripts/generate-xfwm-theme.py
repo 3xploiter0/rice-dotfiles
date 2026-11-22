@@ -11,7 +11,10 @@ from PIL import Image, ImageDraw
 TITLE_HEIGHT = 31
 BORDER = 2
 CORNER = 16
-BUTTON = 28
+BUTTON = 16          # image canvas; keeps titlebar height from title-*.png
+LIGHT_DIAMETER = 12  # real macOS traffic-light size
+DOT_DIAMETER = 8     # understated menu/shade/stick dots
+
 
 ACTIVE_BG = (17, 17, 27, 255)      # #11111b
 INACTIVE_BG = (24, 24, 37, 255)    # #181825
@@ -33,13 +36,15 @@ def shade(rgb: tuple[int, int, int], factor: float) -> tuple[int, int, int]:
     return tuple(min(255, max(0, int(c * factor))) for c in rgb)
 
 
-def disc(size: int, color: tuple[int, int, int], dim: bool = False, factor: float = 1.0):
+def disc(size: int, color: tuple[int, int, int], dim: bool = False,
+         factor: float = 1.0, diameter: int = LIGHT_DIAMETER):
     img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
     base = shade(color, 0.42) if dim else color
     fill = shade(base, factor)
-    r = (size - 2) / 2
-    box = (1, 1, size - 2, size - 2)
+    c = (size - 1) / 2
+    r = (diameter - 2) / 2
+    box = (c - r, c - r, c + r, c + r)
     draw.ellipse(box, fill=fill + (255,))
     if not dim:
         # subtle top-left specular highlight
@@ -90,12 +95,12 @@ def build(directory: Path) -> None:
 
     understated = (108, 114, 134)
     for name in ("menu", "shade", "shade-toggled", "stick", "stick-toggled"):
-        write(directory, f"{name}-active", disc(BUTTON, understated, factor=1.4))
-        write(directory, f"{name}-inactive", disc(BUTTON, understated, dim=True))
-        write(directory, f"{name}-prelight-active", disc(BUTTON, (166, 173, 200)))
-        write(directory, f"{name}-prelight-inactive", disc(BUTTON, understated, dim=True))
-        write(directory, f"{name}-pressed-active", disc(BUTTON, (88, 91, 112)))
-        write(directory, f"{name}-pressed-inactive", disc(BUTTON, understated, dim=True))
+        write(directory, f"{name}-active", disc(BUTTON, understated, factor=1.4, diameter=DOT_DIAMETER))
+        write(directory, f"{name}-inactive", disc(BUTTON, understated, dim=True, diameter=DOT_DIAMETER))
+        write(directory, f"{name}-prelight-active", disc(BUTTON, (166, 173, 200), diameter=DOT_DIAMETER))
+        write(directory, f"{name}-prelight-inactive", disc(BUTTON, understated, dim=True, diameter=DOT_DIAMETER))
+        write(directory, f"{name}-pressed-active", disc(BUTTON, (88, 91, 112), diameter=DOT_DIAMETER))
+        write(directory, f"{name}-pressed-inactive", disc(BUTTON, understated, dim=True, diameter=DOT_DIAMETER))
 
     for side in ("top-left", "top-right", "bottom-left", "bottom-right"):
         write(directory, f"{side}-active", corner(side, ACTIVE_BG))
@@ -123,7 +128,7 @@ title_shadow_inactive=false
 title_vertical_offset_active=1
 title_vertical_offset_inactive=1
 title_horizontal_offset=0
-button_offset=6
+button_offset=11
 button_spacing=4
 show_app_icon=false
 shadow_delta_height=0
