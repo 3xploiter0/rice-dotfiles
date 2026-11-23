@@ -14,7 +14,7 @@ k(){ printf "  ${C}%-22s${X} ${W}%s${X}\n" "$1" "$2"; }
 
 banner(){ printf "${B}${BD}
    ┌─────────────────────────────────────────────┐
-   │   3xploiter0 · Catppuccin rice card         │
+   │   3xploiter0 · macOS rice card              │
    └─────────────────────────────────────────────┘${X}
 ${D}   tip: ${C}cheat htb${D} · ${C}cheat tmux${D} · ${C}cheat desktop${D} · ${C}cheat shell${X}\n"; }
 
