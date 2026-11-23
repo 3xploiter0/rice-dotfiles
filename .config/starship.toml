@@ -1,39 +1,68 @@
 add_newline = true
-command_timeout = 200
-format = "${custom.target}[$directory$git_branch$git_status]($style)$character"
+command_timeout = 300
+format = """
+${custom.target}$directory$git_branch$git_status
+$character"""
+right_format = "$cmd_duration$time"
 
-[character]
-error_symbol = "[✗](bold cyan)"
-success_symbol = "[❯](bold cyan)"
-
+# ── path pill (macOS blue) ───────────────────────────
 [directory]
-truncation_length = 2
+truncation_length = 3
 truncation_symbol = "…/"
-repo_root_style = "bold cyan"
-repo_root_format = "[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
+truncate_to_repo = false
+read_only = " 󰌾"
+style = "bold fg:#ffffff bg:#0a84ff"
+format = "[](fg:#0a84ff)[ $path$read_only ]($style)[](fg:#0a84ff) "
+home_symbol = " ~"
 
+[directory.substitutions]
+"Documents" = " Documents"
+"Downloads" = " Downloads"
+"Desktop"   = " Desktop"
+"Pictures"  = " Pictures"
+"Music"     = " Music"
+"cyber"     = " cyber"
+
+# ── git branch pill ──────────────────────────────────
 [git_branch]
-format = "[$branch]($style) "
-style = "italic cyan"
+symbol = " "
+style = "bold fg:#a6e3a1 bg:#3d3d4a"
+format = "[](fg:#3d3d4a)[ $symbol$branch ]($style)[](fg:#3d3d4a) "
 
+# ── git status pill (only when dirty) ────────────────
 [git_status]
-format     = '[$all_status]($style)'
-style      = "cyan"
-ahead      = "⇡${count} "
-diverged   = "⇕⇡${ahead_count}⇣${behind_count} "
-behind     = "⇣${count} "
-conflicted = " "
-up_to_date = " "
-untracked  = "? "
-modified   = " "
-stashed    = ""
-staged     = ""
-renamed    = ""
-deleted    = ""
+style = "bold fg:#1e1e2e bg:#f9e2af"
+format = "[](fg:#f9e2af)[ $all_status$ahead_behind ]($style)[](fg:#f9e2af) "
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+conflicted = "="
+untracked = "?"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"
+stashed = "$"
 
-# red target indicator (set with: target IP)
+# ── prompt arrow ─────────────────────────────────────
+[character]
+success_symbol = "[❯](bold #0a84ff)"
+error_symbol = "[❯](bold #ff453a)"
+
+# ── right side ───────────────────────────────────────
+[cmd_duration]
+min_time = 2000
+format = "[ $duration ](fg:#e0af68) "
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "fg:#6c7086"
+format = "[ $time]($style)"
+
+# ── red target indicator (set with: target IP) ───────
 [custom.target]
 command = "head -1 ~/.config/hack/target"
 when = "test -s ~/.config/hack/target"
-format = "[󰓾 $output](bold red) "
+format = "[](fg:#ff453a)[ 󰓾 $output ](bold fg:#ffffff bg:#ff453a)[](fg:#ff453a) "
 shell = ["sh"]
