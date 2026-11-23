@@ -10,4 +10,8 @@ sudo sed -i -e 's#^background = .*#background = /usr/share/backgrounds/mac/Sonom
   -e 's#^theme-name = .*#theme-name = WhiteSur-Dark#' -e 's#^icon-theme-name = .*#icon-theme-name = WhiteSur-dark#' \
   -e 's#^cursor-theme-name = .*#cursor-theme-name = WhiteSur-cursors#' -e 's#^font-name = .*#font-name = Inter 11#' \
   /etc/lightdm/lightdm-gtk-greeter.conf
+sudo mkdir -p /var/lib/lightdm/.config/gtk-3.0
+sudo cp "$(dirname "$0")/greeter-gtk.css" /var/lib/lightdm/.config/gtk-3.0/gtk.css
+sudo chown -R lightdm:lightdm /var/lib/lightdm/.config
+sudo sed -i -e 's#^hide-user-image = .*#hide-user-image = false#' -e 's#^position = .*#position = 50%,center 46%,center#' /etc/lightdm/lightdm-gtk-greeter.conf
 echo "login screen styled"

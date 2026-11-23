@@ -86,7 +86,7 @@
 /plugins/plugin-19/digital-time-format        %a %H:%M
 /plugins/plugin-1/button-icon                 mac-apple
 /plugins/plugin-1/button-title                
-/plugins/plugin-1/recent                      [virtualbox.desktop,google-chrome.desktop,xfce-display-settings.desktop,riseup-vpn.desktop,com.microsoft.VSCode.desktop,kali-burpsuite.desktop,be.maartenbaert.simplescreenrecorder.desktop,firefox-esr.desktop,kali-ghidra.desktop,org.wireshark.Wireshark.desktop]
+/plugins/plugin-1/recent                      [google-chrome.desktop,virtualbox.desktop,xfce-display-settings.desktop,riseup-vpn.desktop,com.microsoft.VSCode.desktop,kali-burpsuite.desktop,be.maartenbaert.simplescreenrecorder.desktop,firefox-esr.desktop,kali-ghidra.desktop,org.wireshark.Wireshark.desktop]
 /plugins/plugin-1/show-button-title           false
 /plugins/plugin-2                             separator
 /plugins/plugin-20                            separator

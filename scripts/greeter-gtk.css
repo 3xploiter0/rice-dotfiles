@@ -1,0 +1,56 @@
+/* macOS-style LightDM greeter */
+#panel_window {
+  background-color: rgba(20, 20, 24, 0.55);
+  color: #fff;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+#panel_window * { color: #fff; text-shadow: none; }
+
+#login_window {
+  background-color: rgba(28, 28, 34, 0.62);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 26px;
+  padding: 34px 38px 30px 38px;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.10);
+  color: #fff;
+}
+#login_window label { color: rgba(255,255,255,0.92); font-weight: 600; }
+
+#user_image {
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.35);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  padding: 4px;
+  margin-bottom: 8px;
+}
+#user_combobox, #user_combobox button, #user_combobox * { background: transparent; border: none; box-shadow: none; color: #fff; font-size: 15pt; font-weight: 600; }
+
+#password_entry {
+  background-color: rgba(255,255,255,0.14);
+  color: #fff;
+  caret-color: #fff;
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 999px;
+  padding: 9px 18px;
+  min-height: 22px;
+  box-shadow: none;
+}
+#password_entry:focus {
+  background-color: rgba(255,255,255,0.20);
+  border-color: rgba(10,132,255,0.95);
+  box-shadow: 0 0 0 3px rgba(10,132,255,0.35);
+}
+
+#login_window button {
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 999px;
+  padding: 6px 20px;
+  box-shadow: none;
+}
+#login_window button:hover { background: rgba(255,255,255,0.24); }
+#login_window button.suggested-action, #login_window #login_button { background: #0a84ff; border-color: #0a84ff; color: #fff; }
+
+#greeter_infobar { border-radius: 12px; background: rgba(255,69,58,0.85); color: #fff; }
