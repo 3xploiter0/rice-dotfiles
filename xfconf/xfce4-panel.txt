@@ -5,7 +5,7 @@
 /panels/panel-1/background-style              1
 /panels/panel-1/icon-size                     20
 /panels/panel-1/length                        100
-/panels/panel-1/plugin-ids                    [1,12,14,16,17,18,19]
+/panels/panel-1/plugin-ids                    [1,12,14,16,17,18,19,40]
 /panels/panel-1/position                      p=6;x=0;y=0
 /panels/panel-1/position-locked               true
 /panels/panel-1/size                          24
@@ -97,7 +97,7 @@
 /plugins/plugin-2200/appearance               0
 /plugins/plugin-2200/items                    [-lock-screen,-switch-user,-separator,-suspend,-hibernate,-hybrid-sleep,-separator,-shutdown,-restart,-separator,+logout,-logout-dialog]
 /plugins/plugin-22/appearance                 0
-/plugins/plugin-22/items                      [+lock-screen,-switch-user,-separator,-suspend,-hibernate,-hybrid-sleep,-separator,-shutdown,-restart,-separator,+logout,-logout-dialog]
+/plugins/plugin-22/items                      [-lock-screen,-switch-user,-separator,-suspend,-hibernate,-hybrid-sleep,-separator,-shutdown,-restart,-separator,-logout,+logout-dialog]
 /plugins/plugin-23                            genmon
 /plugins/plugin-23/command                    /home/x3xploiter0/.local/bin/hackbar target
 /plugins/plugin-23/enable-single-row          true
@@ -110,6 +110,8 @@
 /plugins/plugin-30/items                      launchpad.desktop
 /plugins/plugin-31                            docklike
 /plugins/plugin-4                             directorymenu
+/plugins/plugin-40                            launcher
+/plugins/plugin-40/items                      [power.desktop]
 /plugins/plugin-4/base-directory              /home/x3xploiter0
 /plugins/plugin-4/icon-name                   system-file-manager
 /plugins/plugin-5                             launcher
