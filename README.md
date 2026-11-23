@@ -1,48 +1,31 @@
-# 🐉 3xploiter0 rice — Catppuccin Mocha Kali
+# 🍎 3xploiter0 rice — macOS-style Kali (XFCE)
 
-A complete **Catppuccin Mocha** rice for **Kali Linux (XFCE)** with a full **hacking workflow** baked in — installed with one command.
+A **macOS-style desktop for Kali Linux (XFCE / X11)** with a full **hacking workflow** built in. The desktop is dark **WhiteSur**; terminals and editor keep the **Catppuccin Mocha** colours.
 
-Themed desktop, macOS-style feels, animated eye candy, and a pentest toolkit that turns a fresh box into a working HTB/THM rig in seconds.
+Frosted menu bar, magnifying dock, genie-style minimize, rounded windows, styled notifications and login screen, plus a pentest toolkit that turns a fresh box into a working HTB/THM rig in seconds.
 
-![HTB workspace](docs/workspace.png)
-
----
-
-## 🎨 Palette
-
-| Role | Color | Hex |
-|---|---|---|
-| Base / background | 🟣 dark | `#1e1e2e` |
-| Crust / panel | ⬛ | `#11111b` |
-| Surface | 🟪 | `#313244` |
-| Text | ⚪ | `#a6adc8` (low-glare) |
-| Mauve (accent) | 🟣 | `#cba6f7` |
-| Blue | 🔵 | `#89b4fa` |
-| Pink | 🌸 | `#f5c2e7` |
-| Teal | 🩵 | `#94e2d5` |
-| Peach | 🟠 | `#fab387` |
-| Green / Yellow / Red | ✅ | `#a6e3a1` · `#f9e2af` · `#f38ba8` |
+> Screenshots of the new look are coming. The old `docs/*.png` images show the previous Catppuccin version and are no longer linked here.
 
 ---
 
-## 📖 Command reference
+## ✨ What you get
 
-Every command is documented with an example in **[COMMANDS.md](COMMANDS.md)**.
-In a terminal: `cheat` (quick list), `cheat <section>` (enum/ports/web/ad/crack/linux/windows…), and **`ex <command>`** to print one example — e.g. `ex payload`.
+### Desktop (macOS look)
+- **WhiteSur-Dark** GTK theme, window borders (real red/yellow/green traffic lights), and **WhiteSur-dark** icons
+- **Bibata Modern Ice** white cursor, **Inter** UI font, **Sonoma-dark** wallpaper (more in `~/.local/share/backgrounds/mac/`)
+- **Menu bar:** translucent dark bar with the Apple logo, the **focused app's name** (like macOS), tray, clock and a **power button**
+- **Dock:** [Plank](https://github.com/ricotz/plank) with **hover zoom**, launch bounce, and *hide when a window overlaps it*
+- **Animations (picom):** genie-style **minimize / restore** toward the dock, pop-in on open, soft shadows, blur on glass surfaces. Apps that draw their own frame (Chrome, GTK headerbars) are excluded so they don't get a blue halo
+- **Notifications:** rounded, frosted popups (`xfce4-notifyd` + CSS) with a clean volume slider
+- **Launchpad** (`F4`), **Mission Control** (`F3`), hot corners, three-finger swipe workspaces
+- **Login screen:** LightDM GTK greeter with a dark card, round avatar and pill-shaped fields (optional step, see below)
 
-## ✨ Highlights
-
-- **Catppuccin Mocha everywhere** — window theme, GTK, Flat-Remix Purple icons, Bibata Ice cursor, JetBrainsMono Nerd Font, themed Alacritty / QTerminal / btop / Neovim, starship prompt
-- **Anime wallpapers** — a curated `anime-*.jpg` rotation (`anime-yq2mll.jpg` by default), no gradient placeholders; cycle with `wal-cycle`
-- **macOS replica look** — real WhiteSur traffic-light close/minimize/maximize buttons on every app window, frosted glass menu bar + dock, rounded windows, soft shadows, centered clock, Launchpad (`F4`), Mission Control (`F3`), hot corners
-- **Eye candy** — animated video wallpaper (`livewp`), wallpaper-driven auto-theming (`wal-cycle`), a desktop HUD (conky), window animations + blur (picom)
-- **Hacking workflow** — one-command box setup, auto-recon, VPN toggle, reverse-shell generator, report builder, terminal auto-logging
-- **Self-maintaining** — weekly auto-update + unattended security patches
-- **Backed up + shareable** — everything lives in this repo
-
-| Launchpad | Matrix lock |
-|---|---|
-| ![Launchpad](docs/launchpad.png) | ![Matrix](docs/matrix.png) |
+### Terminal & workflow
+- **Starship prompt** as rounded pills: blue **path pill** with folder icons, green **git branch** pill, yellow **git status** pill, red **target** pill when you set one, and a clock on the right
+- Alacritty / QTerminal / tmux / Neovim (LazyVim) / btop in **Catppuccin Mocha**
+- **Hacking workflow:** one-command box setup, auto-recon, VPN toggle, reverse-shell generator, report builder, terminal auto-logging
+- **Self-maintaining:** weekly update timer + unattended security patches
+- **Backed up:** `rice-backup` snapshots everything into this repo
 
 ---
 
@@ -56,15 +39,25 @@ cd ~/rice
 ./install.sh
 ```
 
-- Existing configs are **backed up** to `~/.rice-restore-<date>/` first.
-- **Safe install:** desktop look + terminals + toolkit. It does **not** touch GRUB, the boot splash, or the login screen.
-- When it finishes: **log out and back in**, open a terminal, and run **`cheat`**.
+`install.sh` backs up your existing configs to `~/.rice-restore-<date>/`, installs packages, copies the dotfiles and scripts, **builds the WhiteSur theme, icons and cursors**, and applies the XFCE look. It does **not** touch GRUB, the boot splash or the login screen.
+
+### Extra steps (not part of `install.sh` yet)
+
+| Step | Command | Notes |
+|---|---|---|
+| **Dock (Plank)** | `bash scripts/install-plank.sh` | Plank isn't packaged in Kali, so it's **built from source** into `~/.local`. Install the build deps listed at the top of the script first. After building, copy `.config/plank` and `.local/share/plank` into place and start `plank` |
+| **Login screen** | `bash scripts/setup-login.sh` | Needs `sudo`. Copies the theme/wallpaper to system folders and styles the LightDM greeter. Backs up the greeter config as `.bak` |
+
+When done, **log out and back in**, open a terminal and run **`cheat`**.
+
+> **Plank is unmaintained upstream** (last commit Dec 2023). It still builds and runs on current Kali, but it won't get fixes.
 
 ---
 
 ## ⌨️ Commands
 
-Run **`cheat`** any time for the full, colored list (`cheat htb`, `cheat tmux`, `cheat desktop`…), or open [`cheatsheet/rice-card.html`](cheatsheet/rice-card.html).
+Every command is documented with an example in **[COMMANDS.md](COMMANDS.md)**.
+In a terminal: `cheat` (quick list), `cheat <section>` (enum/ports/web/ad/crack/linux/windows…), and **`ex <command>`** to print one example, e.g. `ex payload`. Or open [`cheatsheet/rice-card.html`](cheatsheet/rice-card.html).
 
 ### Hacking workflow
 | Command | Does |
@@ -81,6 +74,7 @@ Run **`cheat`** any time for the full, colored list (`cheat htb`, `cheat tmux`, 
 | `crack <hash\|file>` | Auto-detect hash type → hashcat vs rockyou |
 | `report <box>` | Build a markdown pentest report from notes + logs |
 | `status` | One glance: VPN, target, box, listeners, tmux |
+| `adlab` | How to set up an Active Directory practice lab (Ludus / online labs) |
 
 ### Desktop
 | Keys | Does |
@@ -89,10 +83,23 @@ Run **`cheat`** any time for the full, colored list (`cheat htb`, `cheat tmux`, 
 | `F4` / `F3` | Launchpad / Mission Control |
 | `Super+Ctrl+Space` | Next wallpaper |
 | `Super+1..5` / `+Shift` | Switch / move to workspace |
-| Three-finger swipe left/right | Switch desktop/workspace (needs `libinput-gestures` + touchpad) |
-| `livewp on` · `wal-cycle` | Live video wallpaper · recolor from wallpaper |
+| Three-finger swipe left/right | Switch workspace (needs `libinput-gestures` + a touchpad) |
 
-QTerminal's menu bar is hidden (`MenuVisible=false`), so `session · action · edit · view · help` no longer overlaps the window controls.
+---
+
+## 🛠️ Tweaking the look
+
+| Want to change | Where |
+|---|---|
+| Dock size / zoom / hiding | `gsettings` schema `net.launchpad.plank.dock.settings` (icon-size, zoom-percent, hide-mode). Plank needs `GSETTINGS_SCHEMA_DIR=~/.local/share/glib-2.0/schemas` |
+| Minimize animation | `animations = (...)` in `.config/picom/picom.conf` |
+| Prompt pills & colours | `.config/starship.toml` |
+| Menu bar & dock CSS | `.config/gtk-3.0/gtk.css` |
+| Notification style | the `#XfceNotifyWindow` block in `gtk.css` |
+| Login card | `scripts/greeter-gtk.css` (installed to `/var/lib/lightdm/.config/gtk-3.0/gtk.css`) |
+| Focused-app name in the bar | `.local/bin/activeapp` (a genmon script) |
+
+Tip: after changing configs, run `rice-backup` to snapshot them into this repo.
 
 ---
 
@@ -100,16 +107,18 @@ QTerminal's menu bar is hidden (`MenuVisible=false`), so `session · action · e
 
 ```
 install.sh              one-command installer (portable, backs up first)
-.zshrc .tmux.conf       shell + tmux (Catppuccin Mocha, auto-logging)
-.config/               alacritty, picom (glass), rofi, nvim (LazyVim), conky, fastfetch, btop, cava, libinput-gestures
-.local/bin/            all the helper commands above
-.local/share/          WhiteSur-MacOS xfwm theme, icons config, qterminal/gtksourceview themes, wallpapers
-scripts/               generate-xfwm-theme.py (regenerates the traffic-light theme)
-xfce-xml/              panel + dock + window-manager + keybind settings
-cheatsheet/            printable HTML reference card
+uninstall.sh            restores your previous configs
+.zshrc .tmux.conf       shell + tmux (zshrc is gitignored on the author's machine)
+.config/                picom, plank, gtk-3.0/4.0, alacritty, rofi, nvim, starship, btop, cava, fastfetch, libinput-gestures
+.local/bin/             all the helper commands above
+.local/share/           Plank theme, wallpapers (mac/), qterminal & gtksourceview themes
+scripts/                install-plank.sh, setup-login.sh, greeter-gtk.css, install-gestures.sh, generate-xfwm-theme.py
+xfce-xml/               panel, window-manager, notifications and keybind settings
+xfconf/                 text dumps of xfconf channels + Plank dock settings
+cheatsheet/             printable HTML reference card
 ```
 
-Self-update: a systemd user timer runs `update` weekly (nuclei templates + config backup/push), and `unattended-upgrades` handles apt security patches.
+Self-update: a systemd user timer runs `update` weekly (nuclei templates + config backup), and `unattended-upgrades` handles apt security patches.
 
 ---
 
@@ -120,23 +129,18 @@ cd ~/rice        # the folder you cloned into
 ./uninstall.sh
 ```
 
-It stops the rice (picom, conky, dock, live wallpaper, weekly timer), removes the
-helper commands and configs it added, and **restores your previous configs** from
-the backup `install.sh` made (`~/.rice-restore-<date>/`). Log out and back in
-afterwards.
-
-Packages are left installed (they're harmless on their own); the uninstaller
-prints the `apt remove` line if you also want to drop the extras. If you no longer
-have the cloned folder, re-clone it and run `./uninstall.sh` from there.
+It stops the rice processes, removes the helper commands and configs it added, and **restores your previous configs** from the backup `install.sh` made (`~/.rice-restore-<date>/`). Log out and back in afterwards. Packages are left installed. If you styled the login screen, restore `/etc/lightdm/lightdm-gtk-greeter.conf.bak`.
 
 ---
 
 ## ⚠️ Notes
 
 - Built and tested on **Kali Linux rolling, XFCE (X11)**. Other XFCE distros may need small tweaks.
-- The Nerd Font isn't bundled (too large for git) — the installer downloads it automatically.
-- Wallpapers are included for convenience; swap in your own from `~/.local/share/backgrounds/omarchy/`.
-- Three-finger swipes need a physical libinput touchpad. Kali has no `libinput-gestures` apt package, so the installer fetches the upstream script into `~/.local/bin` and uses `libinput-tools`. It also adds your user to the `input` group and enables autostart; **log out and back in once** before swiping. Without a touchpad, use `Super+1..5` or `Ctrl+Alt+Left/Right`. You can re-run just this part with `bash scripts/install-gestures.sh`.
+- **Not for Wayland.** picom, Plank and the hot corners need X11.
+- The WhiteSur theme is installed from the **prebuilt release** (no `sassc` needed). Icons, cursors and wallpapers come from [vinceliuice](https://github.com/vinceliuice)'s WhiteSur projects.
+- The Nerd Font isn't bundled (too large for git); the installer downloads it.
+- Three-finger swipes need a physical libinput touchpad. Kali has no `libinput-gestures` apt package, so the installer fetches the upstream script. **Log out and back in once** before swiping. Re-run just this part with `bash scripts/install-gestures.sh`.
+- Chrome: turn on **Use system title bar and borders** (`chrome://settings/appearance`) to get the traffic-light buttons.
 - Use the recon/scanning tools **only against systems you're authorized to test.**
 
 Made for fun. PRs and issues welcome.
