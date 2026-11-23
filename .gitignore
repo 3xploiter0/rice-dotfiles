@@ -12,3 +12,15 @@ dockerlabs/vulhub/
 *.token
 TG_BOT_TOKEN
 TG_USER_ID
+.local/bin/libinput
+.local/bin/libinput-analyze
+.local/bin/libinput-debug-events
+.local/bin/libinput-debug-gui
+.local/bin/libinput-debug-tablet
+.local/bin/libinput-debug-tablet-pad
+.local/bin/libinput-list-devices
+.local/bin/libinput-measure
+.local/bin/libinput-quirks
+.local/bin/libinput-record
+.local/bin/libinput-test
+.local/bin/plank
