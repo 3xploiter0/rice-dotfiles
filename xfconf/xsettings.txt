@@ -1,6 +1,6 @@
 /Gtk/ButtonImages               true
 /Gtk/CursorBlinkTimeout         10
-/Gtk/CursorThemeName            WhiteSur-cursors
+/Gtk/CursorThemeName            Bibata-Modern-Ice
 /Gtk/CursorThemeSize            24
 /Gtk/DecorationLayout           close,minimize,maximize:
 /Gtk/EnableAnimations           true
