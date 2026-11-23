@@ -62,6 +62,7 @@
 /plugins/plugin-13/tracked-core               0
 /plugins/plugin-13/update-interval            0
 /plugins/plugin-14                            systray
+/plugins/plugin-14/hidden-legacy-items        [anydesk,ibus panel]
 /plugins/plugin-14/known-items                [chrome_status_icon_4,chrome_status_icon_3,SimpleScreenRecorder,RiseupVPN,chrome_status_icon_2,chrome_status_icon_1,blueman]
 /plugins/plugin-14/known-legacy-items         [ethernet network connection “wired connection 1” active,wi-fi network connection “rockyou.txt” active: rockyou.txt (77%),wi-fi network connection “rockyou.txt” active: rockyou.txt (76%),wi-fi network connection “rockyou.txt” active: rockyou.txt (97%),wi-fi network connection “rockyou.txt” active: rockyou.txt (98%),wi-fi network connection “rockyou.txt” active: rockyou.txt (96%),wi-fi network connection “rockyou.txt” active: rockyou.txt (95%),wi-fi network connection “rockyou.txt” active: rockyou.txt (100%),wi-fi network connection “rockyou.txt” active: rockyou.txt (99%),anydesk,wi-fi network connection “ray mode” active: ray mode (84%),wi-fi network connection “ray mode” active: ray mode (85%),wi-fi network connection “ray mode” active: ray mode (88%),ibus panel,wi-fi network connection “ray mode” active: ray mode (89%),wi-fi network connection “ray mode” active: ray mode (87%),wi-fi network connection “1kn0wn0th1ng” active: 1kn0wn0th1ng (73%),onboard,wi-fi network connection “1kn0wn0th1ng” active: 1kn0wn0th1ng (68%),networkmanager applet]
 /plugins/plugin-14/size-max                   16
