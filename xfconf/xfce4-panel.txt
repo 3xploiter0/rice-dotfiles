@@ -9,7 +9,7 @@
 /panels/panel-1/position                      p=6;x=0;y=0
 /panels/panel-1/position-locked               true
 /panels/panel-1/size                          24
-/panels/panel-2/autohide-behavior             1
+/panels/panel-2/autohide-behavior             0
 /panels/panel-2/background-rgba               [0.100000,0.110000,0.150000,0.550000]
 /panels/panel-2/background-style              1
 /panels/panel-2/enter-opacity                 100
