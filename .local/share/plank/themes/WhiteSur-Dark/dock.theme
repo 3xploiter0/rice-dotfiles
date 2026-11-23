@@ -38,7 +38,7 @@ FadeOpacity=1
 #The amount of time (in ms) for click animations.
 ClickTime=300
 #The amount of time (in ms) to bounce an urgent icon.
-UrgentBounceTime=0
+UrgentBounceTime=600
 #The amount of time (in ms) to bounce an icon when launching an application.
 LaunchBounceTime=600
 #The amount of time (in ms) for active window indicator animations.

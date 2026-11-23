@@ -4,7 +4,6 @@
   <property name="configver" type="int" value="2"/>
   <property name="panels" type="array">
     <value type="int" value="1"/>
-    <value type="int" value="2"/>
     <property name="panel-1" type="empty">
       <property name="position" type="string" value="p=6;x=0;y=0"/>
       <property name="length" type="uint" value="100"/>
@@ -26,6 +25,7 @@
       <property name="icon-size" type="int" value="20"/>
       <property name="plugin-ids" type="array">
         <value type="int" value="1"/>
+        <value type="int" value="41"/>
         <value type="int" value="12"/>
         <value type="int" value="14"/>
         <value type="int" value="16"/>
@@ -63,8 +63,8 @@
   <property name="plugins" type="empty">
     <property name="plugin-1" type="string" value="whiskermenu">
       <property name="recent" type="array">
-        <value type="string" value="virtualbox.desktop"/>
         <value type="string" value="google-chrome.desktop"/>
+        <value type="string" value="virtualbox.desktop"/>
         <value type="string" value="xfce-display-settings.desktop"/>
         <value type="string" value="riseup-vpn.desktop"/>
         <value type="string" value="com.microsoft.VSCode.desktop"/>
@@ -315,6 +315,13 @@
       <property name="items" type="array">
         <value type="string" value="power.desktop"/>
       </property>
+    </property>
+    <property name="plugin-41" type="string" value="genmon">
+      <property name="command" type="string" value="/home/x3xploiter0/.local/bin/activeapp"/>
+      <property name="use-label" type="bool" value="false"/>
+      <property name="update-period" type="int" value="700"/>
+      <property name="font" type="string" value="Inter Bold 10"/>
+      <property name="enable-single-row" type="bool" value="true"/>
     </property>
   </property>
 </channel>
