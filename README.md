@@ -4,7 +4,19 @@ A **macOS-style desktop for Kali Linux (XFCE / X11)** with a full **hacking work
 
 Frosted menu bar, magnifying dock, genie-style minimize, rounded windows, styled notifications and login screen, plus a pentest toolkit that turns a fresh box into a working HTB/THM rig in seconds.
 
-> Screenshots of the new look are coming. The old `docs/*.png` images show the previous Catppuccin version and are no longer linked here.
+![Desktop](docs/desktop.jpg)
+
+---
+
+## 📸 Screenshots
+
+| Launchpad (`F4`) | Login screen |
+|---|---|
+| ![Launchpad](docs/launchpad.jpg) | ![Login screen](docs/login.jpg) |
+
+| Pill prompt (starship) | Notifications |
+|---|---|
+| ![Prompt](docs/prompt.png) | ![Notifications](docs/notifications.png) |
 
 ---
 
