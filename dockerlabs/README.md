@@ -11,7 +11,7 @@ dlab up bwapp                       -> http://localhost:8083/install.php
 dlab up mutillidae                  -> http://localhost:8084
 
 vulhub log4j      # pick & run 1 of ~333 CVE scenarios (vulhub down to stop)
-adlab             # how to build an Active Directory lab (GOAD / Ludus)
+adlab             # how to build an Active Directory lab (Ludus / online labs)
 dlab down <name>  stop it
 dlab open <name>  open in browser
 dlab ps           running lab containers
