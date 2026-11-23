@@ -1,0 +1,11 @@
+[Plymouth Theme]
+Name=macOS
+Description=Black screen, white Apple logo and a thin progress bar.
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/macos
+ScriptFile=/usr/share/plymouth/themes/macos/macos.script
+ConsoleLogBackgroundColor=0x000000
+MonospaceFont=JetBrainsMono Nerd Font 11
+Font=JetBrainsMono Nerd Font 11
