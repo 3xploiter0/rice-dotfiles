@@ -16,7 +16,7 @@
       <value type="string" value="xfce4-settings-helper"/>
     </property>
   </property>
-  <property name="theme" type="string" value="Omarchy-CatppuccinMocha"/>
+  <property name="theme" type="string" value="Default"/>
   <property name="notify-location" type="string" value="top-right"/>
   <property name="initial-opacity" type="double" value="1"/>
   <property name="expire-timeout" type="int" value="5"/>

@@ -8,3 +8,19 @@
 wnck-pager:selected { background-color: rgba(10,132,255,0.45); border-radius: 5px; }
 .docklike button { border: none; border-radius: 12px; margin: 2px; padding: 2px; }
 .docklike button:hover { background-color: rgba(255,255,255,0.15); }
+
+/* ---------- macOS-style notification popups (xfce4-notifyd) ---------- */
+#XfceNotifyWindow {
+  background-color: rgba(34, 34, 40, 0.80);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  color: #ffffff;
+  padding: 2px;
+}
+#XfceNotifyWindow label { color: #ffffff; }
+#XfceNotifyWindow label#summary { font-weight: 700; }
+#XfceNotifyWindow label#body { color: rgba(255,255,255,0.78); }
+#XfceNotifyWindow image { color: #ffffff; }
+#XfceNotifyWindow progressbar trough { background-color: rgba(255,255,255,0.22); border-radius: 999px; min-height: 6px; border: none; }
+#XfceNotifyWindow progressbar progress { background-color: #ffffff; border-radius: 999px; min-height: 6px; border: none; }
+#XfceNotifyWindow button { background: rgba(255,255,255,0.14); border: none; border-radius: 8px; color: #fff; }
