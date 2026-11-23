@@ -11,6 +11,11 @@ apktool
 apt
 apt-utils
 aria2
+autoconf
+autoconf-archive
+automake
+autopoint
+bamfdaemon
 base-files
 base-passwd
 bash
@@ -44,6 +49,7 @@ debconf
 debconf-i18n
 debian-archive-keyring
 debianutils
+desktop-file-utils
 dhcpcd-base
 diffutils
 dirsearch
@@ -72,9 +78,11 @@ fonts-jetbrains-mono
 foremost
 freerdp3-x11
 fzf
+gcc
 gcc-15-base
 gcc-16-cross-base
 gdb
+gettext
 gettext-base
 gh
 ghidra
@@ -93,6 +101,7 @@ init
 init-system-helpers
 initramfs-tools
 intel-microcode
+intltool
 iproute2
 iputils-ping
 iputils-tracepath
@@ -117,6 +126,7 @@ libatomic1-arm64-cross
 libattr1
 libaudit-common
 libaudit1
+libbamf3-dev
 libblkid1
 libbpf1
 libbsd0
@@ -131,6 +141,7 @@ libcap2-bin
 libcom-err2
 libcrypt1
 libdb5.3t64
+libdbusmenu-gtk3-dev
 libdebconfclient0
 libedit2
 libelf1t64
@@ -140,9 +151,13 @@ libfdt1
 libgcc-16-dev-arm64-cross
 libgcc-s1
 libgcc-s1-arm64-cross
+libgdk-pixbuf-2.0-dev
+libgee-0.8-dev
 libgmp10
+libgnome-menu-3-dev
 libgomp1-arm64-cross
 libgssapi-krb5-2
+libgtk-3-dev
 libhogweed6t64
 libhwasan0-arm64-cross
 libidn2-0
@@ -198,14 +213,19 @@ libtext-wrapi18n-perl
 libtinfo6
 libtirpc-common
 libtirpc3t64
+libtool
 libtsan2-arm64-cross
 libubsan1-arm64-cross
 libudev1
 libunistring5
 libuuid1
+libwnck-3-dev
 libx11-dev
 libxext-dev
+libxfixes-dev
+libxi-dev
 libxinerama-dev
+libxml2-utils
 libxrender-dev
 libxtables12
 libxxhash0
@@ -221,10 +241,12 @@ login.defs
 logrotate
 logsave
 lsof
+make
 man-db
 manpages
 mawk
 media-types
+meson
 micro
 mitmproxy
 mount
@@ -238,6 +260,7 @@ neovim
 netbase
 netcat-traditional
 nftables
+ninja-build
 npm
 openssh-client
 openssl-provider-legacy
@@ -249,6 +272,7 @@ perl
 perl-base
 picom
 pipx
+pkg-config
 procps
 python3-paramiko
 python3-requests
@@ -289,6 +313,7 @@ unattended-upgrades
 usbutils
 util-linux
 util-linux-extra
+valac
 vim-common
 vim-tiny
 virtualbox

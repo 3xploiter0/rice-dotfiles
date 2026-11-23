@@ -1,5 +1,5 @@
 /configver                                    2
-/panels                                       [1,2]
+/panels                                       [1]
 /panels/panel-1/background-color              [0.050000,0.070000,0.120000,0.950000]
 /panels/panel-1/background-rgba               [0.080000,0.080000,0.100000,0.720000]
 /panels/panel-1/background-style              1
