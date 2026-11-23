@@ -151,8 +151,8 @@ if command -v xfconf-query >/dev/null; then
     grep -rlZ '/home/x3xploiter0' "$HOME/.config/xfce4/panel" 2>/dev/null | xargs -0 -r sed -i "s#/home/x3xploiter0#$HOME#g"
   fi
   # wallpaper on every monitor THIS machine has (names differ per PC: eDP-1, eDP, HDMI-1…)
-  WP="$HOME/.local/share/backgrounds/omarchy"
-  img="$WP/anime-yq2mll.jpg"
+  WP="$HOME/.local/share/backgrounds/mac"
+  img="$WP/Sonoma-dark.jpg"
   [ -f "$img" ] || img="$(find "$WP" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.png' \) 2>/dev/null | sort | head -1)"
   if [ -n "$img" ] && command -v xrandr >/dev/null; then
     for mon in $(xrandr --query | awk '/ connected/{print $1}'); do
