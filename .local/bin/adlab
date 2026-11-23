@@ -5,14 +5,7 @@ cat <<TXT
 ${W}  Active Directory practice labs${X}
 ${D}  AD labs run Windows Server VMs — not Docker. Pick by your resources:${X}
 
-${B}▌ GOAD${X} (Game of Active Directory) — the standard, most complete
-  ${D}needs ~120GB disk, 24GB+ RAM, VirtualBox/VMware/Proxmox + Vagrant${X}
-  ${G}git clone https://github.com/Orange-Cyberdefense/GOAD ~/cyber/adlabs/GOAD${X}
-  ${G}cd ~/cyber/adlabs/GOAD && ./goad.sh${X}   ${D}(pick provider; it builds the forest)${X}
-
-${B}▌ GOAD-Light${X} — 2 VMs, lighter (same repo: ./goad.sh -t install -l GOAD-Light)
-
-${B}▌ Ludus${X} — easiest if you have a dedicated host (auto-deploys GOAD & more)
+${B}▌ Ludus${X} — easiest if you have a dedicated host (auto-deploys ready-made AD labs)
   ${D}https://docs.ludus.cloud${X}
 
 ${B}▌ No hardware?${X} practice AD attacks online instead:

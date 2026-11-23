@@ -494,7 +494,7 @@ bhound 172.30.0.10 alice 'Spring2024!'   # collect -> .zip, upload in the UI
 In the UI: "Shortest Paths to Domain Admins", mark users **Owned**, run pre-built queries.
 
 ### `adlab`
-Guide for setting up an Active Directory lab (GOAD / Ludus — VM-based, not Docker).
+Guide for setting up an Active Directory lab (Ludus / online labs — VM-based, not Docker).
 ```bash
 adlab                 # prints the setup path + requirements + online alternatives
 ```
