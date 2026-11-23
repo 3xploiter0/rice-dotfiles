@@ -146,6 +146,7 @@ libgssapi-krb5-2
 libhogweed6t64
 libhwasan0-arm64-cross
 libidn2-0
+libimage-exiftool-perl
 libitm1-arm64-cross
 libjansson4
 libk5crypto3

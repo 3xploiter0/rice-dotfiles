@@ -1,11 +1,11 @@
 /Gtk/ButtonImages               true
 /Gtk/CursorBlinkTimeout         10
-/Gtk/CursorThemeName            Bibata-Modern-Ice
+/Gtk/CursorThemeName            WhiteSur-cursors
 /Gtk/CursorThemeSize            24
-/Gtk/DecorationLayout           :
+/Gtk/DecorationLayout           close,minimize,maximize:
 /Gtk/EnableAnimations           true
 /Gtk/EnablePrimaryPaste         true
-/Gtk/FontName                   Hanken Grotesk 10
+/Gtk/FontName                   Inter 10
 /Gtk/ImModule                   
 /Gtk/KeynavUseCaret             false
 /Gtk/KeyThemeName               Default
@@ -23,9 +23,9 @@
 /Net/DoubleClickTime            400
 /Net/EnableEventSounds          true
 /Net/EnableInputFeedbackSounds  false
-/Net/IconThemeName              Flat-Remix-Purple-Dark
+/Net/IconThemeName              WhiteSur-dark
 /Net/SoundThemeName             freedesktop
-/Net/ThemeName                  adw-gtk3-dark
+/Net/ThemeName                  WhiteSur-Dark
 /Xfce/SyncThemes                true
 /Xft/Antialias                  1
 /Xft/Hinting                    true

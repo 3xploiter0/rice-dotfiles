@@ -3,8 +3,8 @@
 <channel name="xfwm4" version="1.0">
   <property name="general" type="empty">
     <property name="button_layout" type="string" value="CHM|"/>
-    <property name="theme" type="string" value="WhiteSur-MacOS"/>
-    <property name="title_font" type="string" value="Hanken Grotesk Bold 9"/>
+    <property name="theme" type="string" value="WhiteSur-Dark"/>
+    <property name="title_font" type="string" value="Inter Bold 9"/>
     <property name="easy_click" type="empty"/>
     <property name="workspace_count" type="int" value="5"/>
     <property name="cycle_workspaces" type="empty"/>

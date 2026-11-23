@@ -10,7 +10,7 @@ mkdir -p "$repo"
 paths=(
   .zshrc .tmux.conf .config/starship.toml
   .config/alacritty .config/picom .config/rofi .config/conky
-  .config/gtk-3.0/gtk.css .config/gtk-4.0/gtk.css
+  .config/gtk-3.0/gtk.css .config/gtk-3.0/settings.ini .config/gtk-4.0/gtk.css .config/gtk-4.0/settings.ini
   .config/qterminal.org/qterminal.ini
   .config/nvim/lua .config/fastfetch .config/btop/btop.conf .config/cava/config
   .config/hack .config/cherrytree/config.cfg
@@ -19,9 +19,6 @@ paths=(
   .local/share/themes/Omarchy-CatppuccinMocha
   .local/share/qtermwidget6/color-schemes/CatppuccinMocha.colorscheme
   .local/share/gtksourceview-5/styles/catppuccin-mocha.xml
-  .config/btop/themes
-  .config/polybar/config.ini
-  .config/dunst/dunstrc
 )
 
 cd "$repo"

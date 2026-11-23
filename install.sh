@@ -113,6 +113,20 @@ fi
 # rockyou
 [ -f /usr/share/wordlists/rockyou.txt ] || sudo gunzip -kf /usr/share/wordlists/rockyou.txt.gz 2>/dev/null
 
+# ---------------------------------------------------------------- WhiteSur (macOS look)
+say "WhiteSur GTK theme + icons + cursors (prebuilt, no sassc needed)"
+t="$(mktemp -d)"
+if git clone -q --depth 1 https://github.com/vinceliuice/WhiteSur-gtk-theme.git "$t/gtk" \
+   && git clone -q --depth 1 https://github.com/vinceliuice/WhiteSur-icon-theme.git "$t/icons" \
+   && git clone -q --depth 1 https://github.com/vinceliuice/WhiteSur-cursors.git "$t/cursors"; then
+  mkdir -p "$HOME/.themes" "$HOME/.local/share/icons"
+  tar -xJf "$t/gtk/release/WhiteSur-Dark.tar.xz" -C "$HOME/.themes"
+  ( cd "$t/icons" && ./install.sh -d "$HOME/.local/share/icons" -t default >/dev/null 2>&1 )
+  ( cd "$t/cursors" && ./install.sh >/dev/null 2>&1 )
+  ok "WhiteSur"
+else warn "WhiteSur download failed (look will fall back to defaults)"; fi
+rm -rf "$t"
+
 # ---------------------------------------------------------------- XFCE look
 if command -v xfconf-query >/dev/null; then
   say "Applying XFCE look (panel, theme, keybinds, wallpaper)"

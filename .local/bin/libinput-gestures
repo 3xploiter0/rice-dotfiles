@@ -1,0 +1,5 @@
+#!/bin/sh
+# User-level wrapper: bundle libinput tools in ~/.local/bin and run the
+# upstream libinput-gestures script from ~/.local/share/libinput-gestures.
+export PATH="$HOME/.local/bin:$PATH"
+exec python3 "$HOME/.local/share/libinput-gestures/libinput-gestures" "$@"

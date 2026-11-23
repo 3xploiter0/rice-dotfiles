@@ -18,12 +18,12 @@
         <value type="double" value="0.94999999999999996"/>
       </property>
       <property name="background-rgba" type="array">
-        <value type="double" value="1.00000000000000000"/>
-        <value type="double" value="1.00000000000000000"/>
-        <value type="double" value="1.00000000000000000"/>
-        <value type="double" value="1.00000000000000000"/>
+        <value type="double" value="0.080000000000000002"/>
+        <value type="double" value="0.080000000000000002"/>
+        <value type="double" value="0.10000000000000001"/>
+        <value type="double" value="0.71999999999999997"/>
       </property>
-      <property name="icon-size" type="uint" value="20"/>
+      <property name="icon-size" type="int" value="20"/>
       <property name="plugin-ids" type="array">
         <value type="int" value="1"/>
         <value type="int" value="12"/>
@@ -62,16 +62,16 @@
   <property name="plugins" type="empty">
     <property name="plugin-1" type="string" value="whiskermenu">
       <property name="recent" type="array">
-        <value type="string" value="riseup-vpn.desktop"/>
         <value type="string" value="virtualbox.desktop"/>
         <value type="string" value="google-chrome.desktop"/>
+        <value type="string" value="xfce-display-settings.desktop"/>
+        <value type="string" value="riseup-vpn.desktop"/>
         <value type="string" value="com.microsoft.VSCode.desktop"/>
         <value type="string" value="kali-burpsuite.desktop"/>
         <value type="string" value="be.maartenbaert.simplescreenrecorder.desktop"/>
         <value type="string" value="firefox-esr.desktop"/>
         <value type="string" value="kali-ghidra.desktop"/>
         <value type="string" value="org.wireshark.Wireshark.desktop"/>
-        <value type="string" value="xfce-display-settings.desktop"/>
       </property>
       <property name="button-title" type="string" value=""/>
       <property name="show-button-title" type="bool" value="false"/>
@@ -206,6 +206,11 @@
       <property name="square-icons" type="bool" value="true"/>
       <property name="symbolic-icons" type="bool" value="true"/>
       <property name="known-legacy-items" type="array">
+        <value type="string" value="ethernet network connection “wired connection 1” active"/>
+        <value type="string" value="wi-fi network connection “rockyou.txt” active: rockyou.txt (77%)"/>
+        <value type="string" value="wi-fi network connection “rockyou.txt” active: rockyou.txt (76%)"/>
+        <value type="string" value="wi-fi network connection “rockyou.txt” active: rockyou.txt (97%)"/>
+        <value type="string" value="wi-fi network connection “rockyou.txt” active: rockyou.txt (98%)"/>
         <value type="string" value="wi-fi network connection “rockyou.txt” active: rockyou.txt (96%)"/>
         <value type="string" value="wi-fi network connection “rockyou.txt” active: rockyou.txt (95%)"/>
         <value type="string" value="wi-fi network connection “rockyou.txt” active: rockyou.txt (100%)"/>
@@ -249,7 +254,7 @@
     <property name="plugin-19" type="string" value="clock">
       <property name="digital-layout" type="uint" value="3"/>
       <property name="digital-time-format" type="string" value="%a %H:%M"/>
-      <property name="digital-time-font" type="string" value="JetBrains Mono Bold 10"/>
+      <property name="digital-time-font" type="string" value="Inter Bold 10"/>
     </property>
     <property name="plugin-20" type="string" value="separator">
       <property name="style" type="uint" value="0"/>
