@@ -2,8 +2,8 @@ net.launchpad.plank.dock.settings alignment 'center'
 net.launchpad.plank.dock.settings auto-pinning true
 net.launchpad.plank.dock.settings current-workspace-only false
 net.launchpad.plank.dock.settings dock-items ['1-launchpad.dockitem', '2-files.dockitem', '3-terminal.dockitem', '4-chrome.dockitem', '5-settings.dockitem']
-net.launchpad.plank.dock.settings hide-delay 0
-net.launchpad.plank.dock.settings hide-mode 'none'
+net.launchpad.plank.dock.settings hide-delay 150
+net.launchpad.plank.dock.settings hide-mode 'window-dodge'
 net.launchpad.plank.dock.settings icon-size 34
 net.launchpad.plank.dock.settings items-alignment 'center'
 net.launchpad.plank.dock.settings lock-items false
