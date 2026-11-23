@@ -14,4 +14,6 @@ sudo mkdir -p /var/lib/lightdm/.config/gtk-3.0
 sudo cp "$(dirname "$0")/greeter-gtk.css" /var/lib/lightdm/.config/gtk-3.0/gtk.css
 sudo chown -R lightdm:lightdm /var/lib/lightdm/.config
 sudo sed -i -e 's#^hide-user-image = .*#hide-user-image = false#' -e 's#^position = .*#position = 50%,center 46%,center#' /etc/lightdm/lightdm-gtk-greeter.conf
+sudo cp "$HOME/.face" /usr/share/backgrounds/mac/avatar.svg 2>/dev/null && sudo chmod a+r /usr/share/backgrounds/mac/avatar.svg \
+  && echo 'default-user-image = /usr/share/backgrounds/mac/avatar.svg' | sudo tee -a /etc/lightdm/lightdm-gtk-greeter.conf >/dev/null
 echo "login screen styled"

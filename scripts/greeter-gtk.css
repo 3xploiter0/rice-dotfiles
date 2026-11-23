@@ -1,53 +1,29 @@
 /* macOS-style LightDM greeter — opaque, no shadows (greeter has no compositor) */
-#panel_window {
-  background-color: #141418;
-  color: #ffffff;
-  font-weight: 600;
-  border-bottom: 1px solid #2a2a31;
-}
+decoration, window decoration { box-shadow: none; margin: 0; border: none; }
+
+#panel_window { background-color: #141418; color: #ffffff; font-weight: 600; border-bottom: 1px solid #2a2a31; }
 #panel_window * { color: #ffffff; text-shadow: none; }
 
-#login_window {
-  background-color: #1d1d23;
-  border: 1px solid #3a3a44;
-  border-radius: 18px;
-  padding: 34px 38px 30px 38px;
-  box-shadow: none;
-  color: #ffffff;
-}
-#login_window label { color: #f2f2f5; font-weight: 600; text-shadow: none; }
+#login_window { background-color: #1d1d23; border: 1px solid #3a3a44; box-shadow: none; color: #ffffff; padding: 0; }
+#login_box, #content_frame, #buttonbox_frame, #login_window frame, #login_window box { background-color: #1d1d23; border: none; box-shadow: none; }
+#content_frame { padding: 30px 34px 14px 34px; }
+#buttonbox_frame { padding: 10px 34px 22px 34px; border-top: 1px solid #2c2c34; }
+#login_window label, #message_label { color: #f2f2f5; font-weight: 600; text-shadow: none; }
 
-#user_image {
-  border-radius: 50%;
-  border: 3px solid #4a4a56;
-  box-shadow: none;
-  padding: 4px;
-  margin-bottom: 8px;
-}
-#user_combobox, #user_combobox button, #user_combobox * { background: transparent; border: none; box-shadow: none; color: #ffffff; font-size: 15pt; font-weight: 600; }
+#user_image_border { background: transparent; border: 3px solid #4a4a56; border-radius: 50%; box-shadow: none; padding: 3px; }
+#user_image { border-radius: 50%; box-shadow: none; }
 
-#password_entry {
-  background-color: #2b2b33;
-  color: #ffffff;
-  caret-color: #ffffff;
-  border: 1px solid #44444f;
-  border-radius: 999px;
-  padding: 9px 18px;
-  min-height: 22px;
-  box-shadow: none;
+#username_entry, #user_combobox, #user_combobox button, #password_entry {
+  background-color: #2b2b33; color: #ffffff; caret-color: #ffffff;
+  border: 1px solid #44444f; border-radius: 999px; padding: 8px 16px; min-height: 22px; box-shadow: none; text-shadow: none;
 }
-#password_entry:focus { background-color: #31313a; border-color: #0a84ff; box-shadow: none; }
+#password_entry:focus, #username_entry:focus { background-color: #31313a; border-color: #0a84ff; box-shadow: none; }
+#username_entry selection { background-color: #0a84ff; color: #ffffff; }
 
-#login_window button {
-  background: #2b2b33;
-  color: #ffffff;
-  border: 1px solid #44444f;
-  border-radius: 999px;
-  padding: 6px 20px;
-  box-shadow: none;
-  text-shadow: none;
-}
-#login_window button:hover { background: #383842; }
-#login_window #login_button, #login_window button.suggested-action { background: #0a84ff; border-color: #0a84ff; color: #ffffff; }
+#cancel_button, #login_button { border-radius: 999px; padding: 7px 22px; box-shadow: none; text-shadow: none; border: 1px solid #44444f; }
+#cancel_button { background: #2b2b33; color: #ffffff; }
+#cancel_button:hover { background: #383842; }
+#login_button { background: #0a84ff; border-color: #0a84ff; color: #ffffff; }
+#login_button:hover { background: #3399ff; }
 
-#greeter_infobar { border-radius: 12px; background: #ff453a; color: #ffffff; }
+#greeter_infobar { background: #ff453a; color: #ffffff; border-radius: 10px; }
