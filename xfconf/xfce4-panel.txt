@@ -99,7 +99,7 @@
 /plugins/plugin-22/appearance                 0
 /plugins/plugin-22/items                      [-lock-screen,-switch-user,-separator,-suspend,-hibernate,-hybrid-sleep,-separator,-shutdown,-restart,-separator,-logout,+logout-dialog]
 /plugins/plugin-23                            genmon
-/plugins/plugin-23/command                    /home/x3xploiter0/.local/bin/hackbar target
+/plugins/plugin-23/command                    $HOME/.local/bin/hackbar target
 /plugins/plugin-23/enable-single-row          true
 /plugins/plugin-23/font                       JetBrainsMono Nerd Font Bold 9
 /plugins/plugin-23/text                       (genmon)
@@ -113,12 +113,12 @@
 /plugins/plugin-40                            launcher
 /plugins/plugin-40/items                      [power.desktop]
 /plugins/plugin-41                            genmon
-/plugins/plugin-41/command                    /home/x3xploiter0/.local/bin/activeapp
+/plugins/plugin-41/command                    $HOME/.local/bin/activeapp
 /plugins/plugin-41/enable-single-row          true
 /plugins/plugin-41/font                       Inter Bold 10
 /plugins/plugin-41/update-period              700
 /plugins/plugin-41/use-label                  false
-/plugins/plugin-4/base-directory              /home/x3xploiter0
+/plugins/plugin-4/base-directory              $HOME
 /plugins/plugin-4/icon-name                   system-file-manager
 /plugins/plugin-5                             launcher
 /plugins/plugin-5/items                       [17902833181.desktop]

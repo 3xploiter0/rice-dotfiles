@@ -19,6 +19,8 @@ say "Stopping running components"
 pkill -x picom 2>/dev/null; pkill -x conky 2>/dev/null
 pkill -x xwinwrap 2>/dev/null; pkill -f 'mpv -wid' 2>/dev/null
 pkill -f "$HOME/.local/bin/hotcorners" 2>/dev/null; pkill -x rofi 2>/dev/null
+pkill -x plank 2>/dev/null
+pkill -f "$HOME/.local/share/libinput-gestures/libinput-gestures" 2>/dev/null
 systemctl --user disable --now rice-update.timer 2>/dev/null
 ok "stopped services + timer"
 
@@ -28,7 +30,7 @@ systemctl --user daemon-reload 2>/dev/null
 
 # 3. remove autostart entries we added
 say "Removing autostart entries"
-for f in picom conky-hud hotcorners conky crystal-dock; do rm -f "$HOME/.config/autostart/$f.desktop"; done
+for f in picom conky-hud hotcorners conky crystal-dock plank libinput-gestures; do rm -f "$HOME/.config/autostart/$f.desktop"; done
 ok "autostart"
 
 # 4. remove the helper scripts we shipped
@@ -41,15 +43,23 @@ ok "scripts"
 # 5. remove configs/themes the rice added
 say "Removing rice configs + themes"
 rm -rf "$HOME/.config/alacritty" "$HOME/.config/picom" "$HOME/.config/conky" \
+       "$HOME/.config/plank" "$HOME/.config/libinput-gestures" \
        "$HOME/.config/rofi/launchpad.rasi" "$HOME/.config/rofi/launchpad-full.rasi" \
        "$HOME/.config/rofi/expose.rasi" "$HOME/.config/rofi/expose-full.rasi" \
        "$HOME/.config/fastfetch/logo.txt" \
        "$HOME/.local/share/themes/Omarchy-CatppuccinMocha" \
+       "$HOME/.local/share/plank/themes/WhiteSur-Dark" \
+       "$HOME/.local/share/icons/hicolor/scalable/apps/mac-apple.svg" \
+       "$HOME/.local/share/icons/WhiteSur-cursors" \
        "$HOME/.local/share/qtermwidget6/color-schemes/CatppuccinMocha.colorscheme" \
        "$HOME/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml" \
        "$HOME/.local/share/gtksourceview-4/styles/catppuccin-mocha.xml" \
        "$HOME/.local/share/gtksourceview-5/styles/catppuccin-mocha.xml" \
        "$HOME/.local/share/applications/screensavers/matrix.desktop"
+# remove only the prompt block install.sh appended (leave the rest of .zshrc alone)
+if [ -f "$HOME/.zshrc" ] && grep -q '3xploiter0 rice — Starship prompt' "$HOME/.zshrc"; then
+  sed -i '/# 3xploiter0 rice — Starship prompt/,+2d' "$HOME/.zshrc"
+fi
 ok "configs"
 
 # 6. restore your previous configs from the newest install backup
@@ -79,4 +89,9 @@ To remove the extras this rice pulled in, review and run e.g.:
   sudo apt remove picom rofi crystal-dock conky-all cmatrix xfce4-docklike-plugin \\
      alacritty && sudo apt autoremove
 ${D}(Keep tools you use — many are standard pentest utilities.)${X}
+
+${D}If you used the optional system-wide steps, restore them too:${X}
+  sudo cp /etc/lightdm/lightdm-gtk-greeter.conf.bak /etc/lightdm/lightdm-gtk-greeter.conf
+  sudo cp /etc/plymouth/plymouthd.conf.before-macos /etc/plymouth/plymouthd.conf
+  sudo update-initramfs -u -k \$(uname -r)
 DONE

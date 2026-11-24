@@ -24,7 +24,7 @@ Frosted menu bar, magnifying dock, genie-style minimize, rounded windows, styled
 
 ### Desktop (macOS look)
 - **WhiteSur-Dark** GTK theme, window borders (real red/yellow/green traffic lights), and **WhiteSur-dark** icons
-- **Bibata Modern Ice** white cursor, **Inter** UI font, **Sonoma-dark** wallpaper (more in `~/.local/share/backgrounds/mac/`)
+- **WhiteSur** white cursors, **Inter** UI font, **Sonoma-dark** wallpaper (more in `~/.local/share/backgrounds/mac/`)
 - **Menu bar:** translucent dark bar with the Apple logo, the **focused app's name** (like macOS), tray, clock and a **power button**
 - **Dock:** [Plank](https://github.com/ricotz/plank) with **hover zoom**, launch bounce, and *hide when a window overlaps it*
 - **Animations (picom):** genie-style **minimize / restore** toward the dock, pop-in on open, soft shadows, blur on glass surfaces. Apps that draw their own frame (Chrome, GTK headerbars) are excluded so they don't get a blue halo
@@ -51,13 +51,13 @@ cd ~/rice
 ./install.sh
 ```
 
-`install.sh` backs up your existing configs to `~/.rice-restore-<date>/`, installs packages, copies the dotfiles and scripts, **builds the WhiteSur theme, icons and cursors**, and applies the XFCE look. It does **not** touch GRUB, the boot splash or the login screen.
+`install.sh` backs up your existing configs to `~/.rice-restore-<date>/`, installs packages, copies the dotfiles and scripts (including the Apple menu-bar icon and Plank dock config), **builds the WhiteSur theme, icons and cursors**, adds the Starship hook to your `.zshrc`, applies the XFCE look and the dock settings (if Plank is built). It is safe to re-run. It does **not** touch GRUB, the boot splash or the login screen.
 
 ### Extra steps (not part of `install.sh` yet)
 
 | Step | Command | Notes |
 |---|---|---|
-| **Dock (Plank)** | `bash scripts/install-plank.sh` | Plank isn't packaged in Kali, so it's **built from source** into `~/.local`. Install the build deps listed at the top of the script first. After building, copy `.config/plank` and `.local/share/plank` into place and start `plank` |
+| **Dock (Plank)** | `bash scripts/install-plank.sh` | Plank isn't packaged in Kali, so it's **built from source** into `~/.local`. Install the build deps listed at the top of the script first. Its config, WhiteSur theme and settings are already installed by `install.sh` — just build the binary, re-run `./install.sh` (or log out/in) |
 | **Login screen** | `bash scripts/setup-login.sh` | Needs `sudo`. Copies the theme/wallpaper to system folders and styles the LightDM greeter. Backs up the greeter config as `.bak` |
 
 When done, **log out and back in**, open a terminal and run **`cheat`**.
@@ -148,6 +148,7 @@ It stops the rice processes, removes the helper commands and configs it added, a
 ## ⚠️ Notes
 
 - Built and tested on **Kali Linux rolling, XFCE (X11)**. Other XFCE distros may need small tweaks.
+- `packages.txt` is a **reference snapshot** of the author's machine, not an install list — `install.sh` installs only what the rice needs. Don't bulk-install that file on a fresh box.
 - **Not for Wayland.** picom, Plank and the hot corners need X11.
 - The WhiteSur theme is installed from the **prebuilt release** (no `sassc` needed). Icons, cursors and wallpapers come from [vinceliuice](https://github.com/vinceliuice)'s WhiteSur projects.
 - The Nerd Font isn't bundled (too large for git); the installer downloads it.

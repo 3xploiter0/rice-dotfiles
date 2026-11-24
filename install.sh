@@ -34,7 +34,7 @@ APT=(
   libinput-tools python3-pil
   xfce4-docklike-plugin xfce4-panel-profiles conky-all cmatrix
   # terminals + shell
-  alacritty tmux zoxide bat eza fd-find fzf ripgrep zsh-syntax-highlighting zsh-autosuggestions
+  alacritty starship tmux zoxide bat eza fd-find fzf ripgrep zsh-syntax-highlighting zsh-autosuggestions
   neovim tree-sitter-cli
   # build + media (xwinwrap, live wallpaper, fastfetch logo)
   build-essential libx11-dev libxext-dev libxrender-dev libxinerama-dev
@@ -71,29 +71,42 @@ copy() { # src-in-repo  dest
   local s="$REPO/$1" d="$2"
   [ -e "$s" ] || return 0
   [ -e "$d" ] && { mkdir -p "$BK/$(dirname "$1")"; cp -a "$d" "$BK/$1" 2>/dev/null; }
-  mkdir -p "$(dirname "$d")"; cp -a "$s" "$d"
+  if [ -d "$s" ]; then
+    # Merge into an existing directory. `cp -a src dest` would create dest/basename
+    # instead, which hides every file one level too deep on a re-install.
+    mkdir -p "$d"; cp -a "$s/." "$d/"
+  else
+    mkdir -p "$(dirname "$d")"; cp -a "$s" "$d"
+  fi
 }
 say "Installing dotfiles + scripts"
 for p in .zshrc .tmux.conf \
          .config/starship.toml .config/alacritty .config/picom .config/rofi \
-         .config/libinput-gestures \
+         .config/libinput-gestures .config/plank .config/cherrytree \
          .config/conky .config/nvim .config/fastfetch .config/btop .config/cava \
          .config/hack .config/gtk-3.0 .config/gtk-4.0 .config/qterminal.org \
          .local/bin \
-         .local/share/themes .local/share/qtermwidget6 .local/share/qterminal \
+         .local/share/themes .local/share/icons .local/share/qtermwidget6 .local/share/qterminal \
          .local/share/gtksourceview-3.0 \
          .local/share/gtksourceview-4 .local/share/gtksourceview-5 \
-         .local/share/backgrounds .local/share/applications; do
+         .local/share/backgrounds .local/share/plank .local/share/applications; do
   copy "$p" "$HOME/$p"
 done
 chmod +x "$HOME/.local/bin/"* 2>/dev/null
+# the Apple menu-bar logo lives in hicolor/scalable/apps — refresh the cache so it resolves
+command -v gtk-update-icon-cache >/dev/null 2>&1 && \
+  gtk-update-icon-cache -f -t "$HOME/.local/share/icons/hicolor" >/dev/null 2>&1
 mkdir -p "$HOME/cyber" && cp -f "$REPO/COMMANDS.md" "$HOME/cyber/COMMANDS.md" 2>/dev/null
 ok "dotfiles + scripts"
 
 # fix any hardcoded author paths -> this user
 say "Making paths portable ($USER)"
-grep -rlZ '/home/x3xploiter0' "$HOME/.local/bin" "$HOME/.config" 2>/dev/null \
+grep -rIlZ '/home/x3xploiter0' "$HOME/.local/bin" "$HOME/.config" "$HOME/.local/share" 2>/dev/null \
   | xargs -0 -r sed -i "s#/home/x3xploiter0#$HOME#g"
+# .zshrc is user-owned/gitignored — add the prompt hook only if it isn't there yet
+if command -v starship >/dev/null 2>&1 && ! grep -q 'starship init zsh' "$HOME/.zshrc" 2>/dev/null; then
+  printf '\n# 3xploiter0 rice — Starship prompt\nexport STARSHIP_CONFIG="$HOME/.config/starship.toml"\neval "$(starship init zsh)"\n' >> "$HOME/.zshrc"
+fi
 ok "paths"
 
 # ---------------------------------------------------------------- pipx + xwinwrap
@@ -144,11 +157,15 @@ if command -v xfconf-query >/dev/null; then
   done
   # picom does the compositing — xfwm4's own compositor must be off or they fight
   xfconf-query -c xfwm4 -p /general/use_compositing -n -t bool -s false 2>/dev/null
+  # the XML alone isn't always picked up by a running xfsettingsd — set the cursor live
+  xfconf-query -c xsettings -p /Net/CursorThemeName -n -t string -s WhiteSur-cursors 2>/dev/null
+  command -v gsettings >/dev/null 2>&1 && \
+    gsettings set org.gnome.desktop.interface cursor-theme WhiteSur-cursors 2>/dev/null
   # panel launchers (Launchpad etc)
   mkdir -p "$HOME/.config/xfce4/panel"
   if [ -d "$REPO/xfce-panel-launchers" ]; then
     cp -a "$REPO/xfce-panel-launchers/." "$HOME/.config/xfce4/panel/"
-    grep -rlZ '/home/x3xploiter0' "$HOME/.config/xfce4/panel" 2>/dev/null | xargs -0 -r sed -i "s#/home/x3xploiter0#$HOME#g"
+    grep -rIlZ '/home/x3xploiter0' "$HOME/.config/xfce4/panel" 2>/dev/null | xargs -0 -r sed -i "s#/home/x3xploiter0#$HOME#g"
   fi
   # wallpaper on every monitor THIS machine has (names differ per PC: eDP-1, eDP, HDMI-1…)
   WP="$HOME/.local/share/backgrounds/mac"
@@ -176,11 +193,29 @@ fi
 say "Autostart + weekly self-update"
 mkdir -p "$HOME/.config/autostart"
 [ -d "$REPO/.config/autostart" ] && { cp -a "$REPO/.config/autostart/." "$HOME/.config/autostart/"; \
-  grep -rlZ '/home/x3xploiter0' "$HOME/.config/autostart" 2>/dev/null | xargs -0 -r sed -i "s#/home/x3xploiter0#$HOME#g"; }
+  grep -rIlZ '/home/x3xploiter0' "$HOME/.config/autostart" 2>/dev/null | xargs -0 -r sed -i "s#/home/x3xploiter0#$HOME#g"; }
 if [ -d "$REPO/.config/systemd" ]; then
   cp -a "$REPO/.config/systemd/." "$HOME/.config/systemd/"
   systemctl --user daemon-reload 2>/dev/null
   systemctl --user enable --now rice-update.timer 2>/dev/null && ok "weekly timer"
+fi
+
+# ---------------------------------------------------------------- Plank dock look
+# Config/theme are copied above; the binary itself is built by install-plank.sh.
+if [ -f "$HOME/.local/share/glib-2.0/schemas/net.launchpad.plank.gschema.xml" ]; then
+  say "Applying Plank dock settings"
+  SD="$HOME/.local/share/glib-2.0/schemas"
+  glib-compile-schemas "$SD" >/dev/null 2>&1
+  SCHEMA="net.launchpad.plank.dock.settings:/net/launchpad/plank/dock/dock1/"
+  while read -r _ key val; do
+    [ -n "${key:-}" ] && GSETTINGS_SCHEMA_DIR="$SD" gsettings set "$SCHEMA" "$key" "$val" 2>/dev/null
+  done < "$REPO/xfconf/plank-dock1.txt"
+  if [ -x "$HOME/.local/bin/plank" ] && [ -n "${DISPLAY:-}" ] && ! pgrep -x plank >/dev/null; then
+    (setsid env GSETTINGS_SCHEMA_DIR="$SD" "$HOME/.local/bin/plank" >/dev/null 2>&1 &)
+  fi
+  ok "dock"
+else
+  warn "Plank binary not built yet — run: bash scripts/install-plank.sh"
 fi
 
 # ---------------------------------------------------------------- 3-finger gestures
